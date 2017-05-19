@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane fx:id="telaJogo" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.uefs.ecomp.jm_c.view.TelaJogoController">
+   <top>
+      <Pane fx:id="paneUp" prefHeight="90.0" prefWidth="700.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="labelSaldo" layoutX="504.0" layoutY="20.0" text="Saldo:" />
+            <Label fx:id="labelDivida" layoutX="673.0" layoutY="20.0" text="Dívida:" />
+            <Button fx:id="buttonEmprestimo" focusTraversable="false" layoutX="861.0" layoutY="16.0" mnemonicParsing="false" onAction="#clicarEmprestimo" text="Empréstimo" />
+            <TextField fx:id="fieldSaldo" alignment="CENTER" editable="false" focusTraversable="false" layoutX="545.0" layoutY="16.0" prefHeight="25.0" prefWidth="80.0" />
+            <TextField fx:id="fieldDivida" alignment="CENTER" editable="false" focusTraversable="false" layoutX="718.0" layoutY="16.0" prefHeight="25.0" prefWidth="80.0" />
+            <Pane layoutY="74.0" prefHeight="15.0" prefWidth="1000.0">
+               <children>
+                  <Text fx:id="textDom" layoutX="44.0" layoutY="12.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DOM." />
+                  <Text fx:id="textSeg" layoutX="162.0" layoutY="12.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SEG." />
+                  <Text fx:id="textTer" layoutX="277.0" layoutY="12.0" strokeType="OUTSIDE" strokeWidth="0.0" text="TER." />
+                  <Text fx:id="textQua" layoutX="388.0" layoutY="12.0" strokeType="OUTSIDE" strokeWidth="0.0" text="QUA." />
+                  <Text fx:id="textQui" layoutX="501.0" layoutY="12.0" strokeType="OUTSIDE" strokeWidth="0.0" text="QUI." />
+                  <Text fx:id="textSex" layoutX="613.0" layoutY="12.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SEX." />
+                  <Text fx:id="textSab" layoutX="729.0" layoutY="12.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SAB." />
+               </children>
+            </Pane>
+         </children>
+      </Pane>
+   </top>
+   <center>
+      <GridPane fx:id="paneCenter" gridLinesVisible="true" BorderPane.alignment="CENTER">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Pane fx:id="pane00" prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <TextField fx:id="fieldMes" alignment="CENTER_RIGHT" editable="false" focusTraversable="false" layoutX="31.0" layoutY="57.0" prefHeight="25.0" prefWidth="52.0" />
+                  <Label fx:id="labelMes" layoutX="33.0" layoutY="61.0" text="Mês: " textFill="#0a0a0a" />
+                  <Circle fx:id="circleRoxo" fill="#b72bf8" layoutX="16.0" layoutY="17.0" radius="14.0" stroke="#8820bc" strokeType="INSIDE" visible="false" />
+               </children></Pane>
+            <Pane fx:id="pane01" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" />
+            <Pane fx:id="pane02" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" />
+            <Pane fx:id="pane03" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" />
+            <Pane fx:id="pane04" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" />
+            <Pane fx:id="pane05" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" />
+            <Pane fx:id="pane06" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="6" />
+            <Pane fx:id="pane10" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1" />
+            <Pane fx:id="pane11" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Pane fx:id="pane12" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <Pane fx:id="pane13" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+            <Pane fx:id="pane14" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+            <Pane fx:id="pane15" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+            <Pane fx:id="pane16" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.rowIndex="1" />
+            <Pane fx:id="pane20" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2" />
+            <Pane fx:id="pane21" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Pane fx:id="pane22" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+            <Pane fx:id="pane23" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+            <Pane fx:id="pane24" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+            <Pane fx:id="pane25" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="2" />
+            <Pane fx:id="pane26" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.rowIndex="2" />
+            <Pane fx:id="pane30" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="3" />
+            <Pane fx:id="pane31" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Pane fx:id="pane32" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+            <Pane fx:id="pane33" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+            <Pane fx:id="pane34" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+            <Pane fx:id="pane35" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="3" />
+            <Pane fx:id="pane36" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.rowIndex="3" />
+            <Pane fx:id="pane40" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="4" />
+            <Pane fx:id="pane41" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <Pane fx:id="pane42" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+            <Pane fx:id="pane43" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+            <Pane fx:id="pane44" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="4">
+               <children>
+                  <TextField fx:id="fieldSorteGrande" alignment="CENTER" editable="false" focusTraversable="false" layoutX="20.0" layoutY="57.0" prefHeight="25.0" prefWidth="80.0" />
+               </children></Pane>
+            <Pane fx:id="pane45" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="4" />
+            <Pane fx:id="pane46" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.rowIndex="4">
+               <children>
+                  <Button fx:id="buttonDado" focusTraversable="false" layoutX="34.0" layoutY="19.0" mnemonicParsing="false" onAction="#clicarDado" text="Dado" />
+                  <TextField fx:id="fieldDado" alignment="CENTER" editable="false" focusTraversable="false" layoutX="34.0" layoutY="57.0" prefHeight="25.0" prefWidth="47.0" />
+               </children></Pane>
+         </children>
+      </GridPane>
+   </center>
+   <right>
+      <SplitPane fx:id="splitPane" dividerPositions="0.5" orientation="VERTICAL" prefHeight="525.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <items>
+            <TitledPane fx:id="paneJogadores" animated="false" collapsible="false" maxHeight="250.0" maxWidth="200.0" minHeight="250.0" minWidth="200.0" prefHeight="250.0" prefWidth="200.0" text="Jogadores">
+               <content>
+                  <AnchorPane fx:id="paneJogadores2" prefHeight="255.0" prefWidth="200.0">
+                     <children>
+                        <Label fx:id="labelP1" layoutX="13.0" layoutY="15.0" text="P1:" />
+                        <Label fx:id="labelP2" layoutX="13.0" layoutY="41.0" text="P2:" />
+                        <Label fx:id="labelP3" layoutX="13.0" layoutY="67.0" text="P3:" />
+                        <Label fx:id="labelP4" layoutX="13.0" layoutY="93.0" text="P4:" />
+                        <Label fx:id="labelP5" layoutX="13.0" layoutY="119.0" text="P5:" />
+                        <Label fx:id="labelP6" layoutX="13.0" layoutY="145.0" text="P6:" />
+                        <Label fx:id="labelNome1" layoutX="39.0" layoutY="15.0" text="Label" />
+                        <Label fx:id="labelNome2" layoutX="39.0" layoutY="41.0" text="Label" />
+                        <Label fx:id="labelNome3" layoutX="39.0" layoutY="67.0" text="Label" />
+                        <Label fx:id="labelNome4" layoutX="39.0" layoutY="93.0" text="Label" />
+                        <Label fx:id="labelNome5" layoutX="39.0" layoutY="119.0" text="Label" />
+                        <Label fx:id="labelNome6" layoutX="39.0" layoutY="145.0" text="Label" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </TitledPane>
+            <TitledPane fx:id="paneCartasViradas" animated="false" collapsible="false" maxHeight="255.0" maxWidth="200.0" minHeight="255.0" minWidth="200.0" prefHeight="255.0" prefWidth="200.0" text="Cartas Viradas" textAlignment="CENTER">
+               <content>
+                  <ListView fx:id="paneCartasViradas2" prefHeight="200.0" prefWidth="200.0" />
+               </content>
+            </TitledPane>
+         </items>
+      </SplitPane>
+   </right>
+</BorderPane>

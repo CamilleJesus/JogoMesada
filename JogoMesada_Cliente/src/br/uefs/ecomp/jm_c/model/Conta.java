@@ -11,7 +11,7 @@ public class Conta {
     private double divida;
     
     public Conta() {
-        this.saldo = 3000;
+        this.saldo = 3000.0;
         this.divida = 0;
     }
 
@@ -22,6 +22,14 @@ public class Conta {
     public void setSaldo(double saldo) {
         this.saldo = saldo;
     }
+    
+    public void aumentaSaldo(double valor) {
+        this.saldo += valor;
+    }
+    
+    public void diminuiSaldo(double valor) {
+        this.saldo -= valor;
+    }
 
     public double getDivida() {
         return divida;
@@ -31,20 +39,12 @@ public class Conta {
         this.divida = divida;
     }
     
-    public void diaMesada(double valor) {
-        
-        if ((divida > 0.0) && (valor > 0.0) && (valor <= saldo)) {
-            divida *= 1.1;
-                            
-            if (valor <= divida) {
-                saldo -= valor;
-                divida -= valor;
-            } else if (valor > divida) {
-                double aux = valor - divida;
-                saldo +=aux;
-                divida -= valor;
-            }          
-        }
+    public void aumentaDivida(double valor) {
+        this.divida += valor;
+    }
+    
+    public void diminuiDivida(double valor) {
+        this.divida -= valor;
     }
     
 }
