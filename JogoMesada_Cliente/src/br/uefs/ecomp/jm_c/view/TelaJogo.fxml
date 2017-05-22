@@ -109,7 +109,7 @@
                <content>
                   <Pane fx:id="paneCorreio" prefHeight="200.0" prefWidth="200.0">
                      <children>
-                        <ComboBox fx:id="comboCorreio" layoutX="9.0" layoutY="14.0" prefHeight="25.0" prefWidth="183.0" />
+                        <ComboBox fx:id="comboCorreio" layoutX="9.0" layoutY="14.0" onAction="#clicaComboCorreio" prefHeight="25.0" prefWidth="183.0" />
                         <TextArea fx:id="areaCorreio" editable="false" layoutX="9.0" layoutY="39.0" prefHeight="130.0" prefWidth="183.0" />
                      </children>
                   </Pane>
@@ -120,7 +120,7 @@
                   <Pane fx:id="paneCompras" prefHeight="200.0" prefWidth="200.0">
                      <children>
                         <TextArea fx:id="areaCompras" editable="false" layoutX="9.0" layoutY="39.0" prefHeight="130.0" prefWidth="183.0" />
-                        <ComboBox fx:id="comboCompras" layoutX="9.0" layoutY="14.0" prefHeight="25.0" prefWidth="183.0" />
+                        <ComboBox fx:id="comboCompras" layoutX="9.0" layoutY="14.0" onAction="#clicaComboCompras" prefHeight="25.0" prefWidth="183.0" />
                      </children>
                   </Pane>
                </content>

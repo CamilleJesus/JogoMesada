@@ -122,7 +122,7 @@ public class ControllerCarta {
      * @return cartaCorreio
      */
     public CartaCorreio escolheCartaCorreio() {
-        return (this.cartasCorreio.get((int) (Math.random() * 15)));
+        return (this.cartasCorreio.get((int) (Math.random() * 14)));
     }
     
     /** Método que, a partir do tipo da carta Correio, realiza sua ação específica.
@@ -269,7 +269,7 @@ public class ControllerCarta {
      * @return cartaCorreio
      */
     public CartaCompras escolheCartaCompras() {
-        return (this.cartasCompras.get((int) (Math.random() * 15)));
+        return (this.cartasCompras.get((int) (Math.random() * 14)));
     }
     
     /** Método de ação para carta Compras.
