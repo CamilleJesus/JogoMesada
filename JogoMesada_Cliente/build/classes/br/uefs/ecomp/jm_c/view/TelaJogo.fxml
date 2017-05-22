@@ -9,16 +9,16 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane fx:id="telaJogo" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.uefs.ecomp.jm_c.view.TelaJogoController">
+<BorderPane fx:id="borderJogo" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.uefs.ecomp.jm_c.view.TelaJogoController">
    <top>
       <Pane fx:id="paneUp" prefHeight="90.0" prefWidth="700.0" BorderPane.alignment="CENTER">
          <children>
             <Label fx:id="labelSaldo" layoutX="504.0" layoutY="20.0" text="Saldo:" />
             <Label fx:id="labelDivida" layoutX="673.0" layoutY="20.0" text="Dívida:" />
-            <Button fx:id="buttonEmprestimo" focusTraversable="false" layoutX="861.0" layoutY="16.0" mnemonicParsing="false" onAction="#clicarEmprestimo" text="Empréstimo" />
+            <Button fx:id="buttonEmprestimo" focusTraversable="false" layoutX="861.0" layoutY="16.0" mnemonicParsing="false" onAction="#clicaEmprestimo" text="Empréstimo" />
             <TextField fx:id="fieldSaldo" alignment="CENTER" editable="false" focusTraversable="false" layoutX="545.0" layoutY="16.0" prefHeight="25.0" prefWidth="80.0" />
             <TextField fx:id="fieldDivida" alignment="CENTER" editable="false" focusTraversable="false" layoutX="718.0" layoutY="16.0" prefHeight="25.0" prefWidth="80.0" />
-            <Pane layoutY="74.0" prefHeight="15.0" prefWidth="1000.0">
+            <Pane fx:id="paneDias" layoutY="74.0" prefHeight="15.0" prefWidth="1000.0">
                <children>
                   <Text fx:id="textDom" layoutX="44.0" layoutY="12.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DOM." />
                   <Text fx:id="textSeg" layoutX="162.0" layoutY="12.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SEG." />
@@ -29,6 +29,7 @@
                   <Text fx:id="textSab" layoutX="729.0" layoutY="12.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SAB." />
                </children>
             </Pane>
+            <ComboBox fx:id="comboPlayers" focusTraversable="false" layoutX="74.0" layoutY="16.0" prefHeight="25.0" prefWidth="81.0" promptText="Players" />
          </children>
       </Pane>
    </top>
@@ -95,7 +96,7 @@
             <Pane fx:id="pane45" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="4" />
             <Pane fx:id="pane46" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.rowIndex="4">
                <children>
-                  <Button fx:id="buttonDado" focusTraversable="false" layoutX="34.0" layoutY="19.0" mnemonicParsing="false" onAction="#clicarDado" text="Dado" />
+                  <Button fx:id="buttonDado" focusTraversable="false" layoutX="34.0" layoutY="19.0" mnemonicParsing="false" onAction="#clicaDado" text="Dado" />
                   <TextField fx:id="fieldDado" alignment="CENTER" editable="false" focusTraversable="false" layoutX="34.0" layoutY="57.0" prefHeight="25.0" prefWidth="47.0" />
                </children></Pane>
          </children>
@@ -104,29 +105,24 @@
    <right>
       <SplitPane fx:id="splitPane" dividerPositions="0.5" orientation="VERTICAL" prefHeight="525.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <items>
-            <TitledPane fx:id="paneJogadores" animated="false" collapsible="false" maxHeight="250.0" maxWidth="200.0" minHeight="250.0" minWidth="200.0" prefHeight="250.0" prefWidth="200.0" text="Jogadores">
+            <TitledPane fx:id="titledCorreio" animated="false" collapsible="false" maxHeight="250.0" maxWidth="200.0" minHeight="250.0" minWidth="200.0" prefHeight="250.0" prefWidth="200.0" text="Cartas Correio">
                <content>
-                  <AnchorPane fx:id="paneJogadores2" prefHeight="255.0" prefWidth="200.0">
+                  <Pane fx:id="paneCorreio" prefHeight="200.0" prefWidth="200.0">
                      <children>
-                        <Label fx:id="labelP1" layoutX="13.0" layoutY="15.0" text="P1:" />
-                        <Label fx:id="labelP2" layoutX="13.0" layoutY="41.0" text="P2:" />
-                        <Label fx:id="labelP3" layoutX="13.0" layoutY="67.0" text="P3:" />
-                        <Label fx:id="labelP4" layoutX="13.0" layoutY="93.0" text="P4:" />
-                        <Label fx:id="labelP5" layoutX="13.0" layoutY="119.0" text="P5:" />
-                        <Label fx:id="labelP6" layoutX="13.0" layoutY="145.0" text="P6:" />
-                        <Label fx:id="labelNome1" layoutX="39.0" layoutY="15.0" text="Label" />
-                        <Label fx:id="labelNome2" layoutX="39.0" layoutY="41.0" text="Label" />
-                        <Label fx:id="labelNome3" layoutX="39.0" layoutY="67.0" text="Label" />
-                        <Label fx:id="labelNome4" layoutX="39.0" layoutY="93.0" text="Label" />
-                        <Label fx:id="labelNome5" layoutX="39.0" layoutY="119.0" text="Label" />
-                        <Label fx:id="labelNome6" layoutX="39.0" layoutY="145.0" text="Label" />
+                        <ComboBox fx:id="comboCorreio" layoutX="9.0" layoutY="14.0" prefHeight="25.0" prefWidth="183.0" />
+                        <TextArea fx:id="areaCorreio" editable="false" layoutX="9.0" layoutY="39.0" prefHeight="130.0" prefWidth="183.0" />
                      </children>
-                  </AnchorPane>
+                  </Pane>
                </content>
             </TitledPane>
-            <TitledPane fx:id="paneCartasViradas" animated="false" collapsible="false" maxHeight="255.0" maxWidth="200.0" minHeight="255.0" minWidth="200.0" prefHeight="255.0" prefWidth="200.0" text="Cartas Viradas" textAlignment="CENTER">
+            <TitledPane fx:id="titledCompras" animated="false" collapsible="false" maxHeight="255.0" maxWidth="200.0" minHeight="255.0" minWidth="200.0" prefHeight="255.0" prefWidth="200.0" text="Cartas Compras e Entretenimento" textAlignment="CENTER">
                <content>
-                  <ListView fx:id="paneCartasViradas2" prefHeight="200.0" prefWidth="200.0" />
+                  <Pane fx:id="paneCompras" prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <TextArea fx:id="areaCompras" editable="false" layoutX="9.0" layoutY="39.0" prefHeight="130.0" prefWidth="183.0" />
+                        <ComboBox fx:id="comboCompras" layoutX="9.0" layoutY="14.0" prefHeight="25.0" prefWidth="183.0" />
+                     </children>
+                  </Pane>
                </content>
             </TitledPane>
          </items>

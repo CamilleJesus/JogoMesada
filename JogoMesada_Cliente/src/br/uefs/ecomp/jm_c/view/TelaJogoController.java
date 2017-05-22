@@ -1,8 +1,9 @@
 package br.uefs.ecomp.jm_c.view;
 
-import br.uefs.ecomp.jm_c.controller.ControllerPartida;
+import br.uefs.ecomp.jm_c.controller.Facade;
+import br.uefs.ecomp.jm_c.model.Peao;
+
 import java.net.URL;
-import java.util.ArrayList;
 
 import java.util.ResourceBundle;
 
@@ -14,20 +15,20 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.control.SplitPane;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TitledPane;
 import javafx.scene.image.Image;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 
@@ -63,6 +64,12 @@ public class TelaJogoController implements Initializable {
     private Pane pane26;
 
     @FXML
+    private TitledPane titledCorreio;
+
+    @FXML
+    private TextArea areaCorreio;
+
+    @FXML
     private ComboBox<?> comboPlayers;
 
     @FXML
@@ -78,7 +85,7 @@ public class TelaJogoController implements Initializable {
     private Pane pane20;
 
     @FXML
-    private BorderPane telaJogo;
+    private ComboBox<?> comboCompras;
 
     @FXML
     private Text textSeg;
@@ -105,6 +112,9 @@ public class TelaJogoController implements Initializable {
     private Pane pane16;
 
     @FXML
+    private TitledPane titledCompras;
+
+    @FXML
     private Button buttonEmprestimo;
 
     @FXML
@@ -120,13 +130,13 @@ public class TelaJogoController implements Initializable {
     private Text textDom;
 
     @FXML
-    private ListView<?> listCorreio;
+    private Circle circle;
 
     @FXML
-    private Circle circleRoxo;
+    private ComboBox<?> comboCorreio;
 
     @FXML
-    private TitledPane paneCompras;
+    private Pane paneCompras;
 
     @FXML
     private Text textQua;
@@ -192,7 +202,10 @@ public class TelaJogoController implements Initializable {
     private Pane pane42;
 
     @FXML
-    private TitledPane paneCorreio;
+    private Pane paneCorreio;
+
+    @FXML
+    private Pane paneDias;
 
     @FXML
     private TextField fieldSorteGrande;
@@ -213,6 +226,9 @@ public class TelaJogoController implements Initializable {
     private Pane pane35;
 
     @FXML
+    private TextArea areaCompras;
+
+    @FXML
     private Pane pane30;
 
     @FXML
@@ -225,70 +241,129 @@ public class TelaJogoController implements Initializable {
     private Label labelMes;
 
     @FXML
-    private ListView<?> listCompras;
-    private ControllerPartida controllerPartida;
+    private BorderPane borderJogo;
+    private Facade facade = new Facade();
+    Peao peao = new Peao("");
     private int quantidade;
     private int mes = 1;
     
-    public void carregaJogadores() {
-        
-    }
-    
-    public void atualizaSaldo() {
-        this.fieldSaldo.setText("R$ " + controllerPartida.getJogador().getConta().getSaldo());
-    }
-    
-    public void atualizaDivida() {
-        this.fieldDivida.setText("R$ " + controllerPartida.getJogador().getConta().getDivida());
-    }
-    
-    public void clicarEmprestimo(ActionEvent event) {
+    public void clicaEmprestimo(ActionEvent event) {
         double valor = Double.parseDouble(JOptionPane.showInputDialog(null, "Informe o valor:", "Empréstimo", JOptionPane.QUESTION_MESSAGE));
+        this.facade.pegaEmprestimo(valor);
+        this.atualizaSaldo();
+        this.atualizaDivida();
     }
     
-    public int clicarDado(ActionEvent event) {
-        int sorteio = ((int) (Math.random() * (7 - 1) + 1));
-        fieldDado.setText(Integer.toString(sorteio));
-        this.moverPeao(sorteio);
+    public void criaPeao(String cor) {
+        Peao peao = new Peao("");
+        this.circle.setFill(Color.PURPLE);
+        this.circle.setStroke(Color.PURPLE);
+    }
+    
+    public int clicaDado(ActionEvent event) {
+        int sorteio = ((int) ((Math.random() * 6) + 1));
+        this.fieldDado.setText(Integer.toString(sorteio));
+        this.movePeao(this.peao, this.circle, sorteio);
         return sorteio;
     }
     
-    public void moverPeao(int casas) {
-        quantidade += casas;
-        int coluna = 0;
-        int linha = 0;
-        this.mudarMes();
+    public void movePeao(Peao peao, Circle circle, int quantidade) {
+        peao.aumentaQuantidade(quantidade);
+        this.atualizaMes();
+        int casa = peao.getQuantidade();
         
-        if (quantidade <= 6) {
-            linha = 0;
-            coluna = quantidade;
-        } else if (quantidade <= 13) {
-            linha = 1;
-            coluna = (quantidade - 7);
-        } else if (quantidade <= 20) {
-            linha = 2;
-            coluna = (quantidade - 14);
-        } else if (quantidade <= 27) {
-            linha = 3;
-            coluna = (quantidade - 21);
-        } else if (quantidade < 31) {
-            linha = 4;
-            coluna = (quantidade - 28);
-        } else if (quantidade >= 31) {
-            linha = 4;
-            coluna = 3;
-            quantidade = 0;
-            mes++;
+        if (casa <= 6) {
+            peao.setLinha(0);
+            peao.setColuna(casa);
+        } else if (casa <= 13) {
+            peao.setLinha(1);
+            peao.setColuna(casa - 7);
+        } else if (casa <= 20) {
+            peao.setLinha(2);
+            peao.setColuna(casa - 14);
+        } else if (casa <= 27) {
+            peao.setLinha(3);
+            peao.setColuna(casa - 21);
+        } else if (casa < 31) {
+            peao.setLinha(4);
+            peao.setColuna(casa - 28);
+        } else if (casa >= 31) {
+            peao.setLinha(4);
+            peao.setColuna(3);
+            casa = 0;
+            this.mes++;
         }
-        paneCenter.getChildren().remove(circleRoxo);
-        paneCenter.add(circleRoxo, coluna, linha);     
+        this.paneCenter.getChildren().remove(circle);
+        this.paneCenter.add(circle, peao.getColuna(), peao.getLinha());     
     }
     
-    public void mudarMes() {        
-        fieldMes.setText(Integer.toString(mes));
+    public void atualizaMes() {        
+        this.fieldMes.setText(Integer.toString(mes));
     }
     
     public void casas(int coluna, int linha) {
+        
+        if ((coluna == 1) && (linha == 0)) {
+            
+        } else if ((coluna == 2) && (linha == 0)) {
+            
+        } else if ((coluna == 3) && (linha == 0)) {
+            
+        } else if ((coluna == 4) && (linha == 0)) {
+            
+        } else if ((coluna == 5) && (linha == 0)) {
+            
+        } else if ((coluna == 6) && (linha == 1)) {
+            
+        } else if ((coluna == 1) && (linha == 1)) {
+            
+        } else if ((coluna == 2) && (linha == 1)) {
+            
+        } else if ((coluna == 3) && (linha == 1)) {
+            
+        } else if ((coluna == 4) && (linha == 1)) {
+            
+        } else if ((coluna == 5) && (linha == 1)) {
+            
+        } else if ((coluna == 6) && (linha == 1)) {
+            
+        } else if ((coluna == 0) && (linha == 2)) {
+            
+        } else if ((coluna == 1) && (linha == 2)) {
+            
+        } else if ((coluna == 2) && (linha == 2)) {
+            
+        } else if ((coluna == 3) && (linha == 2)) {
+            
+        } else if ((coluna == 4) && (linha == 2)) {
+            
+        } else if ((coluna == 5) && (linha == 2)) {
+            
+        } else if ((coluna == 6) && (linha == 2)) {
+            
+        } else if ((coluna == 0) && (linha == 3)) {
+            
+        } else if ((coluna == 1) && (linha == 3)) {
+            
+        } else if ((coluna == 2) && (linha == 3)) {
+            
+        } else if ((coluna == 3) && (linha == 3)) {
+            
+        } else if ((coluna == 4) && (linha == 3)) {
+            
+        } else if ((coluna == 5) && (linha == 3)) {
+            
+        } else if ((coluna == 6) && (linha == 3)) {
+            
+        } else if ((coluna == 0) && (linha == 4)) {
+            
+        } else if ((coluna == 1) && (linha == 4)) {
+            
+        } else if ((coluna == 2) && (linha == 4)) {
+            
+        } else if ((coluna == 3) && (linha == 4)) {
+            
+        } 
         
     }
     
@@ -299,10 +374,11 @@ public class TelaJogoController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         this.carregaImagens();
         
-        //this.atualizaSaldo();
-        //this.atualizaDivida();
+        this.atualizaSaldo();
+        this.atualizaDivida();
+        this.atualizaSorteGrande();
         
-        circleRoxo.setVisible(true);
+        circle.setVisible(true);
     }
     
     public void carregaImagens() {
@@ -345,6 +421,22 @@ public class TelaJogoController implements Initializable {
         pane44.setBackground(new Background(new BackgroundImage(new Image(getClass().getResource("Casa44.png").toExternalForm()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false))));
         pane45.setBackground(new Background(new BackgroundImage(new Image(getClass().getResource("Casa45.png").toExternalForm()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false))));
         pane46.setBackground(new Background(new BackgroundImage(new Image(getClass().getResource("Casa46.png").toExternalForm()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false))));
+    }
+    
+    public void atualizaJogadores() {
+        
+    }
+    
+    public void atualizaSaldo() {
+        this.fieldSaldo.setText("R$ " + this.facade.retornaSaldo());
+    }
+    
+    public void atualizaDivida() {
+        this.fieldDivida.setText("R$ " + this.facade.retornaDivida());
+    }
+    
+    public void atualizaSorteGrande() {
+        this.fieldSorteGrande.setText("R$ " + this.facade.retornaSorteGrande());
     }
     
 }
