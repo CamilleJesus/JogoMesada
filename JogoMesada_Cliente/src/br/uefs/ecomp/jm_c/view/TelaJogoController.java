@@ -243,7 +243,7 @@ public class TelaJogoController implements Initializable {
     @FXML
     private BorderPane borderJogo;
     private Facade facade = new Facade();
-    Peao peao = new Peao("");
+    Peao peao = new Peao();
     private int quantidade;
     private int mes = 1;
     
@@ -252,12 +252,6 @@ public class TelaJogoController implements Initializable {
         this.facade.pegaEmprestimo(valor);
         this.atualizaSaldo();
         this.atualizaDivida();
-    }
-    
-    public void criaPeao(String cor) {
-        Peao peao = new Peao("");
-        this.circle.setFill(Color.PURPLE);
-        this.circle.setStroke(Color.PURPLE);
     }
     
     public int clicaDado(ActionEvent event) {

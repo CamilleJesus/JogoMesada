@@ -10,13 +10,11 @@ public class Peao {
     private int quantidade;
     private int linha;
     private int coluna;
-    private String cor;
 
-    public Peao(String cor) {
+    public Peao() {
         this.quantidade = 0;
         this.linha = 0;
         this.coluna = 0;
-        this.cor = cor;
     }
 
     public int getQuantidade() {
@@ -45,14 +43,6 @@ public class Peao {
 
     public void setColuna(int coluna) {
         this.coluna = coluna;
-    }
-
-    public String getCor() {
-        return cor;
-    }
-
-    public void setCor(String cor) {
-        this.cor = cor;
     }
     
 }
