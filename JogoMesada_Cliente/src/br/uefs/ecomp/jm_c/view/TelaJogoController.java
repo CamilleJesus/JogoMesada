@@ -284,7 +284,7 @@ public class TelaJogoController implements Initializable {
         } else if (casa >= 31) {
             peao.setLinha(4);
             peao.setColuna(3);
-            casa = 0;
+            peao.setQuantidade(0);
             this.mes++;
         }
         this.paneCenter.getChildren().remove(circle);
