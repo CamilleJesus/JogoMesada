@@ -3,12 +3,16 @@ package br.uefs.ecomp.jm_c.view;
 import br.uefs.ecomp.jm_c.controller.Facade;
 import br.uefs.ecomp.jm_c.model.CartaCompras;
 import br.uefs.ecomp.jm_c.model.CartaCorreio;
+import br.uefs.ecomp.jm_c.model.ConexaoCliente;
 import br.uefs.ecomp.jm_c.model.Peao;
+import java.io.IOException;
 
 import java.net.URL;
 import java.util.ArrayList;
 
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javafx.event.ActionEvent;
 
@@ -135,6 +139,9 @@ public class TelaJogoController implements Initializable {
     private Circle circle;
 
     @FXML
+    private Circle circle2;
+
+    @FXML
     private ComboBox<String> comboCorreio;
 
     @FXML
@@ -248,9 +255,14 @@ public class TelaJogoController implements Initializable {
     @FXML
     private Button buttonSorteGrande;
     
+    @FXML
+    private Button buttonAtualiza;
+    
     private Facade facade = new Facade();
     Peao peao = new Peao();
+    Peao peao2 = new Peao();
     private int mes = 1;
+    private ConexaoCliente conexaoCliente = new ConexaoCliente();
     
     public void clicaEmprestimo(ActionEvent event) {
         double valor = Double.parseDouble(JOptionPane.showInputDialog(null, "Informe o valor:", "Empréstimo", JOptionPane.QUESTION_MESSAGE));
@@ -260,11 +272,36 @@ public class TelaJogoController implements Initializable {
     }
     
     public int clicaDado(ActionEvent event) {
-        int sorteio = this.facade.rolaDado();
-        this.fieldDado.setText(Integer.toString(sorteio));
+        Integer sorteio = this.facade.rolaDado();
+        this.fieldDado.setText(sorteio.toString());
         this.movePeao(this.peao, this.circle, sorteio);
         this.acaoCasa(this.peao.getColuna(), this.peao.getLinha());
+        this.envia(sorteio);
+        this.atualizaTela(event);   //N faço ideia se isso deveria funcionar
         return sorteio;
+    }
+    
+    public void envia(Integer sorteio) {
+        String envia = sorteio.toString();
+        
+        try {
+            this.conexaoCliente.enviar(envia);
+            System.out.println("Enviou");
+        } catch (IOException ex) {
+            System.out.println("Não enviou");
+        }
+    }
+    
+    public void atualizaTela(ActionEvent event) {
+        String recebe = null;
+        
+        try {
+            recebe = this.conexaoCliente.receber();
+            System.out.println("Recebeu");
+        } catch (IOException ex) {
+            System.out.println("Não recebeu");
+        }
+        this.movePeao(this.peao2, this.circle2, Integer.parseInt(recebe));
     }
     
     public void clicaComboCorreio(ActionEvent event) {
