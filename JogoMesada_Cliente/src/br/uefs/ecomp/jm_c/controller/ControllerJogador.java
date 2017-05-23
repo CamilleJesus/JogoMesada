@@ -47,7 +47,7 @@ public class ControllerJogador {
      */
     public void ganhaSorteGrande() {
         this.jogador.getConta().aumentaSaldo(sorteGrande.getValor());
-        this.sorteGrande.setValor(0.0);
+        this.sorteGrande.setValor(0);
     }
     
     /** Método que adiciona uma carta Correio à mão do jogador.

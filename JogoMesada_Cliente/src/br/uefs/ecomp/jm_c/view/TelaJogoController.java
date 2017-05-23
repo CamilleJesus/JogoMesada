@@ -245,6 +245,9 @@ public class TelaJogoController implements Initializable {
     @FXML
     private BorderPane borderJogo;
     
+    @FXML
+    private Button buttonSorteGrande;
+    
     private Facade facade = new Facade();
     Peao peao = new Peao();
     private int mes = 1;
@@ -292,6 +295,16 @@ public class TelaJogoController implements Initializable {
                 }
             }
         }        
+    }
+    
+    public void clicaSorteGrande(ActionEvent event) {
+        
+        if (fieldDado.getText().equals("6")) {
+            System.out.println("oi");
+            this.facade.ganhaSorteGrande();
+            this.atualizaSaldo();
+            this.atualizaSorteGrande();
+        }
     }
     
     public void movePeao(Peao peao, Circle circle, int quantidade) {
