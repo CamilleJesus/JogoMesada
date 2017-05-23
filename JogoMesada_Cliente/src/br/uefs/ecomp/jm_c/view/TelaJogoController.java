@@ -300,7 +300,6 @@ public class TelaJogoController implements Initializable {
     public void clicaSorteGrande(ActionEvent event) {
         
         if (fieldDado.getText().equals("6")) {
-            System.out.println("oi");
             this.facade.ganhaSorteGrande();
             this.atualizaSaldo();
             this.atualizaSorteGrande();
