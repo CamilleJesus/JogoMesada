@@ -1,9 +1,12 @@
 package br.uefs.ecomp.jm_c.view;
 
 import br.uefs.ecomp.jm_c.controller.Facade;
+import br.uefs.ecomp.jm_c.model.CartaCompras;
+import br.uefs.ecomp.jm_c.model.CartaCorreio;
 import br.uefs.ecomp.jm_c.model.Peao;
 
 import java.net.URL;
+import java.util.ArrayList;
 
 import java.util.ResourceBundle;
 
@@ -28,7 +31,6 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 
@@ -85,7 +87,7 @@ public class TelaJogoController implements Initializable {
     private Pane pane20;
 
     @FXML
-    private ComboBox<?> comboCompras;
+    private ComboBox<String> comboCompras;
 
     @FXML
     private Text textSeg;
@@ -133,7 +135,7 @@ public class TelaJogoController implements Initializable {
     private Circle circle;
 
     @FXML
-    private ComboBox<?> comboCorreio;
+    private ComboBox<String> comboCorreio;
 
     @FXML
     private Pane paneCompras;
@@ -242,9 +244,12 @@ public class TelaJogoController implements Initializable {
 
     @FXML
     private BorderPane borderJogo;
+    
+    @FXML
+    private Button buttonSorteGrande;
+    
     private Facade facade = new Facade();
     Peao peao = new Peao();
-    private int quantidade;
     private int mes = 1;
     
     public void clicaEmprestimo(ActionEvent event) {
@@ -255,10 +260,51 @@ public class TelaJogoController implements Initializable {
     }
     
     public int clicaDado(ActionEvent event) {
-        int sorteio = ((int) ((Math.random() * 6) + 1));
+        int sorteio = this.facade.rolaDado();
         this.fieldDado.setText(Integer.toString(sorteio));
         this.movePeao(this.peao, this.circle, sorteio);
+        this.acaoCasa(this.peao.getColuna(), this.peao.getLinha());
         return sorteio;
+    }
+    
+    public void clicaComboCorreio(ActionEvent event) {
+        
+        if (comboCorreio.isFocusTraversable()) {
+            ArrayList<CartaCorreio> cartas = this.facade.listaCartasCorreios();
+        
+            for (int i = 0; i < cartas.size(); i++) {
+                CartaCorreio carta = cartas.get(i);
+
+                if (carta.getTipoCarta().equals(comboCorreio.getValue())) {
+                    areaCorreio.setText(carta.getDescricao() + "\n\nR$ " + carta.getValor());
+                }
+            }
+        }        
+    }
+    
+    public void clicaComboCompras(ActionEvent event) {
+        
+        if (comboCompras.isFocusTraversable()) {  
+            ArrayList<CartaCompras> cartas = this.facade.listaCartasCompras();
+        
+            for (int i = 0; i < cartas.size(); i++) {
+                CartaCompras carta = cartas.get(i);
+
+                if (carta.getDescricao().equals(comboCompras.getValue())) {
+                    areaCompras.setText("Compra: R$" + carta.getValorCompra() + "\n\nRevenda: R$" + carta.getValorRevenda());
+                }
+            }
+        }        
+    }
+    
+    public void clicaSorteGrande(ActionEvent event) {
+        
+        if (fieldDado.getText().equals("6")) {
+            System.out.println("oi");
+            this.facade.ganhaSorteGrande();
+            this.atualizaSaldo();
+            this.atualizaSorteGrande();
+        }
     }
     
     public void movePeao(Peao peao, Circle circle, int quantidade) {
@@ -295,70 +341,165 @@ public class TelaJogoController implements Initializable {
         this.fieldMes.setText(Integer.toString(mes));
     }
     
-    public void casas(int coluna, int linha) {
+    public void acaoCasa(int coluna, int linha) {
         
         if ((coluna == 1) && (linha == 0)) {
-            
+            this.pegaCartasCorreio(1);
+            this.atualizaCartasCorreio();
+            this.atualizaSaldo();
+            this.atualizaDivida();
         } else if ((coluna == 2) && (linha == 0)) {
-            
+            this.facade.acaoCasaPremio();
+            this.atualizaSaldo();
         } else if ((coluna == 3) && (linha == 0)) {
-            
+            this.pegaCartasCorreio(3);
+            this.atualizaCartasCorreio();
+            this.atualizaSaldo();
+            this.atualizaDivida();
         } else if ((coluna == 4) && (linha == 0)) {
-            
+            this.facade.pegaCartaCompras();
+            this.atualizaCartasCompras();
+            this.atualizaSaldo();
+            this.atualizaDivida();
         } else if ((coluna == 5) && (linha == 0)) {
-            
-        } else if ((coluna == 6) && (linha == 1)) {
-            
+            this.pegaCartasCorreio(2);
+            this.atualizaCartasCorreio();
+            this.atualizaSaldo();
+            this.atualizaDivida();
+        } else if ((coluna == 6) && (linha == 0)) {
+            int numeroEscolhido = 1;   //Substituir 1 pelo número escolhido pelo jogador
+            int numeroDado = ((int) ((Math.random() * 6) + 1));   //Implementar rolar dado
+            System.out.println(numeroDado);
+            this.facade.acaoCasaBolaoEsportes(true, 6, numeroEscolhido, numeroDado);   //Substituir 6 pelo número de jogadores na partida
+            this.atualizaSaldo();
+        } else if ((coluna == 0) && (linha ==1)) {
+            this.facade.acaoCasaPraiaDomingo(100);   //Valor arbitrário, não consta nas regras
+            this.atualizaSaldo();
+            this.atualizaDivida();
+            this.atualizaSorteGrande();
         } else if ((coluna == 1) && (linha == 1)) {
-            
+            int numeroDado = ((int) ((Math.random() * 6) + 1));   //Implementar rolar dado
+            System.out.println(numeroDado);
+            this.facade.acaoCasaConcursoBandaRock(numeroDado);
+            this.atualizaSaldo();
         } else if ((coluna == 2) && (linha == 1)) {
             
         } else if ((coluna == 3) && (linha == 1)) {
-            
+            this.facade.acaoCasaFelizAniversario(true, 6);   //Substituir 6 pelo número de jogadores na partida
         } else if ((coluna == 4) && (linha == 1)) {
-            
+            this.pegaCartasCorreio(1);
+            this.atualizaCartasCorreio();
+            this.atualizaSaldo();
+            this.atualizaDivida();
         } else if ((coluna == 5) && (linha == 1)) {
-            
+            this.facade.pegaCartaCompras();
+            this.atualizaCartasCompras();
+            this.atualizaSaldo();
+            this.atualizaDivida();
         } else if ((coluna == 6) && (linha == 1)) {
-            
+            int numeroEscolhido = 1;   //Substituir 1 pelo número escolhido pelo jogador
+            int numeroDado = ((int) ((Math.random() * 6) + 1));   //Implementar rolar dado
+            System.out.println(numeroDado);
+            this.facade.acaoCasaBolaoEsportes(true, 6, numeroEscolhido, numeroDado);   //Substituir 6 pelo número de jogadores na partida
+            this.atualizaSaldo();
         } else if ((coluna == 0) && (linha == 2)) {
-            
+            this.facade.acaoCasaAjudeFlorestaAmazonica(200);   //Valor arbitrário, não consta nas regras
+            this.atualizaSaldo();
+            this.atualizaDivida();
+            this.atualizaSorteGrande();
         } else if ((coluna == 1) && (linha == 2)) {
-            
+            this.facade.pegaCartaCompras();
+            this.atualizaCartasCompras();
+            this.atualizaSaldo();
+            this.atualizaDivida();
         } else if ((coluna == 2) && (linha == 2)) {
-            
+            this.pegaCartasCorreio(3);
+            this.atualizaCartasCorreio();
         } else if ((coluna == 3) && (linha == 2)) {
             
         } else if ((coluna == 4) && (linha == 2)) {
-            
+            this.facade.acaoCasaLanchonete(300);   //Valor arbitrário, não consta nas regras
+            this.atualizaSaldo();
+            this.atualizaDivida();
+            this.atualizaSorteGrande();
         } else if ((coluna == 5) && (linha == 2)) {
-            
+            this.pegaCartasCorreio(1);
+            this.atualizaCartasCorreio();
+            this.atualizaSaldo();
+            this.atualizaDivida();
         } else if ((coluna == 6) && (linha == 2)) {
-            
+            int numeroEscolhido = 1;   //Substituir 1 pelo número escolhido pelo jogador
+            int numeroDado = ((int) ((Math.random() * 6) + 1));   //Implementar rolar dado
+            System.out.println(numeroDado);
+            this.facade.acaoCasaBolaoEsportes(true, 6, numeroEscolhido, numeroDado);   //Substituir 6 pelo número de jogadores na partida
+            this.atualizaSaldo();
         } else if ((coluna == 0) && (linha == 3)) {
-            
+            int numeroDado = ((int) ((Math.random() * 6) + 1));   //Implementar rolar dado
+            System.out.println(numeroDado);
+            this.facade.acaoCasaNegocioOcasiao(numeroDado);
+            this.facade.pegaCartaCompras();
         } else if ((coluna == 1) && (linha == 3)) {
-            
+            this.pegaCartasCorreio(1);
+            this.atualizaCartasCorreio();
+            this.atualizaSaldo();
+            this.atualizaDivida();
         } else if ((coluna == 2) && (linha == 3)) {
             
         } else if ((coluna == 3) && (linha == 3)) {
-            
+            this.pegaCartasCorreio(2);
+            this.atualizaCartasCorreio();
+            this.atualizaSaldo();
+            this.atualizaDivida();
         } else if ((coluna == 4) && (linha == 3)) {
-            
+            this.facade.pegaCartaCompras();
+            this.atualizaCartasCompras();
+            this.atualizaSaldo();
+            this.atualizaDivida();
         } else if ((coluna == 5) && (linha == 3)) {
             
         } else if ((coluna == 6) && (linha == 3)) {
-            
+            int numeroEscolhido = 1;   //Substituir 1 pelo número escolhido pelo jogador
+            int numeroDado = ((int) ((Math.random() * 6) + 1));   //Implementar rolar dado
+            System.out.println(numeroDado);
+            this.facade.acaoCasaBolaoEsportes(true, 6, numeroEscolhido, numeroDado);   //Substituir 6 pelo número de jogadores na partida
+            this.atualizaSaldo();
         } else if ((coluna == 0) && (linha == 4)) {
-            
+            this.facade.acaoCasaComprasShopping(400);   //Valor arbitrário, não consta nas regras
+            this.atualizaSaldo();
+            this.atualizaDivida();
+            this.atualizaSorteGrande();
         } else if ((coluna == 1) && (linha == 4)) {
             
         } else if ((coluna == 2) && (linha == 4)) {
-            
+            this.facade.acaoCasaMaratonaBeneficente(true, 0);   //Faz nada
         } else if ((coluna == 3) && (linha == 4)) {
             
-        } 
+        }        
+    }
+    
+    public void pegaCartasCorreio(int quantidade) {
         
+        for (int i = 0; i < quantidade; i++) {
+            this.facade.pegaCartaCorreio();
+        }
+    }
+    
+    public void atualizaCartasCorreio() {                    
+            comboCorreio.getItems().clear();            
+            ArrayList<CartaCorreio> cartas = this.facade.listaCartasCorreios();            
+            
+            for (int i = 0; i < cartas.size(); i++) {
+                comboCorreio.getItems().add(cartas.get(i).getTipoCarta());                
+            }
+    }
+    
+    public void atualizaCartasCompras() {                    
+            comboCompras.getItems().clear();            
+            ArrayList<CartaCompras> cartas = this.facade.listaCartasCompras();            
+            
+            for (int i = 0; i < cartas.size(); i++) {
+                comboCompras.getItems().add(cartas.get(i).getDescricao());                
+            }
     }
     
     /**

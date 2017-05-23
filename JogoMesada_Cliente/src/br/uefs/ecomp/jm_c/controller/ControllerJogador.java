@@ -4,6 +4,7 @@ import br.uefs.ecomp.jm_c.model.CartaCompras;
 import br.uefs.ecomp.jm_c.model.CartaCorreio;
 import br.uefs.ecomp.jm_c.model.Jogador;
 import br.uefs.ecomp.jm_c.model.SorteGrande;
+import java.util.ArrayList;
 
 
 /**
@@ -46,7 +47,7 @@ public class ControllerJogador {
      */
     public void ganhaSorteGrande() {
         this.jogador.getConta().aumentaSaldo(sorteGrande.getValor());
-        this.sorteGrande.setValor(0.0);
+        this.sorteGrande.setValor(0);
     }
     
     /** Método que adiciona uma carta Correio à mão do jogador.
@@ -55,6 +56,14 @@ public class ControllerJogador {
      */
     public void pegaCartaCorreio(CartaCorreio carta) {
         this.jogador.adicionaCartaCorreio(carta);
+    }
+    
+    public ArrayList<CartaCorreio> listaCartasCorreio() {
+        return (this.jogador.getCartasCorreio());
+    }
+    
+    public ArrayList<CartaCompras> listaCartasCompras() {
+        return (this.jogador.getCartasCompras());
     }
     
     /** Método que adiciona uma carta Compras à mão do jogador.

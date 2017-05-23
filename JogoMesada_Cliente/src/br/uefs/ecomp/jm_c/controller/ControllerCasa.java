@@ -31,9 +31,23 @@ public class ControllerCasa {
     }
     
     /** Método de ação para casa Bolão de Esportes.
+     * 
+     * @param participa
+     * @param numeroJogadores
+     * @param numeroEscolhido
+     * @param numeroDado
      */
-    public void acaoCasaBolaoEsportes() {
+    public void acaoCasaBolaoEsportes(boolean participa, int numeroJogadores, int numeroEscolhido, int numeroDado) {
         
+        if (participa == true) {
+            double valor = 1000 + (100 * (numeroJogadores - 1));   //Número de jogadores que escolheram participar, exceto ele
+            
+            if (numeroEscolhido == numeroDado) {
+                this.jogador.getConta().aumentaSaldo(valor);
+            } else {
+                this.jogador.getConta().diminuiSaldo(100);
+            }
+        }
     }
     
     /** Método de ação para casa Praia no Domingo.
@@ -73,31 +87,36 @@ public class ControllerCasa {
     }
     
     /** Método de ação para casa Concurso de Banda de Rock.
+     * 
+     * @param numeroDado
      */
-    public void acaoCasaConcursoBandaRock() {
+    public void acaoCasaConcursoBandaRock(int numeroDado) {
         
+        if (numeroDado == 3) {
+            this.jogador.getConta().aumentaSaldo(1000);            
+        }
     }
     
     /** Método de ação para casa Feliz Aniversário.
      * 
-     * @param tirouCarta
-     * @param jogadores
+     * @param estaCasa
+     * @param numeroJogadores
      */
-    public void acaoCasaFelizAniversario(boolean tirouCarta, int jogadores) {
+    public void acaoCasaFelizAniversario(boolean estaCasa, int numeroJogadores) {
         
-        if (tirouCarta == true) {
-            this.jogador.getConta().aumentaSaldo(jogadores * 100.0);            
-        } else if (tirouCarta == false) {
+        if (estaCasa == true) {
+            this.jogador.getConta().aumentaSaldo(numeroJogadores * 100.0);            
+        } else if (estaCasa == false) {
             this.jogador.getConta().diminuiSaldo(100);
         }
     }
     
     /** Método de ação para casa Negócio de Ocasião.
      * 
+     * @param numeroDado
      * @return numeroDado
      */
-    public int acaoCasaNegocioOcasiao() {
-        int numeroDado = ((int) ((Math.random() * 6) + 1));
+    public int acaoCasaNegocioOcasiao(int numeroDado) {
         this.jogador.getConta().diminuiSaldo(numeroDado * 100.0);
         return numeroDado;
     }
@@ -105,12 +124,12 @@ public class ControllerCasa {
     /** Método de ação para casa Maratona Beneficente.
      * 
      * @param estaCasa
+     * @param numeroDado
      * @return numeroDado
      */
-    public int acaoCasaMaratonaBeneficente(boolean estaCasa) {
+    public int acaoCasaMaratonaBeneficente(boolean estaCasa, int numeroDado) {
                         
         if (estaCasa == false) {
-            int numeroDado = ((int) ((Math.random() * 6) + 1));
             double valor = (numeroDado * 100.0);
             this.jogador.getConta().diminuiSaldo(valor);
             this.sorteGrande.aumentaSorteGrande(valor);

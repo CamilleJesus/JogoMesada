@@ -2,6 +2,7 @@ package br.uefs.ecomp.jm_c.controller;
 
 import br.uefs.ecomp.jm_c.model.CartaCompras;
 import br.uefs.ecomp.jm_c.model.CartaCorreio;
+import java.util.ArrayList;
 
 
 /**
@@ -72,6 +73,14 @@ public class Facade {
         this.controllerJogador.pegaCartaCorreio(this.controllerCarta.escolheCartaCorreio());
     }
     
+    public ArrayList<CartaCorreio> listaCartasCorreios() {
+        return (this.controllerJogador.listaCartasCorreio());
+    }
+    
+    public ArrayList<CartaCompras> listaCartasCompras() {
+        return (this.controllerJogador.listaCartasCompras());
+    }
+    
     public void pegaCartaCompras() {
         this.controllerJogador.pegaCartaCompras(this.controllerCarta.escolheCartaCompras());
     }
@@ -96,8 +105,8 @@ public class Facade {
         this.controllerCasa.acaoCasaPremio();
     }
     
-    public void acaoCasaBolaoEsportes() {
-        this.controllerCasa.acaoCasaBolaoEsportes();
+    public void acaoCasaBolaoEsportes(boolean participa, int numeroJogadores, int numeroEscolhido, int numeroDado) {
+        this.controllerCasa.acaoCasaBolaoEsportes(participa, numeroJogadores, numeroEscolhido, numeroDado);
     }
     
     public void acaoCasaPraiaDomingo(double valor) {
@@ -116,16 +125,20 @@ public class Facade {
         this.controllerCasa.acaoCasaComprasShopping(valor);
     }    
     
+    public void acaoCasaConcursoBandaRock(int numeroDado) {
+        this.controllerCasa.acaoCasaConcursoBandaRock(numeroDado);
+    }
+    
     public void acaoCasaFelizAniversario(boolean tirouCarta, int jogadores) {
         this.controllerCasa.acaoCasaFelizAniversario(tirouCarta, jogadores);
     }
     
-    public int acaoCasaNegocioOcasiao() {
-        return (this.controllerCasa.acaoCasaNegocioOcasiao());
+    public int acaoCasaNegocioOcasiao(int numeroDado) {
+        return (this.controllerCasa.acaoCasaNegocioOcasiao(numeroDado));
     }
     
-    public int acaoCasaMaratonaBeneficente(boolean estaCasa) {
-        return (this.controllerCasa.acaoCasaMaratonaBeneficente(estaCasa));
+    public int acaoCasaMaratonaBeneficente(boolean estaCasa, int numeroDado) {
+        return (this.controllerCasa.acaoCasaMaratonaBeneficente(estaCasa, numeroDado));
     }
     
     public void acaoCasaDiaMesada() {
