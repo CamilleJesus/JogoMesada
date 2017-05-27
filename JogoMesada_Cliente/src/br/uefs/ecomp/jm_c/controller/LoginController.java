@@ -4,6 +4,7 @@ import br.uefs.ecomp.jm_c.model.Conexao;
 import br.uefs.ecomp.jm_c.model.ConexaoCliente;
 import br.uefs.ecomp.jm_c.model.EntrarSala;
 import br.uefs.ecomp.jm_c.view.Cadastro;
+import br.uefs.ecomp.jm_c.view.Inicio;
 import br.uefs.ecomp.jm_c.view.Login;
 import br.uefs.ecomp.jm_c.view.Sala;
 import br.uefs.ecomp.jm_c.view.TelaJogo;
@@ -77,14 +78,14 @@ public class LoginController implements Initializable {
                     cliente.disconectar();
 
                     if (resposta.equals("1")) {
-
-                        new Sala().start(new Stage());
-                        Login.getStage().close();
-
+                        ConexaoCliente conexao = ConexaoCliente.getInstancia();
+                        conexao.setNome(nome);
                         
+                        new Inicio().start(new Stage());
+                        Login.getStage().close();
+                                  
 
-                        EntrarSala tc = new EntrarSala(nome);
-                        new Thread(tc).start();
+                       
                     } else {
                         JOptionPane.showMessageDialog(null, "Usuário ou senha errada",
                                 "Erro", JOptionPane.ERROR_MESSAGE);

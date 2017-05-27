@@ -19,6 +19,7 @@ import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -40,6 +41,8 @@ public class Servidor implements Serializable {
     private transient int numSala;
     private transient HashMap<Integer, Boolean> tempo;
     private transient ServerSocket serverSocket;
+    private transient LinkedList<String> cores;
+    private transient HashMap<Integer, String> salaTempo;
 
     /**
      * Inicializa variaveis
@@ -49,6 +52,8 @@ public class Servidor implements Serializable {
         salas = new HashMap<Integer, ArrayList<Cliente>>();
         sala = new ArrayList<Cliente>();
         tempo = new HashMap<Integer, Boolean>();
+        cores = new LinkedList<String>();
+        salaTempo = new HashMap<Integer, String>();
         numSala = 0;
     }
 
@@ -101,6 +106,7 @@ public class Servidor implements Serializable {
         tempo.put(sala, true);
         boolean atual = tempo.get(sala);
         atual = true;
+        cores = new LinkedList<String>();
         
     }
     
@@ -128,18 +134,35 @@ public class Servidor implements Serializable {
      * @param identificador
      * @param cliente
      */
-    public int addSala(String nome, String ip, String porta) throws UnknownHostException {
+    public int addSala(String nome, String ip, String porta, String cor, String temp) throws UnknownHostException {
         if (sala.size() == 0){
             tempo.put(numSala, false);
         }
-        sala.add(new Cliente(nome, InetAddress.getByName(ip), Integer.parseInt(porta), this.sala.size()));
+        if (cores.contains(cor)){
+            return -1;
+        }
+        cores.add(cor);
+        sala.add(new Cliente(nome, InetAddress.getByName(ip), Integer.parseInt(porta), this.sala.size(), cor));
+        String t = salaTempo.get(numSala);
+        if (t != null){
+            int time = Integer.parseInt(t);
+            int time2 = Integer.parseInt(temp);
+            if (time2 < time){
+                System.out.println(temp);
+                salaTempo.put(numSala, temp);
+            } 
+        }else{
+            salaTempo.put(numSala, temp);
+        }
         
         
         if (sala.size() == 6) {
             salas.put(numSala, sala);
             sala = new ArrayList();
             numSala += 1;
+            cores = new LinkedList<String>();
             return numSala - 1;
+            
         }
         if (sala.size() == 2) {
             Cronometro cronometro = new Cronometro(this, numSala);

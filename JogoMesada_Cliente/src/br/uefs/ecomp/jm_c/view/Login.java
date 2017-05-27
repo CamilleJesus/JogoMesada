@@ -69,6 +69,8 @@ public class Login extends Application {
         String porta = JOptionPane.showInputDialog("Digite porta do servidor");
         if (!porta.equals("")) {
             ConexaoCliente.setPorta(Integer.parseInt(porta));
+            ConexaoCliente.getInstancia().conectar();
+            
         }
 
         String ip = JOptionPane.showInputDialog("Digite ip do servidor");

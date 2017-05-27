@@ -5,19 +5,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
-<?import javafx.scene.text.*?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="93.0" prefWidth="256.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="81.0" prefWidth="263.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
   <children>
-    <Label layoutX="9.0" layoutY="38.0" text="O jogo começará daqui a pouco">
-      <font>
-        <Font size="15.0" />
-      </font>
-    </Label>
-    <Label layoutX="79.0" layoutY="40.0" text="">
-      <font>
-        <Font size="30.0" />
-      </font>
-    </Label>
+    <Label layoutX="35.0" layoutY="33.0" text="O jogo começará em breve ..." />
   </children>
 </AnchorPane>

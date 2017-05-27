@@ -60,8 +60,7 @@ public class TrataCliente implements Runnable {
                 entrarSala();
             }else if (acao.equals("tempo")){
                 String sala = entrada.nextLine();
-                System.err.println(sala);
-                System.out.println(servidor.salaPronta(Integer.parseInt(sala)));
+                
                 if (servidor.salaPronta(Integer.parseInt(sala))){
                     saida.println("true");
                 }else{
@@ -92,11 +91,18 @@ public class TrataCliente implements Runnable {
         String nome = entrada.nextLine();
         String ip = entrada.nextLine();
         String porta = entrada.nextLine();
+        String cor = entrada.nextLine();
+        String tempo = entrada.nextLine();
         
-        int sala = servidor.addSala(nome, ip, porta);
-
-        saida.println(""+sala);
-        saida.println("1");
+        int sala = servidor.addSala(nome, ip, porta, cor, tempo);
+        if (sala != - 1){
+            saida.println(""+sala);
+            saida.println("1");
+        }
+        else{
+            saida.println(""+sala);
+            saida.println("0");
+        }
     }
 
     /**

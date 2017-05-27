@@ -5,6 +5,7 @@
  */
 package br.uefs.ecomp.jm_c.model;
 
+import br.uefs.ecomp.jm_c.view.Inicio;
 import br.uefs.ecomp.jm_c.view.Login;
 import br.uefs.ecomp.jm_c.view.Sala;
 import br.uefs.ecomp.jm_c.view.TelaJogo;
@@ -21,65 +22,45 @@ import javax.swing.JOptionPane;
  *
  * @author felipe
  */
-public class EntrarSala implements Runnable {
+public class EntrarSala implements Runnable{
 
-    private String nome;
+    private int sala;
 
-    public EntrarSala(String nome) {
-        this.nome = nome;
+    public EntrarSala(int sala) {
+        this.sala = sala;
     }
 
-    @Override
     public void run() {
 
+        
+            System.out.println("oi");
         try {
-            ConexaoCliente conexao = ConexaoCliente.getInstancia();
-            conexao.conectar();
-            int sala = entrarSala(nome);
+            conectarJogadores(this.sala);
             System.out.println("oi");
-            conectarJogadores(sala);
-            System.out.println("oi");
+            
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
                     try {
                         new TelaJogo().start(new Stage());
-                        Sala.getStage().close();
+                            Sala.getStage().close();
                     } catch (Exception ex) {
                         Logger.getLogger(EntrarSala.class.getName()).log(Level.SEVERE, null, ex);
                     }
-            
+
                 }
             });
-            System.out.println("oi");
-            
-        } catch (Exception ex) {
+        } catch (IOException ex) {
             Logger.getLogger(EntrarSala.class.getName()).log(Level.SEVERE, null, ex);
         }
+            
+        
+        
+        
 
     }
 
-    private int entrarSala(String nome) throws UnknownHostException, IOException {
-        Conexao cliente = Conexao.getInstancia();
-        if (cliente.conectar()) {
-            cliente.enviar("sala");
-            cliente.enviar(nome);
-            cliente.enviar(InetAddress.getByName("localhost").getHostAddress());
-            cliente.enviar("" + ConexaoCliente.getPorta());
-
-            int sala = Integer.parseInt(cliente.receber());
-            String resposta = cliente.receber();
-            cliente.disconectar();
-
-            if (resposta.equals("1")) {
-                return sala;
-            } else {
-                JOptionPane.showMessageDialog(null, "Algum erro ocorreu",
-                        "Erro", JOptionPane.ERROR_MESSAGE);
-            }
-        }
-        return -1;
-    }
+    
 
     private void conectarJogadores(int sala) throws IOException {
         esperarTempo(sala);
@@ -120,7 +101,7 @@ public class EntrarSala implements Runnable {
                 cliente.enviar("tempo");
                 cliente.enviar("" + sala);
                 resposta = cliente.receber();
-                System.out.println(resposta);
+                
                 cliente.disconectar();
             }
         }

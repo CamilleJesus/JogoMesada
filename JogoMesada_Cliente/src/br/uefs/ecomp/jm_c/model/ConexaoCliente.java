@@ -26,6 +26,7 @@ public class ConexaoCliente {
     private static ConexaoCliente Conexao;
     private static int porta;
     private ArrayList<Usuario> saidas;
+    private static String nome;
 
     /**
      * Inicializa a classe.
@@ -37,7 +38,9 @@ public class ConexaoCliente {
         Conexao = new ConexaoCliente();
     }
     
-   
+   public String getNome(){
+       return nome;
+   }
     
     public void addJogador(InetAddress ip, int porta, int ordem){
         System.out.println("5");
@@ -105,6 +108,10 @@ public class ConexaoCliente {
             return false; // deu erro
         }
 
+    }
+    
+    public static void setNome(String nome){
+        ConexaoCliente.nome = nome;
     }
 
     /**

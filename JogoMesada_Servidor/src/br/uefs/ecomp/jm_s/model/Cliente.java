@@ -13,13 +13,19 @@ public class Cliente implements Serializable{
 	private InetAddress ip;
 	private int porta;
         private int ordem;
+        private String cor;
 	
-	public Cliente (String nome, InetAddress ip, int porta, int ordem){
+	public Cliente (String nome, InetAddress ip, int porta, int ordem, String cor){
 		this.nome = nome;
                 this.ip = ip;
                 this.porta = porta;
                 this.ordem = ordem;
+                this.cor = cor;
 	}
+        
+        public String getCor(){
+            return cor;
+        }
 	
 	/**
 	 * Retorna nome
