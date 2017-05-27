@@ -73,6 +73,14 @@ public class ConexaoCliente {
         Conexao.porta = porta;
     }
 
+    public ArrayList<Usuario> getSaidas() {
+        return saidas;
+    }
+
+    public void setSaidas(ArrayList<Usuario> saidas) {
+        this.saidas = saidas;
+    }
+
     /**
      * Conecta com o servidor.
      *

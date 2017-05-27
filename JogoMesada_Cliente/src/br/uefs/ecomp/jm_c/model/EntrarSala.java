@@ -34,7 +34,6 @@ public class EntrarSala implements Runnable {
 
         try {
             ConexaoCliente conexao = ConexaoCliente.getInstancia();
-            conexao = ConexaoCliente.getInstancia();
             conexao.conectar();
             int sala = entrarSala(nome);
             System.out.println("oi");

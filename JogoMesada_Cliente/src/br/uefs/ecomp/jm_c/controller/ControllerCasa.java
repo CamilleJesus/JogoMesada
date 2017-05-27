@@ -55,6 +55,11 @@ public class ControllerCasa {
      * @param valor
      */
     public void acaoCasaPraiaDomingo(double valor) {
+        double saldo = this.jogador.getConta().getSaldo();
+        
+        if (saldo < valor) {
+            this.jogador.pegaEmprestimo(valor - saldo);
+        }
         this.jogador.getConta().diminuiSaldo(valor);
         this.sorteGrande.aumentaSorteGrande(valor);
     }
@@ -64,6 +69,11 @@ public class ControllerCasa {
      * @param valor
      */
     public void acaoCasaAjudeFlorestaAmazonica(double valor) {
+        double saldo = this.jogador.getConta().getSaldo();
+        
+        if (saldo < valor) {
+            this.jogador.pegaEmprestimo(valor - saldo);
+        }
         this.jogador.getConta().diminuiSaldo(valor);
         this.sorteGrande.aumentaSorteGrande(valor);
     }
@@ -73,6 +83,11 @@ public class ControllerCasa {
      * @param valor
      */
     public void acaoCasaLanchonete(double valor) {
+        double saldo = this.jogador.getConta().getSaldo();
+        
+        if (saldo < valor) {
+            this.jogador.pegaEmprestimo(valor - saldo);
+        }
         this.jogador.getConta().diminuiSaldo(valor);
         this.sorteGrande.aumentaSorteGrande(valor);
     }
@@ -82,6 +97,11 @@ public class ControllerCasa {
      * @param valor
      */
     public void acaoCasaComprasShopping(double valor) {
+        double saldo = this.jogador.getConta().getSaldo();
+        
+        if (saldo < valor) {
+            this.jogador.pegaEmprestimo(valor - saldo);
+        }
         this.jogador.getConta().diminuiSaldo(valor);
         this.sorteGrande.aumentaSorteGrande(valor);
     }
@@ -158,7 +178,7 @@ public class ControllerCasa {
         
         for (int i = 0; i < cartasContas.size(); i++) {
             CartaCorreio carta = cartasContas.get(i);
-            if (carta.getTipoCarta().equals("Contas")) {
+            if (carta.getTipo().equals("Contas")) {
                 valor += carta.getValor();                
             }
         }

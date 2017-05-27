@@ -1,0 +1,7 @@
+coisas a tratar:
+	execução no turno atual das cartas correio (imediatas) que acabou de pegar
+	contas e cobrança monstro, se n pagas imediatamente, somente no dia da mesada
+	vender uma carta compra por vez
+
+
+Obs.: O baralho de cartas é compartilhado entre todos os jogadores? Precisa registrar quando uma carta foi pega?

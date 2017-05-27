@@ -9,7 +9,7 @@ package br.uefs.ecomp.jm_c.model;
  */
 public class CartaCorreio {
         
-    private String tipoCarta; 
+    private String tipo; 
     private String descricao;
     private double valor;
 
@@ -20,8 +20,8 @@ public class CartaCorreio {
      * @param descricao
      * @param valor
      */
-    public CartaCorreio(String tipoCarta, String descricao, double valor) {
-        this.tipoCarta = tipoCarta;
+    public CartaCorreio(String tipo, String descricao, double valor) {
+        this.tipo = tipo;
         this.descricao = descricao;
         this.valor = valor;
     }
@@ -30,16 +30,16 @@ public class CartaCorreio {
      * 
      * @return tipoCarta
      */
-    public String getTipoCarta() {
-        return tipoCarta;
+    public String getTipo() {
+        return tipo;
     }
 
     /** Método que altera o tipo da carta.
      * 
      * @param tipoCarta
      */
-    public void setTipoCarta(String tipoCarta) {
-        this.tipoCarta = tipoCarta;
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 
     /** Método que retorna a descrição da carta.
