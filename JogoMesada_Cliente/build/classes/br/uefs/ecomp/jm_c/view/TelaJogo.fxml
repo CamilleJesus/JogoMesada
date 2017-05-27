@@ -29,8 +29,7 @@
                   <Text fx:id="textSab" layoutX="729.0" layoutY="12.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SAB." />
                </children>
             </Pane>
-            <ComboBox fx:id="comboPlayers" focusTraversable="false" layoutX="74.0" layoutY="16.0" prefHeight="25.0" prefWidth="81.0" promptText="Players" />
-            <Button fx:id="buttonAtualiza" layoutX="259.0" layoutY="16.0" mnemonicParsing="false" onAction="#atualizaTela" text="Atualiza" />
+            <ComboBox fx:id="comboJogadores" focusTraversable="false" layoutX="66.0" layoutY="16.0" prefHeight="25.0" prefWidth="97.0" promptText="Jogadores" />
          </children>
       </Pane>
    </top>
@@ -114,6 +113,7 @@
                      <children>
                         <ComboBox fx:id="comboCorreio" layoutX="9.0" layoutY="14.0" onAction="#clicaComboCorreio" prefHeight="25.0" prefWidth="183.0" />
                         <TextArea fx:id="areaCorreio" editable="false" layoutX="9.0" layoutY="39.0" prefHeight="130.0" prefWidth="183.0" />
+                        <Button fx:id="buttonRealizarAcao" layoutX="105.0" layoutY="177.0" mnemonicParsing="false" onAction="#clicaRealizarAcao" text="Realizar Ação" />
                      </children>
                   </Pane>
                </content>
@@ -124,6 +124,7 @@
                      <children>
                         <TextArea fx:id="areaCompras" editable="false" layoutX="9.0" layoutY="39.0" prefHeight="130.0" prefWidth="183.0" />
                         <ComboBox fx:id="comboCompras" layoutX="9.0" layoutY="14.0" onAction="#clicaComboCompras" prefHeight="25.0" prefWidth="183.0" />
+                        <Button fx:id="buttonVender" layoutX="137.0" layoutY="177.0" mnemonicParsing="false" onAction="#clicaVender" text="Vender" />
                      </children>
                   </Pane>
                </content>

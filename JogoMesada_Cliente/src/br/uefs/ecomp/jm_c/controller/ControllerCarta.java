@@ -6,6 +6,7 @@ import br.uefs.ecomp.jm_c.model.Jogador;
 import br.uefs.ecomp.jm_c.model.SorteGrande;
 
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 
 /**
@@ -110,8 +111,8 @@ public class ControllerCarta {
      * Frente Agora", descrição e valor.
      */
     private void criaCartasVaParaFrenteAgora() {
-        CartaCorreio cartaVaParaFrente1 = new CartaCorreio("Va para Frente Agora", "Vá para a próxima casa 'Compras e Entretenimento' ou 'Achou um Comprador'.", 0.0);
-        CartaCorreio cartaVaParaFrente2 = new CartaCorreio("Va para Frente Agora", "Vá para a próxima casa 'Compras e Entretenimento' ou 'Achou um Comprador'.", 0.0);
+        CartaCorreio cartaVaParaFrente1 = new CartaCorreio("Vá para Frente Agora", "Vá para a próxima casa\n'Compras e Entretenimento'\nou 'Achou um Comprador'.", 0.0);
+        CartaCorreio cartaVaParaFrente2 = new CartaCorreio("Vá para Frente Agora", "Vá para a próxima casa\n'Compras e Entretenimento'\nou 'Achou um Comprador'.", 0.0);
 
         cartasCorreio.add(cartaVaParaFrente1);
         cartasCorreio.add(cartaVaParaFrente2);
@@ -132,7 +133,7 @@ public class ControllerCarta {
      */
     public void acaoCartaCorreio(boolean tirouCarta, CartaCorreio carta) {
         
-        switch (carta.getTipoCarta()) {
+        switch (carta.getTipo()) {
             case "Contas":
                 this.acaoCartaContas(carta);
                 break;
@@ -149,9 +150,13 @@ public class ControllerCarta {
                 this.acaoCartaCobrancaMonstro(carta);
                 break;
             case "Vá para Frente Agora":
-                this.acaoCartaVaFrenteAgora();
+                this.acaoCartaVaFrenteAgora(carta);
                 break;
         }
+    }
+    
+    public void saldoInsuficiente() {
+        JOptionPane.showMessageDialog(null, "Saldo insuficiente!", "Alerta", JOptionPane.ERROR_MESSAGE);
     }
     
     /** Método específico de ação para carta Correio do tipo Contas.
@@ -159,8 +164,14 @@ public class ControllerCarta {
      * @param carta
      */
     public void acaoCartaContas(CartaCorreio carta) {
-        this.jogador.getConta().diminuiSaldo(carta.getValor());
-        this.jogador.removeCartaCorreio(carta);
+        double valor = carta.getValor();
+        
+        if (this.jogador.getConta().getSaldo() >= valor) {
+            this.jogador.getConta().diminuiSaldo(valor);
+            this.jogador.removeCartaCorreio(carta);
+        } else {
+            this.saldoInsuficiente();
+        }
     }   
     
     /** Método específico de ação para carta Correio do tipo Pague a um Vizinho Agora.
@@ -172,9 +183,14 @@ public class ControllerCarta {
         double valor = carta.getValor();
         
         if (tirouCarta == true) {
+            double saldo = this.jogador.getConta().getSaldo();
+            
+            if (saldo < valor) {
+                this.jogador.pegaEmprestimo(valor - saldo);
+            }
             this.jogador.getConta().diminuiSaldo(valor);
-            //jogadorEscolhido.getConta().aumentaSaldo(valor);
             this.jogador.removeCartaCorreio(carta);
+            //jogadorEscolhido.getConta().aumentaSaldo(valor);
         } else if (tirouCarta == false) {
             //jogadorEscolhido.getConta().diminuiSaldo(valor);
             this.jogador.getConta().aumentaSaldo(valor);
@@ -194,6 +210,11 @@ public class ControllerCarta {
             this.jogador.getConta().aumentaSaldo(valor);
             this.jogador.removeCartaCorreio(carta);
         } else if (tirouCarta == false) {
+            double saldo = this.jogador.getConta().getSaldo();
+            
+            if (saldo < valor) {
+                this.jogador.pegaEmprestimo(valor - saldo);
+            }
             this.jogador.getConta().diminuiSaldo(valor);
             //jogadorEscolhido.getConta().aumentaSaldo(valor);
         }                
@@ -208,8 +229,14 @@ public class ControllerCarta {
         double valor = carta.getValor();
         
         if (tirouCarta == true) {
-            this.jogador.getConta().diminuiSaldo(valor);
-            this.jogador.removeCartaCorreio(carta);
+            
+            if (this.jogador.getConta().getSaldo() >= valor) {
+                this.jogador.getConta().diminuiSaldo(valor);
+                this.jogador.removeCartaCorreio(carta);
+            } else {
+                this.saldoInsuficiente();
+                return;
+            }
         }
         this.sorteGrande.aumentaSorteGrande(valor);
     }
@@ -219,14 +246,22 @@ public class ControllerCarta {
      * @param carta
      */
     public void acaoCartaCobrancaMonstro(CartaCorreio carta) {
-        this.jogador.getConta().diminuiSaldo(carta.getValor() * 1.1);
-        this.jogador.removeCartaCorreio(carta);
+        double valor = carta.getValor() * 1.1;
+        
+        if (this.jogador.getConta().getSaldo() >= valor) {
+            this.jogador.getConta().diminuiSaldo(valor);
+            this.jogador.removeCartaCorreio(carta);
+        } else {
+            this.saldoInsuficiente();
+        }
     }
     
     /** Método específico de ação para carta Correio do tipo Vá para Frente Agora.
+     * 
+     * @param carta
      */
-    public void acaoCartaVaFrenteAgora() {
-        
+    public void acaoCartaVaFrenteAgora(CartaCorreio carta) {
+        this.jogador.removeCartaCorreio(carta);
     }
     
     /** Método de criação de cartas Compras, com sua descrição, valor de compra
@@ -277,7 +312,13 @@ public class ControllerCarta {
      * @param carta
      */
     public void acaoCartaCompras(CartaCompras carta) {
-        this.jogador.getConta().diminuiSaldo(carta.getValorCompra());
+        double valor = carta.getValorCompra();
+        
+        if (this.jogador.getConta().getSaldo() >= valor) {
+            this.jogador.getConta().diminuiSaldo(valor);
+        } else {
+            this.saldoInsuficiente();
+        }
     }
     
 }

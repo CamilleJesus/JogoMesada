@@ -12,11 +12,12 @@ import java.net.InetAddress;
  * @author felipe
  */
 public class Usuario {
+    
     private InetAddress ip;
-    private int porta;
+    private Integer porta;
     private static int ordem;
     
-    public Usuario(InetAddress ip, int porta, int ordem) {
+    public Usuario(InetAddress ip, Integer porta, int ordem) {
         this.ip = ip;
         this.porta = porta;
         this.ordem = ordem;
@@ -30,11 +31,11 @@ public class Usuario {
         this.ip = ip;
     }
 
-    public int getPorta() {
+    public Integer getPorta() {
         return porta;
     }
 
-    public void setPorta(int porta) {
+    public void setPorta(Integer porta) {
         this.porta = porta;
     }
 

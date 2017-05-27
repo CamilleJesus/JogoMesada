@@ -81,8 +81,12 @@ public class Facade {
         return (this.controllerJogador.listaCartasCompras());
     }
     
-    public void pegaCartaCompras() {
-        this.controllerJogador.pegaCartaCompras(this.controllerCarta.escolheCartaCompras());
+    public CartaCompras escolheCartaCompras() {
+        return (this.controllerCarta.escolheCartaCompras());
+    }
+    
+    public void pegaCartaCompras(CartaCompras carta) {
+        this.controllerJogador.pegaCartaCompras(carta);
     }
     
     public void vendeCartaCompras(CartaCompras carta) {
@@ -91,6 +95,14 @@ public class Facade {
     
     public int rolaDado() {
         return (this.controllerJogador.rolaDado());
+    }
+    
+    public CartaCorreio buscaCartaCorreio(String tipo) {
+        return (this.controllerJogador.buscaCartaCorreio(tipo));
+    }
+    
+    public CartaCompras buscaCartaCompras(String tipo) {
+        return (this.controllerJogador.buscaCartaCompras(tipo));
     }
     
     public void acaoCartaCorreio(boolean tirouCarta, CartaCorreio carta) {
@@ -129,8 +141,8 @@ public class Facade {
         this.controllerCasa.acaoCasaConcursoBandaRock(numeroDado);
     }
     
-    public void acaoCasaFelizAniversario(boolean tirouCarta, int jogadores) {
-        this.controllerCasa.acaoCasaFelizAniversario(tirouCarta, jogadores);
+    public void acaoCasaFelizAniversario(boolean tirou, int jogadores) {
+        this.controllerCasa.acaoCasaFelizAniversario(tirou, jogadores);
     }
     
     public int acaoCasaNegocioOcasiao(int numeroDado) {

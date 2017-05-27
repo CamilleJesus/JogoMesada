@@ -56,6 +56,32 @@ public class ControllerJogador {
      */
     public void pegaCartaCorreio(CartaCorreio carta) {
         this.jogador.adicionaCartaCorreio(carta);
+    }   
+    
+    public CartaCorreio buscaCartaCorreio(String tipoCarta) {
+        ArrayList<CartaCorreio> cartas = this.listaCartasCorreio();
+        
+        for (int i = 0; i < cartas.size(); i++) {
+            CartaCorreio carta = cartas.get(i);
+            
+            if (tipoCarta.equals(carta.getTipo())){
+                return carta;
+            }
+        }
+        return null;
+    }
+    
+    public CartaCompras buscaCartaCompras(String descricao) {
+        ArrayList<CartaCompras> cartas = this.listaCartasCompras();
+        
+        for (int i = 0; i < cartas.size(); i++) {
+            CartaCompras carta = cartas.get(i);
+            
+            if (descricao.equals(carta.getDescricao())){
+                return carta;
+            }
+        }
+        return null;
     }
     
     public ArrayList<CartaCorreio> listaCartasCorreio() {

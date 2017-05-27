@@ -167,6 +167,7 @@ public class Jogador {
     /** Método que adiciona uma carta Compras à lista de cartas Compras do jogador.
      *
      * @param carta
+     * @return 
      */
     public void adicionaCartaCompras(CartaCompras carta) {
         this.cartasCompras.add(carta);

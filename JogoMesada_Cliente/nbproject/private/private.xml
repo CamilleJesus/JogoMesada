@@ -2,6 +2,7 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+<<<<<<< HEAD
         <group>
             <file>file:/home/felipe/Dropbox/mi_redes/JogoMesada/JogoMesada_Cliente/src/br/uefs/ecomp/jm_c/controller/ControllerJogador.java</file>
             <file>file:/home/felipe/Dropbox/mi_redes/JogoMesada/JogoMesada_Cliente/src/br/uefs/ecomp/jm_c/controller/CadastroController.java</file>
@@ -13,5 +14,8 @@
             <file>file:/home/felipe/Dropbox/mi_redes/JogoMesada/JogoMesada_Cliente/src/br/uefs/ecomp/jm_c/controller/LoginController.java</file>
             <file>file:/home/felipe/Dropbox/mi_redes/JogoMesada/JogoMesada_Cliente/src/br/uefs/ecomp/jm_c/view/Login.java</file>
         </group>
+=======
+        <group/>
+>>>>>>> 885d6ca683f26ded309042b5cb2bdbf2de00473e
     </open-files>
 </project-private>

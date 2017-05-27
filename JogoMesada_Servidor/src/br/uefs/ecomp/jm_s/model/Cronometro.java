@@ -27,7 +27,7 @@ public class Cronometro implements Runnable {
     public void run() {
 
         try {
-            Thread.sleep(60000);
+            Thread.sleep(20000);
             servidor.tempoAcabou(sala);
         } catch (InterruptedException ex) {
             Logger.getLogger(Cronometro.class.getName()).log(Level.SEVERE, null, ex);
