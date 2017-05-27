@@ -25,7 +25,7 @@ public class ConexaoCliente {
     DatagramSocket servidor;
     private static ConexaoCliente Conexao;
     private static int porta;
-    private ArrayList<Player> saidas;
+    private ArrayList<Usuario> saidas;
 
     /**
      * Inicializa a classe.
@@ -43,7 +43,7 @@ public class ConexaoCliente {
         System.out.println("5");
         System.out.println(ip.getHostAddress());
         System.out.println(porta);
-        saidas.add(new Player(ip, porta, ordem));
+        saidas.add(new Usuario(ip, porta, ordem));
     }
 
     /**
@@ -80,7 +80,7 @@ public class ConexaoCliente {
      * @throws IOException
      */
     public boolean conectar() {
-        saidas = new ArrayList<Player>();
+        saidas = new ArrayList<Usuario>();
         
         try {
             //cria porta para escutar algo
@@ -91,6 +91,7 @@ public class ConexaoCliente {
 
             return true; // sucesso
         } catch (Exception e) {
+            e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Erro ao conectar o servidor",
                     "Erro", JOptionPane.ERROR_MESSAGE);
             return false; // deu erro
@@ -107,7 +108,7 @@ public class ConexaoCliente {
         DatagramSocket ds = new DatagramSocket();
         //envia mensagem para as portas dos outros usuarios
         byte[] msg = s.getBytes();
-        for (Player jogador : saidas) {
+        for (Usuario jogador : saidas) {
             
             DatagramPacket pkg = new DatagramPacket(msg, msg.length, jogador.getIp(), jogador.getPorta());
             //envia pacote

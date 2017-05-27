@@ -30,6 +30,7 @@
                </children>
             </Pane>
             <ComboBox fx:id="comboPlayers" focusTraversable="false" layoutX="74.0" layoutY="16.0" prefHeight="25.0" prefWidth="81.0" promptText="Players" />
+            <Button fx:id="buttonAtualiza" layoutX="259.0" layoutY="16.0" mnemonicParsing="false" onAction="#atualizaTela" text="Atualiza" />
          </children>
       </Pane>
    </top>
@@ -56,7 +57,8 @@
                <children>
                   <TextField fx:id="fieldMes" alignment="CENTER_RIGHT" editable="false" focusTraversable="false" layoutX="31.0" layoutY="57.0" prefHeight="25.0" prefWidth="52.0" />
                   <Label fx:id="labelMes" layoutX="33.0" layoutY="61.0" text="Mês: " textFill="#0a0a0a" />
-                  <Circle fx:id="circle" fill="#b72bf8" layoutX="16.0" layoutY="17.0" radius="14.0" stroke="#8820bc" strokeType="INSIDE" visible="false" />
+                  <Circle fx:id="circle" fill="#b72bf8" layoutX="16.0" layoutY="17.0" radius="14.0" stroke="#8820bc" strokeType="INSIDE" />
+                  <Circle fx:id="circle2" fill="#f72c61" layoutX="97.0" layoutY="17.0" radius="14.0" stroke="#f81954" strokeType="INSIDE" />
                </children></Pane>
             <Pane fx:id="pane01" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" />
             <Pane fx:id="pane02" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" />
@@ -92,7 +94,7 @@
             <Pane fx:id="pane44" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="4">
                <children>
                   <TextField fx:id="fieldSorteGrande" alignment="CENTER" editable="false" focusTraversable="false" layoutX="14.0" layoutY="57.0" prefHeight="25.0" prefWidth="86.0" />
-                  <Button fx:id="buttonSorteGrande" layoutX="14.0" layoutY="19.0" mnemonicParsing="false" onAction="#clicaSorteGrande" text="Sorte Grande" />
+                  <Button fx:id="buttonSorteGrande" focusTraversable="false" layoutX="14.0" layoutY="1.0" mnemonicParsing="false" onAction="#clicaSorteGrande" text="Sorte Grande" />
                </children></Pane>
             <Pane fx:id="pane45" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="4" />
             <Pane fx:id="pane46" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.rowIndex="4">

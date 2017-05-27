@@ -7,6 +7,7 @@ package br.uefs.ecomp.jm_c.model;
  */
 public class Peao {
     
+    private int id;
     private int quantidade;
     private int linha;
     private int coluna;
@@ -15,6 +16,18 @@ public class Peao {
         this.quantidade = 0;
         this.linha = 0;
         this.coluna = 0;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId() {
+        this.id = Usuario.getOrdem();
+    }
+    
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getQuantidade() {
