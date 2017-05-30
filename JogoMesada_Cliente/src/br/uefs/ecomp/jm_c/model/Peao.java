@@ -22,10 +22,6 @@ public class Peao {
         return id;
     }
 
-    public void setId() {
-        this.id = Usuario.getOrdem();
-    }
-    
     public void setId(int id) {
         this.id = id;
     }

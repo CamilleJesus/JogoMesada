@@ -3,9 +3,8 @@ package br.uefs.ecomp.jm_c.view;
 import br.uefs.ecomp.jm_c.controller.Facade;
 import br.uefs.ecomp.jm_c.model.CartaCompras;
 import br.uefs.ecomp.jm_c.model.CartaCorreio;
-import br.uefs.ecomp.jm_c.model.ConexaoCliente;
+import br.uefs.ecomp.jm_c.connection.ConexaoCliente;
 import br.uefs.ecomp.jm_c.model.Peao;
-import br.uefs.ecomp.jm_c.model.Recebedor;
 import br.uefs.ecomp.jm_c.model.Usuario;
 
 import java.io.IOException;
@@ -697,7 +696,7 @@ public class TelaJogoController implements Initializable {
         this.atualizaDivida();
         this.atualizaSorteGrande();
         //this.atualizaJogadores();        
-        //Recebedor recebedor = new Recebedor(this);
+        //Recebedor recebedor = new AtualizaJogo(this);
         //new Thread(recebedor).start();
     }
     
