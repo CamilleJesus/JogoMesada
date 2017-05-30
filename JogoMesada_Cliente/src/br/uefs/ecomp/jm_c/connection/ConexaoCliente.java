@@ -45,10 +45,18 @@ public class ConexaoCliente {
     public void setOrdem(int ordem){
         this.ordem = ordem;
     }
+
+    public int getOrdem() {
+        return ordem;
+    }
     
    public String getNome(){
        return nome;
    }
+
+    public String getCor() {
+        return cor;
+    }
     
     public void addJogador(InetAddress ip, int porta, int ordem, String nome, String cor){
         System.out.println("5");

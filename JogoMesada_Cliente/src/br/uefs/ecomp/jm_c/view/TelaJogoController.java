@@ -41,6 +41,7 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 
@@ -193,15 +194,44 @@ public class TelaJogoController implements Initializable {
     @FXML
     private Button buttonVender;
     @FXML
-    private Circle circle;
+    private Circle circle0;
+    @FXML
+    private Circle circle1;
     @FXML
     private Circle circle2;
-    
+    @FXML
+    private Circle circle3;
+    @FXML
+    private Circle circle4;
+    @FXML
+    private Circle circle5;    
     private Facade facade = new Facade();
-    Peao peao = new Peao();
+    ArrayList<Peao> peoes = new ArrayList<>();
+    Peao peao0 = new Peao();
+    Peao peao1 = new Peao();
     Peao peao2 = new Peao();
+    Peao peao3 = new Peao();
+    Peao peao4 = new Peao();
+    Peao peao5 = new Peao();
+    
     private int mes = 1;
     private ConexaoCliente conexaoCliente = ConexaoCliente.getInstancia();
+    
+    public Peao getPeao(int ordem) {
+        
+        for (int i = 0; i < peoes.size(); i++) {
+            Peao peao = peoes.get(i);
+            
+            if (ordem == peao.getId()) {
+                return peao;
+            }
+        }
+        return null;
+    }
+    
+    public Peao getPeaoAtual() {
+        return (this.getPeao(conexaoCliente.getOrdem()));
+    }
     
     public void clicaEmprestimo(ActionEvent event) {
         this.facade.pegaEmprestimo(Double.parseDouble(JOptionPane.showInputDialog(null, "Informe o valor:", "Empréstimo", JOptionPane.QUESTION_MESSAGE)));
@@ -211,9 +241,12 @@ public class TelaJogoController implements Initializable {
     
     public void clicaDado(ActionEvent event) {
         Integer sorteio = this.facade.rolaDado();
-        this.fieldDado.setText(sorteio.toString());        
-        this.movePeao(sorteio)  ;          
-        this.acaoCasa(this.peao.getColuna(), this.peao.getLinha());
+        this.fieldDado.setText(sorteio.toString());
+        int ordem = conexaoCliente.getOrdem();
+        this.movePeao(ordem, sorteio);
+        Peao peao = this.getPeaoAtual();
+        this.acaoCasa(peao.getColuna(), peao.getLinha());
+        this.envia(ordem);
         this.envia(sorteio);
     }
     
@@ -286,8 +319,9 @@ public class TelaJogoController implements Initializable {
     }
     
     public void clicaRealizarAcao(ActionEvent event) {
-        int coluna = this.peao.getColuna();
-        int linha = this.peao.getLinha();
+        Peao peao = this.getPeaoAtual();
+        int coluna = peao.getColuna();
+        int linha = peao.getLinha();
         String tipo = this.comboCorreio.getValue();
         
         if (tipo != null) {
@@ -349,52 +383,55 @@ public class TelaJogoController implements Initializable {
         ChoiceDialog<String> dialogo = new ChoiceDialog<>(null, "Compras e Entretenimento", "Achou um Comprador");
         dialogo.setTitle("Carta Vá para Frente Agora");
         dialogo.setHeaderText(null);
-        dialogo.setContentText("Escolha a casa:");       
-        int coluna = this.peao.getColuna();
-        int linha = this.peao.getLinha();
+        dialogo.setContentText("Escolha a casa:"); 
+        Peao peao = this.getPeaoAtual();
+        int coluna = peao.getColuna();
+        int linha = peao.getLinha();
+        int ordem = this.conexaoCliente.getOrdem();
         
         switch (dialogo.showAndWait().get()) {
             case "Compras e Entretenimento":
 
                 if (((coluna == 1) && (linha == 0)) ||
                         ((coluna == 1) && (linha == 3))){
-                    this.movePeao(3);
+                    this.movePeao(ordem, 3);
                 } else if (((coluna == 3) && (linha == 0)) ||
                         ((coluna == 4) && (linha == 1)) ||
                         ((coluna == 3) && (linha == 3))) {
-                    this.movePeao(1);
+                    this.movePeao(ordem, 1);
                 } else if ((coluna == 5) && (linha == 0)) {
-                    this.movePeao(7);
+                    this.movePeao(ordem, 7);
                 } else if ((coluna == 2) && (linha == 2)) {
-                    this.movePeao(9);
+                    this.movePeao(ordem, 9);
                 } else if ((coluna == 5) && (linha == 2)) {
-                    this.movePeao(6);
+                    this.movePeao(ordem, 6);
                 }              
                 break;
             case "Achou um Comprador":
 
                 if ((coluna == 1) && (linha == 0)){
-                    this.movePeao(8);
+                    this.movePeao(ordem, 8);
                 } else if (((coluna == 3) && (linha == 0)) ||
                         ((coluna == 4) && (linha == 1))) {
-                    this.movePeao(6);
+                    this.movePeao(ordem, 6);
                 } else if (((coluna == 5) && (linha == 0)) ||
                         ((coluna == 5) && (linha == 2))) {
-                    this.movePeao(4);
+                    this.movePeao(ordem, 4);
                 } else if (((coluna == 2) && (linha == 2)) ||
                         (((coluna == 1) && (linha == 3)))){
-                    this.movePeao(1);
+                    this.movePeao(ordem, 1);
                 } else if ((coluna == 3) && (linha == 3)) {
-                    this.movePeao(2);
+                    this.movePeao(ordem, 2);
                 }
                 break;
         }
-        this.acaoCasa(this.peao.getColuna(), this.peao.getLinha());
+        this.acaoCasa(peao.getColuna(), peao.getLinha());
     }
     
     public void clicaVender(ActionEvent event) {
-        int coluna = this.peao.getColuna();
-        int linha = this.peao.getLinha();
+        Peao peao = this.getPeaoAtual();
+        int coluna = peao.getColuna();
+        int linha = peao.getLinha();
         String descricao = this.comboCompras.getValue();
         
         if (descricao != null) {
@@ -412,7 +449,34 @@ public class TelaJogoController implements Initializable {
         }
     }
     
-    public void movePeao(int quantidade) {
+    public void movePeao(int ordem, int quantidade) {
+        
+        switch (ordem) {
+            case 0:
+                movePeao0(ordem, quantidade);
+                break;
+            case 1:
+                movePeao1(ordem, quantidade);
+                break;
+            case 2:
+                movePeao2(ordem, quantidade);
+                break;
+            case 3:
+                movePeao3(ordem, quantidade);
+                break;
+            case 4:
+                movePeao4(ordem, quantidade);
+                break;
+            case 5:
+                movePeao5(ordem, quantidade);
+                break;
+            default:
+                break;
+        }
+    }
+    
+    public void movePeao0(int ordem, int quantidade) {
+        Peao peao = this.getPeao(ordem);
         peao.aumentaQuantidade(quantidade);
         this.atualizaMes();
         int casa = peao.getQuantidade();
@@ -438,37 +502,158 @@ public class TelaJogoController implements Initializable {
             peao.setQuantidade(0);
             this.mes++;
         }
-        this.paneCenter.getChildren().remove(circle);
-        this.paneCenter.add(circle, peao.getColuna(), peao.getLinha());
+        this.paneCenter.getChildren().remove(circle0);
+        this.paneCenter.add(circle0, peao.getColuna(), peao.getLinha());
     }
     
-    public void movePeao2(int quantidade) {
-        peao2.aumentaQuantidade(quantidade);
+    public void movePeao1(int ordem, int quantidade) {
+        Peao peao = this.getPeao(ordem);
+        peao.aumentaQuantidade(quantidade);
         this.atualizaMes();
-        int casa = peao2.getQuantidade();
+        int casa = peao.getQuantidade();
         
         if (casa <= 6) {
-            peao2.setLinha(0);
-            peao2.setColuna(casa);
+            peao.setLinha(0);
+            peao.setColuna(casa);
         } else if (casa <= 13) {
-            peao2.setLinha(1);
-            peao2.setColuna(casa - 7);
+            peao.setLinha(1);
+            peao.setColuna(casa - 7);
         } else if (casa <= 20) {
-            peao2.setLinha(2);
-            peao2.setColuna(casa - 14);
+            peao.setLinha(2);
+            peao.setColuna(casa - 14);
         } else if (casa <= 27) {
-            peao2.setLinha(3);
-            peao2.setColuna(casa - 21);
+            peao.setLinha(3);
+            peao.setColuna(casa - 21);
         } else if (casa < 31) {
-            peao2.setLinha(4);
-            peao2.setColuna(casa - 28);
+            peao.setLinha(4);
+            peao.setColuna(casa - 28);
         } else if (casa >= 31) {
-            peao2.setLinha(4);
-            peao2.setColuna(3);
-            peao2.setQuantidade(0);
+            peao.setLinha(4);
+            peao.setColuna(3);
+            peao.setQuantidade(0);
+        }
+        this.paneCenter.getChildren().remove(circle1);
+        this.paneCenter.add(circle1, peao.getColuna(), peao.getLinha());
+    }
+    
+    public void movePeao2(int ordem, int quantidade) {
+        Peao peao = this.getPeao(ordem);
+        peao.aumentaQuantidade(quantidade);
+        this.atualizaMes();
+        int casa = peao.getQuantidade();
+        
+        if (casa <= 6) {
+            peao.setLinha(0);
+            peao.setColuna(casa);
+        } else if (casa <= 13) {
+            peao.setLinha(1);
+            peao.setColuna(casa - 7);
+        } else if (casa <= 20) {
+            peao.setLinha(2);
+            peao.setColuna(casa - 14);
+        } else if (casa <= 27) {
+            peao.setLinha(3);
+            peao.setColuna(casa - 21);
+        } else if (casa < 31) {
+            peao.setLinha(4);
+            peao.setColuna(casa - 28);
+        } else if (casa >= 31) {
+            peao.setLinha(4);
+            peao.setColuna(3);
+            peao.setQuantidade(0);
         }
         this.paneCenter.getChildren().remove(circle2);
-        this.paneCenter.add(circle2, peao2.getColuna(), peao2.getLinha());
+        this.paneCenter.add(circle2, peao.getColuna(), peao.getLinha());
+    }
+    
+    public void movePeao3(int ordem, int quantidade) {
+        Peao peao = this.getPeao(ordem);
+        peao.aumentaQuantidade(quantidade);
+        this.atualizaMes();
+        int casa = peao.getQuantidade();
+        
+        if (casa <= 6) {
+            peao.setLinha(0);
+            peao.setColuna(casa);
+        } else if (casa <= 13) {
+            peao.setLinha(1);
+            peao.setColuna(casa - 7);
+        } else if (casa <= 20) {
+            peao.setLinha(2);
+            peao.setColuna(casa - 14);
+        } else if (casa <= 27) {
+            peao.setLinha(3);
+            peao.setColuna(casa - 21);
+        } else if (casa < 31) {
+            peao.setLinha(4);
+            peao.setColuna(casa - 28);
+        } else if (casa >= 31) {
+            peao.setLinha(4);
+            peao.setColuna(3);
+            peao.setQuantidade(0);
+        }
+        this.paneCenter.getChildren().remove(circle3);
+        this.paneCenter.add(circle3, peao.getColuna(), peao.getLinha());
+    }
+    
+    public void movePeao4(int ordem, int quantidade) {
+        Peao peao = this.getPeao(ordem);
+        peao.aumentaQuantidade(quantidade);
+        this.atualizaMes();
+        int casa = peao.getQuantidade();
+        
+        if (casa <= 6) {
+            peao.setLinha(0);
+            peao.setColuna(casa);
+        } else if (casa <= 13) {
+            peao.setLinha(1);
+            peao.setColuna(casa - 7);
+        } else if (casa <= 20) {
+            peao.setLinha(2);
+            peao.setColuna(casa - 14);
+        } else if (casa <= 27) {
+            peao.setLinha(3);
+            peao.setColuna(casa - 21);
+        } else if (casa < 31) {
+            peao.setLinha(4);
+            peao.setColuna(casa - 28);
+        } else if (casa >= 31) {
+            peao.setLinha(4);
+            peao.setColuna(3);
+            peao.setQuantidade(0);
+        }
+        this.paneCenter.getChildren().remove(circle4);
+        this.paneCenter.add(circle4, peao.getColuna(), peao.getLinha());
+    }
+    
+    public void movePeao5(int ordem, int quantidade) {
+        Peao peao = this.getPeao(ordem);
+        peao.aumentaQuantidade(quantidade);
+        this.atualizaMes();
+        int casa = peao.getQuantidade();
+        
+        if (casa <= 6) {
+            peao.setLinha(0);
+            peao.setColuna(casa);
+        } else if (casa <= 13) {
+            peao.setLinha(1);
+            peao.setColuna(casa - 7);
+        } else if (casa <= 20) {
+            peao.setLinha(2);
+            peao.setColuna(casa - 14);
+        } else if (casa <= 27) {
+            peao.setLinha(3);
+            peao.setColuna(casa - 21);
+        } else if (casa < 31) {
+            peao.setLinha(4);
+            peao.setColuna(casa - 28);
+        } else if (casa >= 31) {
+            peao.setLinha(4);
+            peao.setColuna(3);
+            peao.setQuantidade(0);
+        }
+        this.paneCenter.getChildren().remove(circle5);
+        this.paneCenter.add(circle5, peao.getColuna(), peao.getLinha());
     }
     
     public void atualizaMes() {        
@@ -691,11 +876,17 @@ public class TelaJogoController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         this.carregaImagens();
-        
+        this.circle0.setVisible(false);
+        this.circle1.setVisible(false);
+        this.circle2.setVisible(false);
+        this.circle3.setVisible(false);
+        this.circle4.setVisible(false);
+        this.circle5.setVisible(false);        
+        this.atualizaPeao();
         this.atualizaSaldo();
         this.atualizaDivida();
         this.atualizaSorteGrande();
-        //this.atualizaJogadores();        
+        this.atualizaJogadores();        
         AtualizaJogo atualiza = new AtualizaJogo(this);
         new Thread(atualiza).start();
     }
@@ -747,7 +938,7 @@ public class TelaJogoController implements Initializable {
         ArrayList<Usuario> usuarios = conexaoCliente.getSaidas();
         
         for (int i = 0; i < usuarios.size(); i++) {
-            comboJogadores.getItems().add(usuarios.get(i).getPorta().toString());   //Integrar classe usuário com jogador e mudar porta para nome
+            comboJogadores.getItems().add(usuarios.get(i).getNome());   //Integrar classe usuário com jogador e mudar porta para nome
         }
     }
     
@@ -761,6 +952,96 @@ public class TelaJogoController implements Initializable {
     
     public void atualizaSorteGrande() {
         this.fieldSorteGrande.setText("R$ " + this.facade.retornaSorteGrande());
+    }
+    
+    public void atualizaPeao() {
+        ArrayList<Usuario> jogadores = conexaoCliente.getSaidas();
+        
+        for (int i = 0; i <= jogadores.size(); i++) {
+            String cor;
+            int ordem;
+            
+            if (i == jogadores.size()) {
+                cor = conexaoCliente.getCor();
+                ordem = conexaoCliente.getOrdem();
+            } else {
+                cor = jogadores.get(i).getCor();
+                ordem = jogadores.get(i).getOrdem();
+            }
+            
+            switch (ordem) {
+                case 0:
+                    this.defineCor(cor, circle0);
+                    this.defineId(ordem, peao0);
+                    peoes.add(peao0);
+                    break;
+                case 1:
+                    this.defineCor(cor, circle1);
+                    this.defineId(ordem, peao1);
+                    peoes.add(peao1);
+                    break;
+                case 2:
+                    this.defineCor(cor, circle2);
+                    this.defineId(ordem, peao2);
+                    peoes.add(peao2);
+                    break;
+                case 3:
+                    this.defineCor(cor, circle3);
+                    this.defineId(ordem, peao3);
+                    peoes.add(peao3);
+                    break;
+                case 4:
+                    this.defineCor(cor, circle4);
+                    this.defineId(ordem, peao4);
+                    peoes.add(peao4);
+                    break;
+                case 5:
+                    this.defineCor(cor, circle5);
+                    this.defineId(ordem, peao5);
+                    peoes.add(peao5);
+                    break;
+            }
+        }        
+    }
+
+    public void defineCor(String cor, Circle circle) {
+        
+        switch (cor) {
+            case "Verde":
+                circle.setFill(Color.DARKCYAN);
+                circle.setStroke(Color.DARKCYAN);
+                circle.setVisible(true);
+                break;
+            case "Rosa":
+                circle.setFill(Color.LIGHTCORAL);
+                circle.setStroke(Color.LIGHTCORAL);
+                circle.setVisible(true);
+                break;
+            case "Amarelo":
+                circle.setFill(Color.YELLOW);
+                circle.setStroke(Color.YELLOW);
+                circle.setVisible(true);
+                break;
+            case "Roxo":
+                circle.setFill(Color.DARKMAGENTA);
+                circle.setStroke(Color.DARKMAGENTA);
+                circle.setVisible(true);
+                break;
+            case "Azul":
+                circle.setFill(Color.SLATEBLUE);
+                circle.setStroke(Color.SLATEBLUE);
+                circle.setVisible(true);
+                break;
+            case "Vermelho":
+                circle.setFill(Color.DARKRED);
+                circle.setStroke(Color.DARKRED);
+                circle.setVisible(true);
+                break;
+        }
+    }
+    
+    public void defineId(int ordem, Peao peao) {
+        peao.setId(ordem);
     }
     
 }
