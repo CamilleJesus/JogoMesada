@@ -78,9 +78,11 @@ public class EntraSala implements Runnable{
                 String ip = cliente.receber();
                 String porta = cliente.receber();
                 String ordem = cliente.receber();
+                String nome = cliente.receber();
+                String cor = cliente.receber();
+                
                 if (Integer.parseInt(porta) != conexao.getPorta()) {
-                    System.out.println(ip);
-                    System.out.println(porta);
+                    
                     conexao.addJogador(InetAddress.getByName(ip), Integer.parseInt(porta), Integer.parseInt(ordem));
 
                 }

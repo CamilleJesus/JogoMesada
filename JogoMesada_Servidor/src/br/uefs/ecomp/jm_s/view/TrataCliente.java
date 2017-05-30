@@ -70,14 +70,16 @@ public class TrataCliente implements Runnable {
             }else if (acao.equals("conectar")){
                 String sala = entrada.nextLine();
                 ArrayList<Cliente> jogadores = servidor.getSala(Integer.parseInt(sala));
+                
                 saida.println(jogadores.size());
                 for (Cliente cliente : jogadores){
                     saida.println(cliente.getIp().getHostAddress());
-                    System.out.println(cliente.getIp());
-                    System.out.println(cliente.getPorta());
-                    System.out.println(cliente.getNome());
                     saida.println(cliente.getPorta());
                     saida.println(""+cliente.getOrdem());
+                    
+                    saida.println(cliente.getNome());
+                    saida.println(cliente.getCor());
+                    
                 }
             }
         } catch (Exception e) {
