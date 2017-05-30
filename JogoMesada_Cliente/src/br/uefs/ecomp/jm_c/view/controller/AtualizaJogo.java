@@ -5,8 +5,8 @@
  */
 package br.uefs.ecomp.jm_c.view.controller;
 
-import br.uefs.ecomp.jm_c.connection.ConexaoCliente;
 import br.uefs.ecomp.jm_c.view.TelaJogoController;
+import br.uefs.ecomp.jm_c.connection.ConexaoCliente;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
