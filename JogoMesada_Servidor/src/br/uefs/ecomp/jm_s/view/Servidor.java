@@ -1,8 +1,6 @@
 package br.uefs.ecomp.jm_s.view;
 
 import br.uefs.ecomp.jm_s.model.Cliente;
-import br.uefs.ecomp.jm_s.model.Cronometro;
-import br.uefs.ecomp.jm_s.model.TrataCliente;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

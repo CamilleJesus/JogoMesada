@@ -3,12 +3,17 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/home/felipe/Dropbox/mi_redes/JogoMesada/JogoMesada_Cliente/src/br/uefs/ecomp/jm_c/model/Conexao.java</file>
             <file>file:/home/felipe/Dropbox/mi_redes/JogoMesada/JogoMesada_Cliente/src/br/uefs/ecomp/jm_c/model/ConexaoCliente.java</file>
             <file>file:/home/felipe/Dropbox/mi_redes/JogoMesada/JogoMesada_Cliente/src/br/uefs/ecomp/jm_c/controller/InicioController.java</file>
             <file>file:/home/felipe/Dropbox/mi_redes/JogoMesada/JogoMesada_Cliente/src/br/uefs/ecomp/jm_c/model/EntrarSala.java</file>
             <file>file:/home/felipe/Dropbox/mi_redes/JogoMesada/JogoMesada_Cliente/src/br/uefs/ecomp/jm_c/controller/LoginController.java</file>
             <file>file:/home/felipe/Dropbox/mi_redes/JogoMesada/JogoMesada_Cliente/src/br/uefs/ecomp/jm_c/view/Login.java</file>
+=======
+            <file>file:/C:/Users/Rafaela/Documents/git/JogoMesada/JogoMesada_Cliente/src/br/uefs/ecomp/jm_c/connection/Conexao.java</file>
+            <file>file:/C:/Users/Rafaela/Documents/git/JogoMesada/JogoMesada_Cliente/src/br/uefs/ecomp/jm_c/view/controller/TelaConfiguracaoController.java</file>
+>>>>>>> 42781c220d0982c6b6bec23d81c6b1df6323c140
         </group>
     </open-files>
 </project-private>

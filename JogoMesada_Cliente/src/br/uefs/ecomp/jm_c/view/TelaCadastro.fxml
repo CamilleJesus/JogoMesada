@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="270.0" prefWidth="400.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="br.uefs.ecomp.jm_c.view.controller.TelaCadastroController">
+  <children>
+    <Label layoutX="123.0" layoutY="35.0" text="Nome de usuário">
+      <font>
+        <Font size="18.0" fx:id="x1" />
+      </font>
+    </Label>
+    <Label font="$x1" layoutX="172.0" layoutY="92.0" text="Senha" />
+    <Label layoutX="185.0" layoutY="89.0" text="" />
+    <TextField fx:id="txNome" layoutX="100.0" layoutY="56.0" prefWidth="200.0" />
+    <Label font="$x1" layoutX="124.0" layoutY="149.0" text="Confirmar Senha" />
+    <Button fx:id="btcadastrar" font="$x1" layoutX="141.0" layoutY="200.0" mnemonicParsing="false" onAction="#cadastrar" text="Cadastrar" />
+    <PasswordField fx:id="txSenha" layoutX="100.0" layoutY="116.0" prefWidth="200.0" />
+    <PasswordField fx:id="txConfirmarSenha" layoutX="100.0" layoutY="170.0" prefWidth="200.0" />
+    <Button fx:id="btvoltar" font="$x1" layoutX="14.0" layoutY="229.0" mnemonicParsing="false" onAction="#voltar" text="Voltar" />
+  </children>
+</AnchorPane>
