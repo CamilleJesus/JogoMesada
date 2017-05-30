@@ -83,7 +83,7 @@ public class EntraSala implements Runnable{
                 
                 if (Integer.parseInt(porta) != conexao.getPorta()) {
                     
-                    conexao.addJogador(InetAddress.getByName(ip), Integer.parseInt(porta), Integer.parseInt(ordem));
+                    conexao.addJogador(InetAddress.getByName(ip), Integer.parseInt(porta), Integer.parseInt(ordem), nome, cor);
 
                 }
             }

@@ -43,11 +43,11 @@ public class ConexaoCliente {
        return nome;
    }
     
-    public void addJogador(InetAddress ip, int porta, int ordem){
+    public void addJogador(InetAddress ip, int porta, int ordem, String nome, String cor){
         System.out.println("5");
         System.out.println(ip.getHostAddress());
         System.out.println(porta);
-        saidas.add(new Usuario(ip, porta, ordem));
+        saidas.add(new Usuario(ip, porta, ordem, nome, cor));
     }
 
     /**
