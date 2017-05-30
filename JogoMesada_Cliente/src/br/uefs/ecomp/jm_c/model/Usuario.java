@@ -16,11 +16,15 @@ public class Usuario {
     private InetAddress ip;
     private Integer porta;
     private static int ordem;
+    private String nome;
+    private String cor;
     
-    public Usuario(InetAddress ip, Integer porta, int ordem) {
+    public Usuario(InetAddress ip, Integer porta, int ordem, String nome, String cor) {
         this.ip = ip;
         this.porta = porta;
         this.ordem = ordem;
+        this.cor = cor;
+        this.nome = nome;
     }
 
     public InetAddress getIp() {

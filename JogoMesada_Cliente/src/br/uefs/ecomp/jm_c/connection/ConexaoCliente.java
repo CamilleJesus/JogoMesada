@@ -28,7 +28,9 @@ public class ConexaoCliente {
     private static int porta;
     private ArrayList<Usuario> saidas;
     private static String nome;
-
+    private int ordem;
+    private String cor;
+    
     /**
      * Inicializa a classe.
      *
@@ -37,6 +39,11 @@ public class ConexaoCliente {
      */
     public static void singleton() throws UnknownHostException, IOException {
         Conexao = new ConexaoCliente();
+    }
+    
+    
+    public void setOrdem(int ordem){
+        this.ordem = ordem;
     }
     
    public String getNome(){
@@ -164,6 +171,10 @@ public String receber() throws IOException {
     public void disconectar() throws IOException {
         servidor.close();
 
+    }
+
+    public void setCor(String cor) {
+        this.cor = cor;
     }
 
 }

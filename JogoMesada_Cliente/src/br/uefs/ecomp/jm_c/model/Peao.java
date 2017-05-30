@@ -16,7 +16,6 @@ public class Peao {
     private int coluna;
 
     public Peao() {
-        this.circulo = new Circle();
         this.quantidade = 0;
         this.linha = 0;
         this.coluna = 0;

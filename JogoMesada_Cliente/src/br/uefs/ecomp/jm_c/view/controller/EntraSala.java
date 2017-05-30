@@ -85,6 +85,10 @@ public class EntraSala implements Runnable{
                     
                     conexao.addJogador(InetAddress.getByName(ip), Integer.parseInt(porta), Integer.parseInt(ordem), nome, cor);
 
+                }else{
+                    
+                    conexao.setOrdem(Integer.parseInt(ordem));
+                    conexao.setCor(cor);
                 }
             }
         }
