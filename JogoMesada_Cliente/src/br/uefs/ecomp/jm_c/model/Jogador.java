@@ -16,7 +16,7 @@ public class Jogador {
     private String nickname;
     private String senha;
     private Conta conta;
-    //private Peao peao;
+    private Peao peao;
     private ArrayList<CartaCorreio> cartasCorreio;
     private ArrayList<CartaCompras> cartasCompras;
     
@@ -27,7 +27,7 @@ public class Jogador {
         this.conta = new Conta();
         this.cartasCorreio = new ArrayList<>();
         this.cartasCompras = new ArrayList<>();
-        //this.peao = new Peao();
+        this.peao = new Peao();
     }   
     
     /** Método que zera a instância da classe.
@@ -94,6 +94,14 @@ public class Jogador {
      */
     public void setConta(Conta conta) {
         this.conta = conta;
+    }
+
+    public Peao getPeao() {
+        return peao;
+    }
+
+    public void setPeao(Peao peao) {
+        this.peao = peao;
     }
     
     /** Método que realiza o empréstimo, ou seja, aumenta o saldo e aumenta a dívida

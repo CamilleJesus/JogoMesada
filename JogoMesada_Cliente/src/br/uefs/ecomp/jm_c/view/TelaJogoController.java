@@ -211,7 +211,7 @@ public class TelaJogoController implements Initializable {
     public void clicaDado(ActionEvent event) {
         Integer sorteio = this.facade.rolaDado();
         this.fieldDado.setText(sorteio.toString());        
-        this.movePeao(this.peao, this.circle, sorteio)  ;          
+        this.movePeao(this.peao, sorteio)  ;          
         this.acaoCasa(this.peao.getColuna(), this.peao.getLinha());
         //this.envia(sorteio);
     }
@@ -357,34 +357,34 @@ public class TelaJogoController implements Initializable {
 
                 if (((coluna == 1) && (linha == 0)) ||
                         ((coluna == 1) && (linha == 3))){
-                    this.movePeao(this.peao, this.circle, 3);
+                    this.movePeao(this.peao, 3);
                 } else if (((coluna == 3) && (linha == 0)) ||
                         ((coluna == 4) && (linha == 1)) ||
                         ((coluna == 3) && (linha == 3))) {
-                    this.movePeao(this.peao, this.circle, 1);
+                    this.movePeao(this.peao, 1);
                 } else if ((coluna == 5) && (linha == 0)) {
-                    this.movePeao(this.peao, this.circle, 7);
+                    this.movePeao(this.peao, 7);
                 } else if ((coluna == 2) && (linha == 2)) {
-                    this.movePeao(this.peao, this.circle, 9);
+                    this.movePeao(this.peao, 9);
                 } else if ((coluna == 5) && (linha == 2)) {
-                    this.movePeao(this.peao, this.circle, 6);
+                    this.movePeao(this.peao, 6);
                 }              
                 break;
             case "Achou um Comprador":
 
                 if ((coluna == 1) && (linha == 0)){
-                    this.movePeao(this.peao, this.circle, 8);
+                    this.movePeao(this.peao, 8);
                 } else if (((coluna == 3) && (linha == 0)) ||
                         ((coluna == 4) && (linha == 1))) {
-                    this.movePeao(this.peao, this.circle, 6);
+                    this.movePeao(this.peao, 6);
                 } else if (((coluna == 5) && (linha == 0)) ||
                         ((coluna == 5) && (linha == 2))) {
-                    this.movePeao(this.peao, this.circle, 4);
+                    this.movePeao(this.peao, 4);
                 } else if (((coluna == 2) && (linha == 2)) ||
                         (((coluna == 1) && (linha == 3)))){
-                    this.movePeao(this.peao, this.circle, 1);
+                    this.movePeao(this.peao, 1);
                 } else if ((coluna == 3) && (linha == 3)) {
-                    this.movePeao(this.peao, this.circle, 2);
+                    this.movePeao(this.peao, 2);
                 }
                 break;
         }
@@ -411,7 +411,7 @@ public class TelaJogoController implements Initializable {
         }
     }
     
-    public void movePeao(Peao peao, Circle circle, int quantidade) {
+    public void movePeao(Peao peao, int quantidade) {
         peao.aumentaQuantidade(quantidade);
         this.atualizaMes();
         int casa = peao.getQuantidade();
@@ -437,8 +437,8 @@ public class TelaJogoController implements Initializable {
             peao.setQuantidade(0);
             this.mes++;
         }
-        this.paneCenter.getChildren().remove(circle);
-        this.paneCenter.add(circle, peao.getColuna(), peao.getLinha());
+        this.paneCenter.getChildren().remove(peao.getCirculo());
+        this.paneCenter.add(peao.getCirculo(), peao.getColuna(), peao.getLinha());
     }
     
     public void movePeao(int quantidade) {

@@ -1,5 +1,7 @@
 package br.uefs.ecomp.jm_c.model;
 
+import javafx.scene.shape.Circle;
+
 
 /**
  *
@@ -8,11 +10,13 @@ package br.uefs.ecomp.jm_c.model;
 public class Peao {
     
     private int id;
+    private Circle circulo;
     private int quantidade;
     private int linha;
     private int coluna;
 
     public Peao() {
+        this.circulo = new Circle();
         this.quantidade = 0;
         this.linha = 0;
         this.coluna = 0;
@@ -24,6 +28,14 @@ public class Peao {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public Circle getCirculo() {
+        return circulo;
+    }
+
+    public void setCirculo(Circle circulo) {
+        this.circulo = circulo;
     }
 
     public int getQuantidade() {
