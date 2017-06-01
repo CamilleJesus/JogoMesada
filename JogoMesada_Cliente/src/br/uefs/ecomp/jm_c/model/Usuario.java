@@ -15,7 +15,7 @@ public class Usuario {
     
     private InetAddress ip;
     private Integer porta;
-    private static int ordem;
+    private int ordem;
     private String nome;
     private String cor;
     
@@ -43,12 +43,12 @@ public class Usuario {
         this.porta = porta;
     }
 
-    public static int getOrdem() {
-        return Usuario.ordem;
+    public int getOrdem() {
+        return this.ordem;
     }
 
-    public static void setOrdem(int ordem) {
-        Usuario.ordem = ordem;
+    public void setOrdem(int ordem) {
+        this.ordem = ordem;
     }
     
 }
