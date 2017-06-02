@@ -1,57 +1,54 @@
 package br.uefs.ecomp.jm_s.view;
 
-import br.uefs.ecomp.jm_s.model.Cliente;
+import br.uefs.ecomp.jm_s.model.Jogador;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.io.PrintStream;
 import java.io.Serializable;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.List;
-import java.util.Scanner;
 
 
 
 /**
  * Classe que armazena informacoes do banco e as manipula.
  *
- * @author felipe
+ * @author felipe e Camille
  *
  */
 public class Servidor implements Serializable {
 
     private HashMap<String, String> clientes;//<nome, senha>
     //<numero da sala, Cliente>
-    private transient HashMap<Integer, ArrayList<Cliente>> salas;
-    //sala<Cliente>
-    private transient ArrayList<Cliente> sala;
+    private transient HashMap<Integer, ArrayList<Jogador>> salas;
+    //sala aberta para novos jogadores
+    private transient ArrayList<Jogador> sala;
+    //numero da sala que esta aberta a novos jogadores
     private transient int numSala;
-    private transient HashMap<Integer, Boolean> tempo;
+    //<numero da sala, tempo de espera acabou? jogo iniciado?>
+    private transient HashMap<Integer, Boolean> tempoInicioJogo;
     private transient ServerSocket serverSocket;
+    //cores escolhidas pelos usuarios da nova sala (sala não iniciada)
     private transient LinkedList<String> cores;
-    private transient HashMap<Integer, String> salaTempo;
+    // <numero da sala, por quanto tempo o jogo vai ser jogado>
+    private transient HashMap<Integer, String> salaTempoDeJogo;
 
     /**
      * Inicializa variaveis
      */
     public Servidor() {
         clientes = new HashMap<String, String>();
-        salas = new HashMap<Integer, ArrayList<Cliente>>();
-        sala = new ArrayList<Cliente>();
-        tempo = new HashMap<Integer, Boolean>();
+        salas = new HashMap<Integer, ArrayList<Jogador>>();
+        sala = new ArrayList<Jogador>();
+        tempoInicioJogo = new HashMap<Integer, Boolean>();
         cores = new LinkedList<String>();
-        salaTempo = new HashMap<Integer, String>();
+        salaTempoDeJogo = new HashMap<Integer, String>();
         numSala = 0;
     }
 
@@ -66,7 +63,7 @@ public class Servidor implements Serializable {
             // aceita um cliente
             Socket cliente = serverSocket.accept();
 
-            // cria tratador de cliente numa nova thread
+            // cria uma classe para tratar cada novo cliente em uma nova thread
             TrataCliente tc = new TrataCliente(cliente.getInputStream(), cliente.getOutputStream(), this);
             new Thread(tc).start();
         }
@@ -94,24 +91,41 @@ public class Servidor implements Serializable {
         return clientes.get(nome);
 
     }
-    
+    /**
+     * Cria nova sala quando tempo de espera termina
+     * 
+     * @param sala 
+     */
     public void tempoAcabou(int sala){
+        //Se sala ainda esta aberta
         if (numSala == sala){
+            //guarda a sala
             salas.put(numSala, this.sala);
+            //abri nova sala
             this.sala = new ArrayList();
+    
             numSala += 1;
+            //nova sala, novas cores
+            cores = new LinkedList<String>();
         }
-        tempo.put(sala, true);
-        boolean atual = tempo.get(sala);
-        atual = true;
-        cores = new LinkedList<String>();
+        // terminado tempo então sala iniciada
+        tempoInicioJogo.put(sala, true);
+        
         
     }
-    
+    /**
+     * retorna se o tempo de espera acabou
+     * @param sala
+     * @return se tempo de espera acabou
+     */
     public boolean salaPronta(int sala){
-        return tempo.get(sala);
+        return tempoInicioJogo.get(sala);
     }
-    
+    /**
+     * retorna a sala dado o numero dela
+     * @param sala
+     * @return sala
+     */
     public ArrayList getSala(int sala){
         return salas.get(sala);
     }
@@ -127,42 +141,64 @@ public class Servidor implements Serializable {
     }
 
     /**
-     * Adiciona cliente a uma sala
-     *
-     * @param identificador
-     * @param cliente
+     * Adiciona cliente a uma sala de espera.
+     * 
+     * @param nome
+     * @param ip
+     * @param porta do servidor udp
+     * @param cor do pino
+     * @param tempoDeJogo
+     * @return numero da sala
+     * @throws UnknownHostException 
      */
-    public int addSala(String nome, String ip, String porta, String cor, String temp) throws UnknownHostException {
+    public int addSala(String nome, String ip, String porta, String cor, String tempoDeJogo) throws UnknownHostException {
+        //se nao tem ninguem na sala
         if (sala.size() == 0){
-            tempo.put(numSala, false);
+            //inicializa o tempo com false dizendo que nao terminou e a sala nao sera iniciada ainda
+            tempoInicioJogo.put(numSala, false);
         }
+        //cor ja escolhida
         if (cores.contains(cor)){
+            // retorna -1 para representar que isso nao pode
             return -1;
         }
+        
         cores.add(cor);
-        sala.add(new Cliente(nome, InetAddress.getByName(ip), Integer.parseInt(porta), this.sala.size(), cor));
-        String t = salaTempo.get(numSala);
+        sala.add(new Jogador(nome, InetAddress.getByName(ip), Integer.parseInt(porta), this.sala.size(), cor));
+        // pega tempo de jogo da sala aberta
+        String t = salaTempoDeJogo.get(numSala);
+        // se tem algum tempo
         if (t != null){
-            int time = Integer.parseInt(t);
-            int time2 = Integer.parseInt(temp);
-            if (time2 < time){
-                System.out.println(temp);
-                salaTempo.put(numSala, temp);
+            
+            int tempoAtual = Integer.parseInt(t);
+            int tempo = Integer.parseInt(tempoDeJogo);
+            //se tempo dado pelo novo jogador da sala for menor que o dado pelos outros 
+            //jogadores da sala entao o tempo da sala sera o escolhido pelo novo jogador
+            if (tempo < tempoAtual){
+                
+                salaTempoDeJogo.put(numSala, tempoDeJogo);
             } 
+        // se nao tem nenhum tempo adicionado 
         }else{
-            salaTempo.put(numSala, temp);
+            salaTempoDeJogo.put(numSala, tempoDeJogo);
         }
         
-        
+        // se sala ta cheia
         if (sala.size() == 6) {
+            // guarda sala
             salas.put(numSala, sala);
+            //cria nova sala aberta
             sala = new ArrayList();
             numSala += 1;
+            // nova sala, nenhuma cor escolhida
             cores = new LinkedList<String>();
+            // retorna sala do ultimo jogador
             return numSala - 1;
             
         }
+        // se sala tem dois jogadores
         if (sala.size() == 2) {
+            // inicia cronometro para tempo de espera antes do jogo inicializar
             Cronometro cronometro = new Cronometro(this, numSala);
             new Thread(cronometro).start();
         }

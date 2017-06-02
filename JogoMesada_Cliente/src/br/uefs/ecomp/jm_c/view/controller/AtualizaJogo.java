@@ -33,8 +33,10 @@ public class AtualizaJogo implements Runnable {
         
         while (true) {
             final String sorteio;
+            final String ordem;
             
             try {
+                ordem = conexao.receber();
                 sorteio = conexao.receber();
                 System.out.println("recebe");
 
@@ -42,7 +44,7 @@ public class AtualizaJogo implements Runnable {
                     @Override
                     public void run() {
                         System.out.println("entrou run2 AtualizaJogo");
-                        jogo.movePeao2(Integer.parseInt(sorteio));
+                        jogo.movePeao(Integer.parseInt(ordem), Integer.parseInt(sorteio));
                     }
                 });
             } catch (IOException ex) {

@@ -1,28 +1,29 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.uefs.ecomp.jm_s.view;
 
-import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import br.uefs.ecomp.jm_s.view.Servidor;
 
 /**
- *
- * @author felipe
+ * Classe que cronometro o tempo para iniciar o jogo em uma sala
+ * @author felipe e Camille
  */
 public class Cronometro implements Runnable {
-
+    
     private Servidor servidor;
     private int sala;
-
+    /**
+     * Inicializa variaveis.
+     * @param servidor
+     * @param sala - numero da sala que esta sendo cronometrado.
+     */
     public Cronometro(Servidor servidor, int sala) {
         this.servidor = servidor;
+        this.sala = sala;
     }
-
+    /**
+     * Espera vinte segundos e informa ao servidor que o tempo de espera da sala
+     * acabou.
+     */
     @Override
     public void run() {
 
