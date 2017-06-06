@@ -8,9 +8,7 @@ package br.uefs.ecomp.jm_c.view.controller;
 import br.uefs.ecomp.jm_c.connection.Conexao;
 import br.uefs.ecomp.jm_c.connection.ConexaoCliente;
 import br.uefs.ecomp.jm_c.view.TelaConfiguracao;
-import br.uefs.ecomp.jm_c.view.TelaLogin;
 import br.uefs.ecomp.jm_c.view.TelaEspera;
-import br.uefs.ecomp.jm_c.view.TelaJogo;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.URL;
@@ -20,7 +18,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
@@ -28,23 +25,33 @@ import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 
 /**
- *
+ * Classe que controla as funcoes da telaConfiguracao. Pega as informacoes sobre
+ * cor do pino do jogador e por quanto tempo ele quer que o jogo aconteca.
  * @author felipe
  */
 public class TelaConfiguracaoController implements Initializable {
 
     @FXML
-    private TextField txTempo;
+    private TextField txTempo;//por quanto tempo a partida ocorre
     @FXML
-    private ToggleGroup cores;
+    private ToggleGroup cores;//opcoes de cores de pinos
     @FXML
     private Button btEnviar;
-   
+   /**
+    * Inicializa a classe
+    * @param url
+    * @param rb 
+    */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
     }
-
+    /**
+     * Pega a cor do pino do jogador e o tempo que ele quer que o jogo aconteca
+     * e entra em uma sala.
+     * @param action
+     * @throws Exception 
+     */
     @FXML
     public void entrarSala(ActionEvent action) throws Exception {
         ConexaoCliente conexao = ConexaoCliente.getInstancia();
@@ -55,13 +62,12 @@ public class TelaConfiguracaoController implements Initializable {
         
         
         int sala = entrarSala(conexao.getNome(), cor, tempo);
-        System.out.println("AAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" + sala);
+        // se nao aconteceu nenhum erro
         if (sala != -1) {
-            System.out.println("AAaaa");
-            System.out.println(cor);
+           // entra na sala
             EntraSala tc = new EntraSala(sala);
             new Thread(tc).start();
-            
+            // fecha tela
             new TelaEspera().start(new Stage());
             TelaConfiguracao.getStage().close();
         
@@ -71,29 +77,40 @@ public class TelaConfiguracaoController implements Initializable {
         
 
     }
-    
+    /**
+     * Adiciona o jogador em uma sala para esperar o jogo comecar.
+     * @param nome
+     * @param cor
+     * @param tempo
+     * @return
+     * @throws UnknownHostException
+     * @throws IOException 
+     */
     private int entrarSala(String nome, String cor, String tempo) throws UnknownHostException, IOException {
         Conexao cliente = Conexao.getInstancia();
         if (cliente.conectar()) {
+            // solicita entrar em uma sala
             cliente.enviar("sala");
             cliente.enviar(nome);
             cliente.enviar(InetAddress.getByName("localhost").getHostAddress());
             cliente.enviar("" + ConexaoCliente.getPorta());
-            cliente.enviar(cor);
-            cliente.enviar(tempo);
-
+            cliente.enviar(cor);// cor do pino
+            cliente.enviar(tempo);//por quanto tempo ele quer que o jogo oconteca
+            // recebe em qual sala esta
             int sala = Integer.parseInt(cliente.receber());
+            // servidor responde se tudo ocorreu corretamente
             String resposta = cliente.receber();
             cliente.disconectar();
-
+            // se tudo deu certo 
             if (resposta.equals("1")) {
                 return sala;
-            } else {
+            } else {// se algo deu errado
 
                 JOptionPane.showMessageDialog(null, "Cor já escolhida",
                         "Erro", JOptionPane.ERROR_MESSAGE);
             }
         }
+        // se algo deu errado
         return -1;
     }
 

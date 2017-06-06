@@ -34,7 +34,7 @@ public class TelaConfiguracao extends Application{
 				load(getClass().getResource("TelaConfiguracao.fxml"));
 		Scene scene = new Scene(parent);
 		stage.setScene(scene);
-		stage.setTitle("Sala");
+		stage.setTitle("Configuração");
 		stage.show();
 		
 		

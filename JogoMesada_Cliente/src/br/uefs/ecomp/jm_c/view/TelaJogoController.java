@@ -6,7 +6,7 @@ import br.uefs.ecomp.jm_c.model.CartaCorreio;
 import br.uefs.ecomp.jm_c.connection.ConexaoCliente;
 import br.uefs.ecomp.jm_c.connection.TrataJogador;
 import br.uefs.ecomp.jm_c.model.Peao;
-import br.uefs.ecomp.jm_c.model.Usuario;
+import br.uefs.ecomp.jm_c.model.Adversario;
 import br.uefs.ecomp.jm_c.view.controller.AtualizaJogo;
 
 import java.io.IOException;
@@ -958,7 +958,7 @@ public class TelaJogoController implements Initializable {
     
     public void atualizaJogadores() {
         comboJogadores.getItems().clear();            
-        ArrayList<Usuario> usuarios = conexaoCliente.getSaidas();
+        ArrayList<Adversario> usuarios = conexaoCliente.getSaidas();
         
         for (int i = 0; i < usuarios.size(); i++) {
             comboJogadores.getItems().add(usuarios.get(i).getNome());   //Integrar classe usuário com jogador e mudar porta para nome
@@ -978,7 +978,7 @@ public class TelaJogoController implements Initializable {
     }
     
     public void atualizaPeao() {
-        ArrayList<Usuario> jogadores = conexaoCliente.getSaidas();
+        ArrayList<Adversario> jogadores = conexaoCliente.getSaidas();
         
         for (int i = 0; i <= jogadores.size(); i++) {
             String cor;
