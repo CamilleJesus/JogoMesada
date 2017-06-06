@@ -99,6 +99,10 @@ public class ConexaoCliente {
     public void setSaidas(ArrayList<Usuario> saidas) {
         this.saidas = saidas;
     }
+    
+    public int getNumeroJogadores() {
+        return (saidas.size());
+    }
 
     /**
      * Conecta com o servidor.
@@ -129,6 +133,15 @@ public class ConexaoCliente {
     public static void setNome(String nome){
         ConexaoCliente.nome = nome;
     }
+    
+    public ArrayList getNomeJogadores() {
+        ArrayList nomes =  new ArrayList();
+                
+        for (int i = 0; i < saidas.size(); i++) {
+            nomes.add(saidas.get(i).getNome());
+        }
+        return nomes;
+    }
 
     /**
      * Envia uma String para o servidor.
@@ -145,6 +158,22 @@ public class ConexaoCliente {
             //envia pacote
             ds.send(pkg);
 
+        }
+        ds.close ();
+    }
+    
+    public void enviarJogador(String nome, String s) throws SocketException, IOException {
+        DatagramSocket ds = new DatagramSocket();
+        //envia mensagem para as portas dos outros usuarios
+        byte[] msg = s.getBytes();
+        
+        for (Usuario jogador : saidas) {
+            
+            if (nome.equals(jogador.getNome())) {
+                DatagramPacket pkg = new DatagramPacket(msg, msg.length, jogador.getIp(), jogador.getPorta());
+                //envia pacote
+                ds.send(pkg);
+            }
         }
         ds.close ();
     }

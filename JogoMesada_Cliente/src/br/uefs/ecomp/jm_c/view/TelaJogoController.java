@@ -4,6 +4,7 @@ import br.uefs.ecomp.jm_c.controller.Facade;
 import br.uefs.ecomp.jm_c.model.CartaCompras;
 import br.uefs.ecomp.jm_c.model.CartaCorreio;
 import br.uefs.ecomp.jm_c.connection.ConexaoCliente;
+import br.uefs.ecomp.jm_c.connection.TrataJogador;
 import br.uefs.ecomp.jm_c.model.Peao;
 import br.uefs.ecomp.jm_c.model.Usuario;
 import br.uefs.ecomp.jm_c.view.controller.AtualizaJogo;
@@ -13,6 +14,7 @@ import java.io.IOException;
 import java.net.URL;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
@@ -213,7 +215,7 @@ public class TelaJogoController implements Initializable {
     Peao peao3 = new Peao();
     Peao peao4 = new Peao();
     Peao peao5 = new Peao();
-    
+    TrataJogador trataJogador = new TrataJogador();
     private int mes = 1;
     private ConexaoCliente conexaoCliente = ConexaoCliente.getInstancia();
     
@@ -244,21 +246,11 @@ public class TelaJogoController implements Initializable {
         this.fieldDado.setText(sorteio.toString());
         int ordem = conexaoCliente.getOrdem();
         this.movePeao(ordem, sorteio);
+        this.trataJogador.enviaString("movePeao");
+        this.trataJogador.enviaInteiro(ordem);
+        this.trataJogador.enviaInteiro(sorteio);
         Peao peao = this.getPeaoAtual();
         this.acaoCasa(peao.getColuna(), peao.getLinha());
-        this.envia(ordem);
-        this.envia(sorteio);
-    }
-    
-    public void envia(Integer sorteio) {
-        String envia = sorteio.toString();
-        
-        try {
-            this.conexaoCliente.enviar(envia);
-            System.out.println("Enviou");
-        } catch (IOException ex) {
-            System.out.println("Não enviou");
-        }
     }
     
     public void clicaComboCorreio(ActionEvent event) {
@@ -323,6 +315,7 @@ public class TelaJogoController implements Initializable {
         int coluna = peao.getColuna();
         int linha = peao.getLinha();
         String tipo = this.comboCorreio.getValue();
+        String s = null;
         
         if (tipo != null) {
             
@@ -336,47 +329,52 @@ public class TelaJogoController implements Initializable {
                     ((coluna == 3) && (linha == 3))) {
 
                 if (tipo.equals("Pague a um Vizinho Agora")) {
-                    this.pagueVizinhoAgora();
+                    s = this.pagueVizinhoAgora();
                 } else if (tipo.equals("Dinheiro Extra")) {
-                    this.dinheiroExtra();
+                    s = this.dinheiroExtra();
                 } else if (tipo.equals("Vá para Frente Agora")) {
                     this.vaFrenteAgora();
                 }
-                this.realizaAcao(tipo);
+                this.realizaAcao(s, tipo);
             } else if ((coluna == 3) && (linha == 4)) {
 
                 if ((tipo.equals("Contas")) || (tipo.equals("Cobrança Monstro"))) {
-                    this.realizaAcao(tipo);
+                    this.realizaAcao(s, tipo);
                 }
             }
         }        
     }
     
-    public void realizaAcao(String tipo) {
-        this.facade.acaoCartaCorreio(true, this.facade.buscaCartaCorreio(tipo));
+    public void realizaAcao(String jogador, String tipo) {
+        this.facade.acaoCartaCorreio(this.conexaoCliente.getNome(), jogador, this.facade.buscaCartaCorreio(tipo));
         this.atualizaSaldo();
         this.atualizaDivida();
         this.atualizaSorteGrande();
         this.atualizaCartasCorreio();
     }
     
-    public void pagueVizinhoAgora() {
+    public String pagueVizinhoAgora() {
         //Substituir por lista de nicknames dos jogadores:
-        ChoiceDialog<String> dialogo = new ChoiceDialog<>(null, "Camille Jesus", "Felipe Damasceno");
+        Collection<String> jogadores = this.conexaoCliente.getNomeJogadores();
+        ChoiceDialog<String> dialogo = new ChoiceDialog<>(null, jogadores);
         dialogo.setTitle("Carta Pague um Vizinho Agora");
         dialogo.setHeaderText(null);
         dialogo.setContentText("Escolha o jogador:");
         String jogador = dialogo.showAndWait().get();
         System.out.println(jogador);
+        return jogador;
     }
     
-    public void dinheiroExtra() {
+    public String dinheiroExtra() {
         //Substituir por lista de nicknames dos jogadores:
-        ChoiceDialog<String> dialogo = new ChoiceDialog<>(null, "Camille Jesus", "Felipe Damasceno");
+        Collection<String> jogadores = this.conexaoCliente.getNomeJogadores();
+        ChoiceDialog<String> dialogo = new ChoiceDialog<>(null, jogadores);
         dialogo.setTitle("Carta Dinheiro Extra");
         dialogo.setHeaderText(null);
         dialogo.setContentText("Escolha o jogador:");
         String jogador = dialogo.showAndWait().get();
+        System.out.println(jogador);
+        return jogador;
     }
     
     public void vaFrenteAgora() {
@@ -663,69 +661,58 @@ public class TelaJogoController implements Initializable {
     public void acaoCasa(int coluna, int linha) {
         
         if ((coluna == 1) && (linha == 0)) {
-            this.pegaCartasCorreio(1);
-            this.atualizaCartasCorreio();
-            this.informaCartaCorreio(1);
+            this.casaCorreio(1);
         } else if ((coluna == 2) && (linha == 0)) {
             this.facade.acaoCasaPremio();
             this.atualizaSaldo();
         } else if ((coluna == 3) && (linha == 0)) {
-            this.pegaCartasCorreio(3);
-            this.atualizaCartasCorreio();
-            this.informaCartaCorreio(3);
+            this.casaCorreio(3);
         } else if ((coluna == 4) && (linha == 0)) {
-            this.informaCartaCompras();
-            this.atualizaCartasCompras();
+            this.casaCompras();
         } else if ((coluna == 5) && (linha == 0)) {
-            this.pegaCartasCorreio(2);
-            this.atualizaCartasCorreio();
-            this.informaCartaCorreio(2);
+            this.casaCorreio(2);
         } else if ((coluna == 6) && (linha == 0)) {
             int numeroEscolhido = this.informaBolaoEsportes();
             int numeroDado = this.rolaDado();
             this.informaNumeroDado(numeroDado);
-            this.facade.acaoCasaBolaoEsportes(true, 6, numeroEscolhido, numeroDado);   //Substituir 6 pelo número de jogadores na partida
+            this.facade.acaoCasaBolaoEsportes(true, this.conexaoCliente.getNumeroJogadores(), numeroEscolhido, numeroDado);
             this.atualizaSaldo();
         } else if ((coluna == 0) && (linha ==1)) {
-            this.facade.acaoCasaPraiaDomingo(100);   //Valor arbitrário, não consta nas regras
+            this.facade.acaoCasaPraiaDomingo(100.0);   //Valor arbitrário, não consta nas regras
             this.atualizaSaldo();
             this.atualizaDivida();
             this.atualizaSorteGrande();
+            this.informaSorteGrande("Praia no Domingo", 100.0);
         } else if ((coluna == 1) && (linha == 1)) {
-            int numeroDado = this.rolaDado();   //Implementar rolar dado
+            int numeroDado = this.rolaDado();
             this.informaNumeroDado(numeroDado);
             this.facade.acaoCasaConcursoBandaRock(numeroDado);
             this.atualizaSaldo();
         } else if ((coluna == 2) && (linha == 1)) {
             this.informaCasaAchouComprador();
         } else if ((coluna == 3) && (linha == 1)) {
-            this.facade.acaoCasaFelizAniversario(true, 6);   //Substituir 6 pelo número de jogadores na partida
+            this.facade.acaoCasaFelizAniversario(this.conexaoCliente.getNumeroJogadores(), this.conexaoCliente.getNome());
             this.atualizaSaldo();
         } else if ((coluna == 4) && (linha == 1)) {
-            this.pegaCartasCorreio(1);
-            this.atualizaCartasCorreio();
-            this.informaCartaCorreio(1);
+            this.casaCorreio(1);
         } else if ((coluna == 5) && (linha == 1)) {
-            this.informaCartaCompras();
-            this.atualizaCartasCompras();
+            this.casaCompras();
         } else if ((coluna == 6) && (linha == 1)) {
             int numeroEscolhido = this.informaBolaoEsportes();
             int numeroDado = this.rolaDado();
             this.informaNumeroDado(numeroDado);
-            this.facade.acaoCasaBolaoEsportes(true, 6, numeroEscolhido, numeroDado);   //Substituir 6 pelo número de jogadores na partida
+            this.facade.acaoCasaBolaoEsportes(true, this.conexaoCliente.getNumeroJogadores(), numeroEscolhido, numeroDado);
             this.atualizaSaldo();
         } else if ((coluna == 0) && (linha == 2)) {
-            this.facade.acaoCasaAjudeFlorestaAmazonica(200);   //Valor arbitrário, não consta nas regras
+            this.facade.acaoCasaAjudeFlorestaAmazonica(200.0);   //Valor arbitrário, não consta nas regras
             this.atualizaSaldo();
             this.atualizaDivida();
             this.atualizaSorteGrande();
+            this.informaSorteGrande("Ajude a Floresta Amazônica", 200.0);
         } else if ((coluna == 1) && (linha == 2)) {
-            this.informaCartaCompras();
-            this.atualizaCartasCompras();
+            this.casaCompras();
         } else if ((coluna == 2) && (linha == 2)) {
-            this.pegaCartasCorreio(3);
-            this.atualizaCartasCorreio();
-            this.informaCartaCorreio(3);
+            this.casaCorreio(3);
         } else if ((coluna == 3) && (linha == 2)) {
             this.informaCasaAchouComprador();
         } else if ((coluna == 4) && (linha == 2)) {
@@ -733,59 +720,66 @@ public class TelaJogoController implements Initializable {
             this.atualizaSaldo();
             this.atualizaDivida();
             this.atualizaSorteGrande();
+            this.informaSorteGrande("Lanchonete", 300.0);
         } else if ((coluna == 5) && (linha == 2)) {
-            this.pegaCartasCorreio(1);
-            this.atualizaCartasCorreio();
-            this.informaCartaCorreio(1);
+            this.casaCorreio(1);
         } else if ((coluna == 6) && (linha == 2)) {
             int numeroEscolhido = this.informaBolaoEsportes();
             int numeroDado = this.rolaDado();
             this.informaNumeroDado(numeroDado);
-            this.facade.acaoCasaBolaoEsportes(true, 6, numeroEscolhido, numeroDado);   //Substituir 6 pelo número de jogadores na partida
+            this.facade.acaoCasaBolaoEsportes(true, this.conexaoCliente.getNumeroJogadores(), numeroEscolhido, numeroDado);
             this.atualizaSaldo();
         } else if ((coluna == 0) && (linha == 3)) {
-            int numeroDado = ((int) ((Math.random() * 6) + 1));   //Implementar rolar dado
-            System.out.println(numeroDado);
+            int numeroDado = this.rolaDado();
+            JOptionPane.showMessageDialog(null, "Número sorteado: " + numeroDado + ".\nPague R$ " + (numeroDado * 100) + " ao Banco!", "Rolagem de Dado", JOptionPane.INFORMATION_MESSAGE);
             this.facade.acaoCasaNegocioOcasiao(numeroDado);
-            this.facade.pegaCartaCompras(this.facade.escolheCartaCompras());            
-            this.informaCartaCompras();
+            this.facade.pegaCartaCompras(this.facade.escolheCartaCompras());
+            this.atualizaCartasCompras();
+            this.informaCasaNegocioOcasiao();
         } else if ((coluna == 1) && (linha == 3)) {
-            this.pegaCartasCorreio(1);
-            this.atualizaCartasCorreio();
-            this.informaCartaCorreio(1);
+            this.casaCorreio(1);
         } else if ((coluna == 2) && (linha == 3)) {
             this.informaCasaAchouComprador();
         } else if ((coluna == 3) && (linha == 3)) {
-            this.pegaCartasCorreio(2);
-            this.atualizaCartasCorreio();
-            this.informaCartaCorreio(2);
+            this.casaCorreio(2);
         } else if ((coluna == 4) && (linha == 3)) {
-            this.informaCartaCompras();
-            this.atualizaCartasCompras();
+            this.casaCompras();
         } else if ((coluna == 5) && (linha == 3)) {
             this.informaCasaAchouComprador();
         } else if ((coluna == 6) && (linha == 3)) {
             int numeroEscolhido = this.informaBolaoEsportes();
             int numeroDado = this.rolaDado();
             this.informaNumeroDado(numeroDado);
-            this.facade.acaoCasaBolaoEsportes(true, 6, numeroEscolhido, numeroDado);   //Substituir 6 pelo número de jogadores na partida
+            this.facade.acaoCasaBolaoEsportes(true, this.conexaoCliente.getNumeroJogadores(), numeroEscolhido, numeroDado);   //Substituir 6 pelo número de jogadores na partida
             this.atualizaSaldo();
         } else if ((coluna == 0) && (linha == 4)) {
             this.facade.acaoCasaComprasShopping(400);   //Valor arbitrário, não consta nas regras
             this.atualizaSaldo();
             this.atualizaDivida();
             this.atualizaSorteGrande();
+            this.informaSorteGrande("Compras no Shopping", 400.0);
         } else if ((coluna == 1) && (linha == 4)) {
             this.informaCasaAchouComprador();
         } else if ((coluna == 2) && (linha == 4)) {
-            this.facade.acaoCasaMaratonaBeneficente(true, 0);   //Faz nada
+            this.facade.acaoCasaMaratonaBeneficente();
         } else if ((coluna == 3) && (linha == 4)) {
             
         }        
     }
     
+    public void casaCorreio(int quantidade) {
+        this.pegaCartasCorreio(quantidade);
+        this.atualizaCartasCorreio();
+        this.informaCartaCorreio(quantidade);
+    }
+    
+    public void casaCompras() {
+        this.informaCartaCompras();
+        this.atualizaCartasCompras();
+    }
+    
     public int rolaDado() {
-        return ((int) ((Math.random() * 6) + 1));
+        return this.facade.rolaDado();
     }
     
     public void pegaCartasCorreio(int quantidade) {
@@ -868,6 +862,35 @@ public class TelaJogoController implements Initializable {
         alert.setHeaderText(null);
         alert.setContentText("Você achou 1 comprador!");
         alert.show();
+    }
+    
+    public void informaCasaNegocioOcasiao() {
+        Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("Casa Negócio de Ocasião");
+            alert.setHeaderText(null);
+            alert.setContentText("Você recebeu 1 carta Compras e Entretenimento!");
+            alert.show();
+    }
+    
+    public void informaCasaMaratonaBeneficente(int numeroDado) {
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("Casa Maratona Beneficente");
+        alert.setHeaderText(null);
+        alert.setContentText("Você colocou R$ " + (numeroDado * 100) + " no Sorte Grande!");
+        alert.show();
+    }
+    
+    public void informaSorteGrande(String nomeCasa, double valor) {
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("Casa " + nomeCasa);
+        alert.setHeaderText(null);
+        alert.setContentText("Você colocou R$ " + valor + " no Sorte Grande!");
+        alert.show();
+    }
+    
+    public void enviaSorteGrande(double valor) {
+        this.trataJogador.enviaString("aumentaSorteGrande");
+        this.trataJogador.enviaDecimal(valor);
     }
     
     /**

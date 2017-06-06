@@ -1,5 +1,6 @@
 package br.uefs.ecomp.jm_c.controller;
 
+import br.uefs.ecomp.jm_c.connection.TrataJogador;
 import br.uefs.ecomp.jm_c.model.CartaCorreio;
 import br.uefs.ecomp.jm_c.model.Jogador;
 import br.uefs.ecomp.jm_c.model.SorteGrande;
@@ -16,6 +17,7 @@ public class ControllerCasa {
     
     private Jogador jogador;
     private SorteGrande sorteGrande;
+    private TrataJogador trataJogador = new TrataJogador();
 
     /** Construtor da classe, recupera as instâncias de jogador e sorte grande.
      */
@@ -40,7 +42,7 @@ public class ControllerCasa {
     public void acaoCasaBolaoEsportes(boolean participa, int numeroJogadores, int numeroEscolhido, int numeroDado) {
         
         if (participa == true) {
-            double valor = 1000 + (100 * (numeroJogadores - 1));   //Número de jogadores que escolheram participar, exceto ele
+            double valor = 1000 + (100 * numeroJogadores);   //Número de jogadores que escolheram participar, exceto ele
             
             if (numeroEscolhido == numeroDado) {
                 this.jogador.getConta().aumentaSaldo(valor);
@@ -62,6 +64,9 @@ public class ControllerCasa {
         }
         this.jogador.getConta().diminuiSaldo(valor);
         this.sorteGrande.aumentaSorteGrande(valor);
+        
+        this.trataJogador.enviaString("aumentaSorteGrande");
+        this.trataJogador.enviaDecimal(valor);
     }
     
     /** Método de ação para casa Ajude a Floresta Amazônica.
@@ -76,6 +81,9 @@ public class ControllerCasa {
         }
         this.jogador.getConta().diminuiSaldo(valor);
         this.sorteGrande.aumentaSorteGrande(valor);
+        
+        this.trataJogador.enviaString("aumentaSorteGrande");
+        this.trataJogador.enviaDecimal(valor);
     }
     
     /** Método de ação para casa Lanchonete.
@@ -90,6 +98,9 @@ public class ControllerCasa {
         }
         this.jogador.getConta().diminuiSaldo(valor);
         this.sorteGrande.aumentaSorteGrande(valor);
+        
+        this.trataJogador.enviaString("aumentaSorteGrande");
+        this.trataJogador.enviaDecimal(valor);
     }
     
     /** Método de ação para casa Compras no Shopping.
@@ -104,6 +115,9 @@ public class ControllerCasa {
         }
         this.jogador.getConta().diminuiSaldo(valor);
         this.sorteGrande.aumentaSorteGrande(valor);
+        
+        this.trataJogador.enviaString("aumentaSorteGrande");
+        this.trataJogador.enviaDecimal(valor);
     }
     
     /** Método de ação para casa Concurso de Banda de Rock.
@@ -119,43 +133,28 @@ public class ControllerCasa {
     
     /** Método de ação para casa Feliz Aniversário.
      * 
-     * @param estaCasa
      * @param numeroJogadores
+     * @param jogadorAtual
      */
-    public void acaoCasaFelizAniversario(boolean estaCasa, int numeroJogadores) {
-        
-        if (estaCasa == true) {
-            this.jogador.getConta().aumentaSaldo(numeroJogadores * 100.0);            
-        } else if (estaCasa == false) {
-            this.jogador.getConta().diminuiSaldo(100);
-        }
+    public void acaoCasaFelizAniversario(int numeroJogadores, String jogadorAtual) {        
+        this.jogador.getConta().aumentaSaldo(numeroJogadores * 100.0);
+            
+        this.trataJogador.enviaString("felizAniversario");
+        this.trataJogador.enviaString(jogadorAtual);
     }
     
     /** Método de ação para casa Negócio de Ocasião.
      * 
      * @param numeroDado
-     * @return numeroDado
      */
-    public int acaoCasaNegocioOcasiao(int numeroDado) {
+    public void acaoCasaNegocioOcasiao(int numeroDado) {
         this.jogador.getConta().diminuiSaldo(numeroDado * 100.0);
-        return numeroDado;
     }
     
     /** Método de ação para casa Maratona Beneficente.
-     * 
-     * @param estaCasa
-     * @param numeroDado
-     * @return numeroDado
      */
-    public int acaoCasaMaratonaBeneficente(boolean estaCasa, int numeroDado) {
-                        
-        if (estaCasa == false) {
-            double valor = (numeroDado * 100.0);
-            this.jogador.getConta().diminuiSaldo(valor);
-            this.sorteGrande.aumentaSorteGrande(valor);
-            return numeroDado;
-        }
-        return 0;
+    public void acaoCasaMaratonaBeneficente() {                                
+        this.trataJogador.enviaString("maratonaBeneficente");
     }
     
     /** Método de ação para casa Dia da Mesada.

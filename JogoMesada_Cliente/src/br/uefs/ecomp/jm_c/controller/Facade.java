@@ -105,8 +105,8 @@ public class Facade {
         return (this.controllerJogador.buscaCartaCompras(tipo));
     }
     
-    public void acaoCartaCorreio(boolean tirouCarta, CartaCorreio carta) {
-        this.controllerCarta.acaoCartaCorreio(tirouCarta, carta);
+    public void acaoCartaCorreio(String jogadorAtual, String jogadorEscolhido, CartaCorreio carta) {
+        this.controllerCarta.acaoCartaCorreio(jogadorAtual, jogadorEscolhido, carta);
     }
     
     public void acaoCartaCompras(CartaCompras carta) {
@@ -141,16 +141,16 @@ public class Facade {
         this.controllerCasa.acaoCasaConcursoBandaRock(numeroDado);
     }
     
-    public void acaoCasaFelizAniversario(boolean tirou, int jogadores) {
-        this.controllerCasa.acaoCasaFelizAniversario(tirou, jogadores);
+    public void acaoCasaFelizAniversario(int numeroJogadores, String jogadorAtual) {
+        this.controllerCasa.acaoCasaFelizAniversario(numeroJogadores, jogadorAtual);
     }
     
-    public int acaoCasaNegocioOcasiao(int numeroDado) {
-        return (this.controllerCasa.acaoCasaNegocioOcasiao(numeroDado));
+    public void acaoCasaNegocioOcasiao(int numeroDado) {
+        this.controllerCasa.acaoCasaNegocioOcasiao(numeroDado);
     }
     
-    public int acaoCasaMaratonaBeneficente(boolean estaCasa, int numeroDado) {
-        return (this.controllerCasa.acaoCasaMaratonaBeneficente(estaCasa, numeroDado));
+    public void acaoCasaMaratonaBeneficente() {
+        this.controllerCasa.acaoCasaMaratonaBeneficente();
     }
     
     public void acaoCasaDiaMesada() {
