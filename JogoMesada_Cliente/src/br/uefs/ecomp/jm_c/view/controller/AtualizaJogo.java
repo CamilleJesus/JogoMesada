@@ -10,14 +10,10 @@ import br.uefs.ecomp.jm_c.connection.ConexaoCliente;
 import br.uefs.ecomp.jm_c.connection.TrataJogador;
 import br.uefs.ecomp.jm_c.model.Jogador;
 import br.uefs.ecomp.jm_c.model.SorteGrande;
-import br.uefs.ecomp.jm_c.view.TelaEspera;
-import br.uefs.ecomp.jm_c.view.TelaJogo;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
-import javafx.scene.control.Alert;
-import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 
 /**
@@ -90,7 +86,7 @@ public class AtualizaJogo implements Runnable {
                         break;
                     case "felizAniversario":
                         nome = conexao.receber();
-                        JOptionPane.showMessageDialog(null, nome + " está na casa Feliz Aniverário!\nDê R$ 100 para ele.", "Casa Feliz Aniversário", JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.showMessageDialog(null, nome + " está na casa Feliz Aniverário!\nDê R$ 100 para ele(a).", "Casa Feliz Aniversário", JOptionPane.INFORMATION_MESSAGE);
                         jogador.getConta().diminuiSaldo(100.0);
                         System.out.println("avisa");
                         

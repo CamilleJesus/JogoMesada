@@ -5,26 +5,28 @@ import br.uefs.ecomp.jm_c.connection.ConexaoCliente;
 import br.uefs.ecomp.jm_c.view.TelaCadastro;
 import br.uefs.ecomp.jm_c.view.TelaConfiguracao;
 import br.uefs.ecomp.jm_c.view.TelaLogin;
-import br.uefs.ecomp.jm_c.view.TelaEspera;
-import br.uefs.ecomp.jm_c.view.TelaJogo;
-import java.io.IOException;
-import java.net.InetAddress;
+
 import java.net.URL;
-import java.net.UnknownHostException;
+
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.application.Platform;
 
 import javax.swing.JOptionPane;
 
 import javafx.event.ActionEvent;
+
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+
 import javafx.scene.control.Button;
+import javafx.scene.control.Hyperlink;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TitledPane;
+import javafx.scene.layout.AnchorPane;
+
 import javafx.stage.Stage;
+
 
 /**
  * Classe que possui as funcoes dos botoes da interface de login.
@@ -35,13 +37,28 @@ import javafx.stage.Stage;
 public class TelaLoginController implements Initializable {
 
     @FXML
-    private TextField txNome;
+    private TitledPane telaLogin;
+
     @FXML
-    private PasswordField txSenha;
+    private Button entrar;
+
     @FXML
-    private Button btCadastrar;
+    private PasswordField fieldSenha;
+
     @FXML
-    private Button btEntrar;
+    private AnchorPane pane;
+
+    @FXML
+    private TextField fieldNickname;
+
+    @FXML
+    private Hyperlink cadastrese;
+
+    @FXML
+    private Label labelNickname;
+
+    @FXML
+    private Label labelSenha;
 
     /**
      * Funcao que executa ao inicializar.
@@ -60,10 +77,10 @@ public class TelaLoginController implements Initializable {
      *
      */
     @FXML
-    private void logar(ActionEvent event) {
+    private void clicaEntrar(ActionEvent event) {
         try {
-            String nome = txNome.getText();
-            String senha = txSenha.getText();
+            String nome = fieldNickname.getText();
+            String senha = fieldSenha.getText();
 
             if (verificarCampos(nome, senha)) {
 
@@ -86,15 +103,13 @@ public class TelaLoginController implements Initializable {
 
                        
                     } else {
-                        JOptionPane.showMessageDialog(null, "Usuário ou senha errada",
-                                "Erro", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Informações inválidas!", "Erro!", JOptionPane.ERROR_MESSAGE);
                     }
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Algum erro ocorreu",
-                    "Erro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Problema no Servidor!", "Erro!", JOptionPane.ERROR_MESSAGE);
         }
 
     }
@@ -111,8 +126,7 @@ public class TelaLoginController implements Initializable {
 
             return true;//tudo correto
         } else {
-            JOptionPane.showMessageDialog(null, "Um ou mais campos em branco",
-                    "Erro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Campo(s) vazio(s)!", "Alerta!", JOptionPane.WARNING_MESSAGE);
         }
         return false;//tem erro
     }
@@ -125,13 +139,12 @@ public class TelaLoginController implements Initializable {
      *
      */
     @FXML
-    private void cadastrar(ActionEvent event) {
+    private void clicaCadastrar(ActionEvent event) {
         try {
             new TelaCadastro().start(new Stage());
             TelaLogin.getStage().close();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro ao mudar de tela",
-                    "Erro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Problema ao mudar de tela!", "Erro!", JOptionPane.ERROR_MESSAGE);
         }
 
     }

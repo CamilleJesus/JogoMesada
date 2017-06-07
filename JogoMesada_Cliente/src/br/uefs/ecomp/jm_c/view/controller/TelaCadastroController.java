@@ -12,10 +12,12 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Hyperlink;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
-import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.TitledPane;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 /**
@@ -25,20 +27,29 @@ import javafx.stage.Stage;
  *
  */
 public class TelaCadastroController implements Initializable {
-	@FXML
-	private TextField txNome;
-	@FXML
-	private PasswordField txConfirmarSenha;
-	@FXML
-	private PasswordField txSenha;
-	@FXML
-	private RadioButton rbFisica;
-	@FXML
-	private RadioButton rbJuridica;
-	@FXML
-	private Button btcadastrar;
-	@FXML
-	private Button btvoltar;
+    @FXML
+    private TitledPane telaCadastro;
+
+    @FXML
+    private Hyperlink voltar;
+
+    @FXML
+    private PasswordField fieldSenha;
+
+    @FXML
+    private AnchorPane pane;
+
+    @FXML
+    private TextField fieldNickname;
+
+    @FXML
+    private Button cadastrar;
+
+    @FXML
+    private Label labelNickname;
+
+    @FXML
+    private Label labelSenha;
 	/**
 	 * Funcao que executa ao inicializar.
 	 */
@@ -52,7 +63,7 @@ public class TelaCadastroController implements Initializable {
 	 * @throws Exception
 	 */
 	@FXML
-	private void voltar(ActionEvent event) throws Exception{
+	private void clicaVoltar(ActionEvent event) throws Exception{
 		new TelaLogin().start(new Stage());
 		TelaCadastro.getStage().close();
 	}
@@ -66,12 +77,11 @@ public class TelaCadastroController implements Initializable {
 	 * @throws Exception
 	 */
 	@FXML
-	private void cadastrar(ActionEvent event) throws Exception{
-		String nome = txNome.getText();
-		String senha = txSenha.getText();
-		String confirmarSenha = txConfirmarSenha.getText();
+	private void clicaCadastrar(ActionEvent event) throws Exception{
+		String nome = fieldNickname.getText();
+		String senha = fieldSenha.getText();
 		
-		if(verificarCampos(nome, senha, confirmarSenha)){
+		if(verificarCampos(nome, senha)){
 					
 			Conexao cliente = Conexao.getInstancia();
 			if (cliente.conectar()){
@@ -87,8 +97,7 @@ public class TelaCadastroController implements Initializable {
 					new TelaLogin().start(new Stage());
 					TelaCadastro.getStage().close();
 				}else{
-                                    JOptionPane.showMessageDialog(null, "Nome já existe, tente outro"
-						, "Erro", JOptionPane.ERROR_MESSAGE);
+                                    JOptionPane.showMessageDialog(null, "Nickname já cadastrado!", "Erro!", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 					
@@ -105,19 +114,11 @@ public class TelaCadastroController implements Initializable {
          * @param confirmarSenha
 	 * @return boolean, true para campos corretos e false campos incorretos.
 	 */
-	private boolean verificarCampos(String nome, String senha, String confirmarSenha){
-		if(!nome.equals("") && !senha.equals("") && !confirmarSenha.equals("")){
-                    if (senha.equals(confirmarSenha)){
-                        return true;// correto
-                    }else{
-                        JOptionPane.showMessageDialog(null, "A confirmação da senha está diferente da senha.", 
-					"Erro", JOptionPane.ERROR_MESSAGE);
-                    }
-                    
-			
+	private boolean verificarCampos(String nome, String senha){
+		if(!nome.equals("") && !senha.equals("")){
+                    return true;		
 		}else{
-			JOptionPane.showMessageDialog(null, "Um ou mais campos em branco.", 
-					"Erro", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Campo(s) vazio(s)!", "Alerta!", JOptionPane.WARNING_MESSAGE);
 		}
 		return false;//tem erro
 	}

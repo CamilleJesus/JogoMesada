@@ -1,14 +1,13 @@
 package br.uefs.ecomp.jm_c.view;
 
-import java.io.IOException;
-
 import javafx.application.Application;
-import javafx.event.EventHandler;
+
 import javafx.fxml.FXMLLoader;
+
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 
 
 /**
@@ -33,7 +32,7 @@ public class TelaEspera extends Application{
 				load(getClass().getResource("TelaEspera.fxml"));
 		Scene scene = new Scene(parent);
 		stage.setScene(scene);
-		stage.setTitle("Sala de espera");
+		stage.setTitle("Jogo da Mesada");
 		stage.show();
 		
 		

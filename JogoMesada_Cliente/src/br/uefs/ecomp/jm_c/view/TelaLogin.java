@@ -9,12 +9,10 @@ import java.net.UnknownHostException;
 import javax.swing.JOptionPane;
 
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 
 
 /**
@@ -37,7 +35,7 @@ public class TelaLogin extends Application {
         Parent parent = FXMLLoader.load(getClass().getResource("TelaLogin.fxml"));
         Scene scene = new Scene(parent);
         stage.setScene(scene);
-        stage.setTitle("Tela de Login");
+        stage.setTitle("Jogo da Mesada");
         stage.show();
 
     }

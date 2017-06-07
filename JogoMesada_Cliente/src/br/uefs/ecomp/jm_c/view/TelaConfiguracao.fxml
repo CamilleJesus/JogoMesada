@@ -1,28 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.paint.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="271.0" prefWidth="263.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="br.uefs.ecomp.jm_c.view.controller.TelaConfiguracaoController">
-  <children>
-    <Button fx:id="btEnviar" layoutX="96.0" layoutY="230.0" mnemonicParsing="false" onAction="#entrarSala" text="Enviar" />
-    <Label layoutX="73.0" layoutY="16.0" text="Tempo de Jogo:" />
-    <Label layoutX="58.0" layoutY="90.0" text="Escolha cor do pino:" />
-    <RadioButton layoutX="58.0" layoutY="119.0" mnemonicParsing="false" selected="true" text="Verde">
-      <toggleGroup>
-        <ToggleGroup fx:id="cores" />
-      </toggleGroup>
-    </RadioButton>
-    <TextField fx:id="txTempo" layoutX="54.0" layoutY="42.0" prefWidth="102.0" />
-    <Label layoutX="157.0" layoutY="45.0" text="Meses" />
-    <RadioButton layoutX="140.0" layoutY="158.0" mnemonicParsing="false" text="Azul" toggleGroup="$cores" />
-    <RadioButton layoutX="58.0" layoutY="158.0" mnemonicParsing="false" text="Rosa" toggleGroup="$cores" />
-    <RadioButton layoutX="58.0" layoutY="196.0" mnemonicParsing="false" text="Amarelo" toggleGroup="$cores" />
-    <RadioButton layoutX="140.0" layoutY="119.0" mnemonicParsing="false" text="Roxo" toggleGroup="$cores" />
-    <RadioButton layoutX="140.0" layoutY="196.0" mnemonicParsing="false" text="Vermelho" toggleGroup="$cores" />
-    <Separator layoutX="14.0" layoutY="75.0" prefWidth="235.0" />
-  </children>
-</AnchorPane>
+
+<TitledPane fx:id="titledConfiguracao" animated="false" collapsible="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="300.0" text="Configuração de Partida" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.uefs.ecomp.jm_c.view.controller.TelaConfiguracaoController">
+   <content>
+      <AnchorPane id="AnchorPane" fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="300.0">
+         <children>
+            <Button fx:id="iniciar" focusTraversable="false" layoutX="127.0" layoutY="249.0" mnemonicParsing="false" onAction="#clicaIniciar" text="Iniciar" />
+            <Label layoutX="140.0" layoutY="111.0" text="Cor:" />
+            <RadioButton fx:id="radioVerde" focusTraversable="false" layoutX="176.0" layoutY="170.0" mnemonicParsing="false" text="Verde">
+               <toggleGroup>
+                  <ToggleGroup fx:id="cores" />
+               </toggleGroup>
+            </RadioButton>
+            <TextField fx:id="fieldDuracao" alignment="CENTER" focusTraversable="false" layoutX="124.0" layoutY="51.0" prefHeight="25.0" prefWidth="53.0" />
+            <Label fx:id="labelMes" layoutX="182.0" layoutY="55.0" text="Mes(es)" />
+            <RadioButton focusTraversable="false" layoutX="52.0" layoutY="170.0" mnemonicParsing="false" text="Azul" toggleGroup="$cores" />
+            <RadioButton focusTraversable="false" layoutX="52.0" layoutY="198.0" mnemonicParsing="false" text="Rosa" toggleGroup="$cores" />
+            <RadioButton focusTraversable="false" layoutX="52.0" layoutY="142.0" mnemonicParsing="false" text="Amarelo" toggleGroup="$cores" />
+            <RadioButton focusTraversable="false" layoutX="176.0" layoutY="142.0" mnemonicParsing="false" text="Roxo" toggleGroup="$cores" />
+            <RadioButton focusTraversable="false" layoutX="176.0" layoutY="198.0" mnemonicParsing="false" text="Vermelho" toggleGroup="$cores" />
+            <Separator layoutX="33.0" layoutY="93.0" prefWidth="235.0" />
+            <Label fx:id="labelDuracao" layoutX="68.0" layoutY="55.0" text="Duração:" />
+         </children>
+      </AnchorPane>
+   </content>
+</TitledPane>
