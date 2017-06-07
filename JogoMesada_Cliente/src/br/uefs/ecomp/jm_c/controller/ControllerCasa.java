@@ -161,28 +161,7 @@ public class ControllerCasa {
      */
     public void acaoCasaDiaMesada() {
         this.jogador.getConta().aumentaSaldo(3500.0);
-        double divida = this.jogador.getConta().getDivida();
-        double juros = divida * 0.1;
-        double novaDivida = divida + juros;
-        this.jogador.getConta().setDivida(novaDivida);
-        
-        if (this.jogador.getConta().getSaldo() > novaDivida) {
-            this.jogador.pagaDivida(novaDivida);
-        } else {
-            this.jogador.pagaDivida(juros);
-        }
-        
-        ArrayList<CartaCorreio> cartasContas = this.jogador.getCartasCorreio();
-        double valor = 0.0;
-        
-        for (int i = 0; i < cartasContas.size(); i++) {
-            CartaCorreio carta = cartasContas.get(i);
-            if (carta.getTipo().equals("Contas")) {
-                valor += carta.getValor();                
-            }
-        }
-        
-        this.jogador.getConta().diminuiSaldo(valor);
+        this.jogador.getConta().setDivida(this.jogador.getConta().getDivida() * 1.1);        
     }
        
 }

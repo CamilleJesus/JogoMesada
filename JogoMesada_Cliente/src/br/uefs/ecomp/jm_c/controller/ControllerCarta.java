@@ -104,7 +104,7 @@ public class ControllerCarta {
      */
     private void criaCartasCobrancaMosntro() {
         CartaCorreio cartaDoacoes1 = new CartaCorreio("Cobrança Monstro", "Notebook Novo", 2000.0);
-        CartaCorreio cartaDoacoes2 = new CartaCorreio("Cobrança Monstro", "Reforma da Casa", 3000.0);
+        CartaCorreio cartaDoacoes2 = new CartaCorreio("Cobrança Monstro", "Reforma da Casa", 4000.0);
 
         cartasCorreio.add(cartaDoacoes1);
         cartasCorreio.add(cartaDoacoes2);
