@@ -30,6 +30,7 @@ public class ConexaoCliente {
     private static String nome;
     private int ordem; //ordem do jogador no jogo
     private String cor; // cor do pino
+    private int tempoPartida;
     
     /**
      * Inicializa a classe.
@@ -39,6 +40,14 @@ public class ConexaoCliente {
      */
     public static void singleton() throws UnknownHostException, IOException {
         Conexao = new ConexaoCliente();
+    }
+    /**
+     * muda tempo da partida
+     * @param tempo 
+     */
+    public void setTempoPartida(int tempo){
+        this.tempoPartida = tempo;
+       
     }
     
     /**

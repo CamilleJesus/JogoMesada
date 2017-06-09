@@ -75,6 +75,8 @@ public class TrataCliente implements Runnable {
         // recebe numero da sala
         String sala = entrada.nextLine();
         ArrayList<Jogador> jogadores = servidor.getSala(Integer.parseInt(sala));
+        String tempoDePartida = servidor.getTempoJogo(Integer.parseInt(sala));
+        saida.println(tempoDePartida);
         // envia quantidade de jogadores na sala
         saida.println(jogadores.size());
         // envia informacao dos jogadores
