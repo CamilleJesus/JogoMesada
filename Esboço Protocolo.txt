@@ -1,10 +1,10 @@
 mandar todos:
-	requisição[movePeao] + id do meu peão + quanto o peão moveu (clicar dado/va para frente agora)
-	requisicao[aumentaSorteGrande] + valor (DOAÇÕES/praia/floresta/lanchonete/shopping)
+	requisição[movePeao] + id do meu peão + quanto o peão moveu (clicar dado/va para frente agora)   V
+	requisicao[aumentaSorteGrande] + valor (DOAÇÕES/praia/floresta/lanchonete/shopping)   V
 	requisição[concursoBandaRock] + meu id + valor dado
-	requisição[felizAniversario] + valor recebido
+	requisição[felizAniversario] + valor recebido   V
 mandar específico (jogador escolhido):
-	requisição[pagueVizinhoAgora] + meu id + valor pago
-	requisição[dinheiroExtra] + meu id + valor recebido
+	requisição[pagueVizinhoAgora] + meu id + valor pago   V
+	requisição[dinheiroExtra] + meu id + valor recebido   V
 mandar grupo:
 	requisicao[bolaoEsportes] + meu id + numero escolhido + numeroSorteado

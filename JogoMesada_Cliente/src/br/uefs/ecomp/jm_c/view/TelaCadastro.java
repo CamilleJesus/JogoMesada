@@ -31,7 +31,7 @@ public class TelaCadastro extends Application{
 				load(getClass().getResource("TelaCadastro.fxml"));
 		Scene scene = new Scene(parent);
 		stage.setScene(scene);
-		stage.setTitle("Tela de Cadastro");
+		stage.setTitle("Jogo da Mesada");
 		stage.show();
 		
 		

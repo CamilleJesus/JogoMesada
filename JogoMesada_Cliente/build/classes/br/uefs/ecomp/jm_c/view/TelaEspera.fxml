@@ -1,13 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="81.0" prefWidth="263.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
-  <children>
-    <Label layoutX="35.0" layoutY="33.0" text="O jogo começará em breve ..." />
-  </children>
-</AnchorPane>
+<TitledPane fx:id="titledEspera" animated="false" collapsible="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="300.0" text="Sala de Espera" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.uefs.ecomp.jm_c.view.controller.TelaEsperaController">
+  <content>
+    <AnchorPane fx:id="pane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+         <children>
+            <ProgressIndicator fx:id="progresso" focusTraversable="false" layoutX="123.0" layoutY="84.0" nodeOrientation="LEFT_TO_RIGHT">
+               <cursor>
+                  <Cursor fx:constant="WAIT" />
+               </cursor>
+               <effect>
+                  <Bloom threshold="0.25" />
+               </effect>
+            </ProgressIndicator>
+            <Text fx:id="textBemVindo" layoutX="15.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Bem-vindo(a)," />
+            <Text fx:id="textFrase" layoutX="65.0" layoutY="180.0" strokeType="OUTSIDE" strokeWidth="0.0" text="O jogo começará em instantes..." />
+            <Label fx:id="nome" layoutX="94.0" layoutY="14.0" />
+         </children></AnchorPane>
+  </content>
+</TitledPane>

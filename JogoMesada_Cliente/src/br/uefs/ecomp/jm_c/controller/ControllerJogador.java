@@ -1,5 +1,6 @@
 package br.uefs.ecomp.jm_c.controller;
 
+import br.uefs.ecomp.jm_c.connection.TrataJogador;
 import br.uefs.ecomp.jm_c.model.CartaCompras;
 import br.uefs.ecomp.jm_c.model.CartaCorreio;
 import br.uefs.ecomp.jm_c.model.Jogador;
@@ -17,6 +18,7 @@ public class ControllerJogador {
 
     private Jogador jogador;
     private SorteGrande sorteGrande;
+    private TrataJogador trataJogador = new TrataJogador();
     
     /** Construtor da classe, recupera as instâncias de jogador e sorte grande.
      */
@@ -48,6 +50,8 @@ public class ControllerJogador {
     public void ganhaSorteGrande() {
         this.jogador.getConta().aumentaSaldo(sorteGrande.getValor());
         this.sorteGrande.setValor(0);
+        
+        this.trataJogador.enviaString("zeraSorteGrande");
     }
     
     /** Método que adiciona uma carta Correio à mão do jogador.

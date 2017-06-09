@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.uefs.ecomp.jm_c.view.controller;
 
 import br.uefs.ecomp.jm_c.connection.Conexao;
@@ -18,11 +13,16 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.Separator;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TitledPane;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
+
 
 /**
  * Classe que controla as funcoes da telaConfiguracao. Pega as informacoes sobre
@@ -31,12 +31,48 @@ import javax.swing.JOptionPane;
  */
 public class TelaConfiguracaoController implements Initializable {
 
+     @FXML
+    private Button iniciar;
+
     @FXML
-    private TextField txTempo;//por quanto tempo a partida ocorre
+    private RadioButton radioRoxo;
+
     @FXML
-    private ToggleGroup cores;//opcoes de cores de pinos
+    private Label labelDuracao;
+
     @FXML
-    private Button btEnviar;
+    private RadioButton radioAzul;
+
+    @FXML
+    private TitledPane titledConfiguracao;
+
+    @FXML
+    private RadioButton radioRosa;
+
+    @FXML
+    private RadioButton radioVermelho;
+
+    @FXML
+    private TextField fieldDuracao;
+
+    @FXML
+    private Label labelMes;
+
+    @FXML
+    private RadioButton radioVerde;
+
+    @FXML
+    private ToggleGroup cores;
+
+    @FXML
+    private RadioButton radioAmarelo;
+
+    @FXML
+    private AnchorPane pane;
+
+    @FXML
+    private Separator separador;
+
    /**
     * Inicializa a classe
     * @param url
@@ -53,11 +89,11 @@ public class TelaConfiguracaoController implements Initializable {
      * @throws Exception 
      */
     @FXML
-    public void entrarSala(ActionEvent action) throws Exception {
+    public void clicaIniciar(ActionEvent action) throws Exception {
         ConexaoCliente conexao = ConexaoCliente.getInstancia();
         RadioButton rb = (RadioButton) cores.getSelectedToggle();
         String cor = rb.getText();
-        String tempo = txTempo.getText();
+        String tempo = fieldDuracao.getText();
         
         
         
@@ -106,8 +142,8 @@ public class TelaConfiguracaoController implements Initializable {
                 return sala;
             } else {// se algo deu errado
 
-                JOptionPane.showMessageDialog(null, "Cor já escolhida",
-                        "Erro", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Cor já escolhida!",
+                        "Erro!", JOptionPane.ERROR_MESSAGE);
             }
         }
         // se algo deu errado

@@ -1,5 +1,6 @@
 package br.uefs.ecomp.jm_c.controller;
 
+import br.uefs.ecomp.jm_c.connection.TrataJogador;
 import br.uefs.ecomp.jm_c.model.CartaCompras;
 import br.uefs.ecomp.jm_c.model.CartaCorreio;
 import br.uefs.ecomp.jm_c.model.Jogador;
@@ -23,6 +24,7 @@ public class ControllerCarta {
     
     private Jogador jogador;
     private SorteGrande sorteGrande;
+    private TrataJogador trataJogador;
     
     /** Construtor da classe, inicializa as listas de cartas (Correio e Compras)
      * e recupera as instâncias de jogador e sorte grande.
@@ -32,6 +34,7 @@ public class ControllerCarta {
         this.cartasCompras = new ArrayList<>();
         this.jogador = Jogador.getInstance();
         this.sorteGrande = SorteGrande.getInstance();
+        trataJogador = new TrataJogador();
         this.criaBaralho();
     }
     
@@ -101,7 +104,7 @@ public class ControllerCarta {
      */
     private void criaCartasCobrancaMosntro() {
         CartaCorreio cartaDoacoes1 = new CartaCorreio("Cobrança Monstro", "Notebook Novo", 2000.0);
-        CartaCorreio cartaDoacoes2 = new CartaCorreio("Cobrança Monstro", "Reforma da Casa", 3000.0);
+        CartaCorreio cartaDoacoes2 = new CartaCorreio("Cobrança Monstro", "Reforma da Casa", 4000.0);
 
         cartasCorreio.add(cartaDoacoes1);
         cartasCorreio.add(cartaDoacoes2);
@@ -131,20 +134,20 @@ public class ControllerCarta {
      * @param tirouCarta
      * @param carta
      */
-    public void acaoCartaCorreio(boolean tirouCarta, CartaCorreio carta) {
+    public void acaoCartaCorreio(String jogadorAtual, String jogadorEscolhido, CartaCorreio carta) {
         
         switch (carta.getTipo()) {
             case "Contas":
                 this.acaoCartaContas(carta);
                 break;
             case "Pague a um Vizinho Agora":
-                this.acaoCartaPagueVizinhoAgora(tirouCarta, carta);
+                this.acaoCartaPagueVizinhoAgora(jogadorAtual, jogadorEscolhido, carta);
                 break;
             case "Dinheiro Extra":
-                this.acaoCartaDinheiroExtra(tirouCarta, carta);
+                this.acaoCartaDinheiroExtra(jogadorAtual, jogadorEscolhido, carta);
                 break;
             case "Doações":
-                this.acaoCartaDoacoes(tirouCarta, carta);
+                this.acaoCartaDoacoes(carta);
                 break;
             case "Cobrança Monstro":
                 this.acaoCartaCobrancaMonstro(carta);
@@ -179,22 +182,19 @@ public class ControllerCarta {
      * @param tirouCarta
      * @param carta
      */
-    public void acaoCartaPagueVizinhoAgora(boolean tirouCarta, CartaCorreio carta) {
+    public void acaoCartaPagueVizinhoAgora(String jogadorAtual, String jogadorEscolhido, CartaCorreio carta) {
         double valor = carta.getValor();
+        double saldo = this.jogador.getConta().getSaldo();
+
+        if (saldo < valor) {
+            this.jogador.pegaEmprestimo(valor - saldo);
+        }
+        this.jogador.getConta().diminuiSaldo(valor);
+        this.jogador.removeCartaCorreio(carta);
         
-        if (tirouCarta == true) {
-            double saldo = this.jogador.getConta().getSaldo();
-            
-            if (saldo < valor) {
-                this.jogador.pegaEmprestimo(valor - saldo);
-            }
-            this.jogador.getConta().diminuiSaldo(valor);
-            this.jogador.removeCartaCorreio(carta);
-            //jogadorEscolhido.getConta().aumentaSaldo(valor);
-        } else if (tirouCarta == false) {
-            //jogadorEscolhido.getConta().diminuiSaldo(valor);
-            this.jogador.getConta().aumentaSaldo(valor);
-        }                
+        this.trataJogador.enviaJogadorString(jogadorEscolhido, "pagueVizinho");
+        this.trataJogador.enviaJogadorString(jogadorEscolhido, jogadorAtual);
+        this.trataJogador.enviaJogadorDecimal(jogadorEscolhido, valor);
     }
     
     /** Método específico de ação para carta Correio do tipo Dinheiro Extra.
@@ -202,22 +202,15 @@ public class ControllerCarta {
      * @param tirouCarta
      * @param carta
      */
-    public void acaoCartaDinheiroExtra(boolean tirouCarta, CartaCorreio carta) {
+    public void acaoCartaDinheiroExtra(String jogadorAtual, String jogadorEscolhido, CartaCorreio carta) {
         double valor = carta.getValor();
         
-        if (tirouCarta == true) {
-            //jogadorEscolhido.getConta().diminuiSaldo(valor);
-            this.jogador.getConta().aumentaSaldo(valor);
-            this.jogador.removeCartaCorreio(carta);
-        } else if (tirouCarta == false) {
-            double saldo = this.jogador.getConta().getSaldo();
-            
-            if (saldo < valor) {
-                this.jogador.pegaEmprestimo(valor - saldo);
-            }
-            this.jogador.getConta().diminuiSaldo(valor);
-            //jogadorEscolhido.getConta().aumentaSaldo(valor);
-        }                
+        this.trataJogador.enviaJogadorString(jogadorEscolhido, "dinheiroExtra");
+        this.trataJogador.enviaJogadorString(jogadorEscolhido, jogadorAtual);
+        this.trataJogador.enviaJogadorDecimal(jogadorEscolhido, valor);
+        
+        this.jogador.getConta().aumentaSaldo(valor);
+        this.jogador.removeCartaCorreio(carta);                
     }
     
     /** Método específico de ação para carta Correio do tipo Doações.
@@ -225,20 +218,20 @@ public class ControllerCarta {
      * @param tirouCarta
      * @param carta
      */
-    public void acaoCartaDoacoes(boolean tirouCarta, CartaCorreio carta) {
+    public void acaoCartaDoacoes(CartaCorreio carta) {
         double valor = carta.getValor();
         
-        if (tirouCarta == true) {
-            
-            if (this.jogador.getConta().getSaldo() >= valor) {
-                this.jogador.getConta().diminuiSaldo(valor);
-                this.jogador.removeCartaCorreio(carta);
-            } else {
-                this.saldoInsuficiente();
-                return;
-            }
+        if (this.jogador.getConta().getSaldo() >= valor) {
+            this.jogador.getConta().diminuiSaldo(valor);
+            this.jogador.removeCartaCorreio(carta);
+        } else {
+            this.saldoInsuficiente();
+            return;
         }
         this.sorteGrande.aumentaSorteGrande(valor);
+        
+        this.trataJogador.enviaString("aumentaSorteGrande");
+        this.trataJogador.enviaDecimal(valor);
     }
     
     /** Método específico de ação para carta Correio do tipo Cobrança Monstro.

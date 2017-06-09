@@ -1,15 +1,11 @@
 package br.uefs.ecomp.jm_c.view;
 
-import java.io.IOException;
-
 import javafx.application.Application;
 import static javafx.application.Application.launch;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 
 
 /**
@@ -34,7 +30,7 @@ public class TelaConfiguracao extends Application{
 				load(getClass().getResource("TelaConfiguracao.fxml"));
 		Scene scene = new Scene(parent);
 		stage.setScene(scene);
-		stage.setTitle("Configuração");
+		stage.setTitle("Jogo da Mesada");
 		stage.show();
 		
 		
