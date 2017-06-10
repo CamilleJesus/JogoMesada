@@ -69,6 +69,16 @@ public class Servidor implements Serializable {
         }
 
     }
+    /**
+     * Retorna o tempo de duracao da partida 
+     * do numero da sala passado por parametro.
+     * 
+     * @param sala
+     * @return 
+     */
+    public String getTempoJogo(int sala){
+        return this.salaTempoDeJogo.get(sala);
+    }
     
 
     /**

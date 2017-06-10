@@ -1,18 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="1">
-        <file>
-            <url>src/br/uefs/ecomp/jm_c/view/TelaJogoController.java</url>
-            <bookmark id="1">
-                <name/>
-                <line>763</line>
-                <key/>
-            </bookmark>
-        </file>
-    </editor-bookmarks>
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/C:/Users/Rafaela/Documents/git/JogoMesada/JogoMesada_Cliente/src/br/uefs/ecomp/jm_c/view/controller/TelaConfiguracaoController.java</file>
+=======
+            <file>file:/home/felipe/Dropbox/mi_redes/JogoMesada/JogoMesada_Cliente/src/br/uefs/ecomp/jm_c/view/controller/EntraSala.java</file>
+            <file>file:/home/felipe/Dropbox/mi_redes/JogoMesada/JogoMesada_Cliente/src/br/uefs/ecomp/jm_c/connection/ConexaoCliente.java</file>
+>>>>>>> 4f170d5e17c73b03ba384b0655453c134fc514fa
         </group>
     </open-files>
 </project-private>

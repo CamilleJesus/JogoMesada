@@ -67,11 +67,14 @@ public class EntraSala implements Runnable{
         // espera o tempo de espera da sala acabar
         esperarTempo(sala);
         Conexao cliente = Conexao.getInstancia();
-        ConexaoCliente conexao = ConexaoCliente.getInstancia();
+        ConexaoCliente conexao = ConexaoCliente.getInstancia(); 
         if (cliente.conectar()) {
             // conecta os jogadores em p2p
             cliente.enviar("conectar");
             cliente.enviar("" + sala);
+            //tempo de duracao da partida
+            int tempoPartida = Integer.parseInt(cliente.receber());
+            conexao.setTempoPartida(tempoPartida);
             int tam = Integer.parseInt(cliente.receber());
             // pega as informacao dois jogadores
             for (int i = 0; i < tam; i++) {
@@ -92,11 +95,12 @@ public class EntraSala implements Runnable{
                     conexao.setCor(cor);
                 }
             }
+            
+            
         }
-        /**
-         * Por tela do jogo aqui
-         */
+        
         cliente.disconectar();
+        
 
     }
     /**
