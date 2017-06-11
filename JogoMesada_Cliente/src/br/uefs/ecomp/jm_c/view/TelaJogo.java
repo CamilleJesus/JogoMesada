@@ -1,5 +1,6 @@
 package br.uefs.ecomp.jm_c.view;
 
+import br.uefs.ecomp.jm_c.connection.ConexaoCliente;
 import javafx.application.Application;
 
 import javafx.fxml.FXMLLoader;
@@ -16,6 +17,7 @@ import javafx.stage.Stage;
  * @author Camille Jesus
  */
 public class TelaJogo extends Application {
+    private ConexaoCliente conexaoCliente = ConexaoCliente.getInstancia();
     
     /** Método que carrega a tela e inicializa a cena (frame).
      * 
@@ -27,7 +29,7 @@ public class TelaJogo extends Application {
         //Chama o arquivo FXML correpondente:
         Parent root = FXMLLoader.load(getClass().getResource("TelaJogo.fxml"));      
         Scene scene = new Scene(root);
-        stage.setTitle("Jogo da Mesada");   //Renomeia o frame
+        stage.setTitle("Jogo da Mesada   <" + this.conexaoCliente.getNome() + ">");   //Renomeia o frame
         stage.setScene(scene);
         stage.show();
     }

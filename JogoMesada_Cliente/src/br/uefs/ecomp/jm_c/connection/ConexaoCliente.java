@@ -41,14 +41,6 @@ public class ConexaoCliente {
     public static void singleton() throws UnknownHostException, IOException {
         Conexao = new ConexaoCliente();
     }
-    /**
-     * muda tempo da partida
-     * @param tempo 
-     */
-    public void setTempoPartida(int tempo){
-        this.tempoPartida = tempo;
-       
-    }
     
     /**
      * muda ordem do jogador na partida
@@ -117,6 +109,20 @@ public class ConexaoCliente {
     public static void setPorta(int porta) {
         Conexao.porta = porta;
     }
+    
+    public int getTempoPartida () {
+        return this.tempoPartida;
+    }
+    
+    /**
+     * muda tempo da partida
+     * @param tempoPartida 
+     */
+    public void setTempoPartida(int tempoPartida){
+        this.tempoPartida = tempoPartida;
+       
+    }
+    
     /**
      * retorna os adversarios da partida
      * @return saidas

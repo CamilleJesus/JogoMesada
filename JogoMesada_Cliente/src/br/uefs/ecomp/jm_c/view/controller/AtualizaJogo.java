@@ -30,7 +30,7 @@ public class AtualizaJogo implements Runnable {
     @Override
     public void run() {
         System.out.println("entrou run AtualizaJogo");
-        ConexaoCliente conexao = ConexaoCliente.getInstancia();
+        ConexaoCliente conexaoCliente = ConexaoCliente.getInstancia();
         SorteGrande sorteGrande = SorteGrande.getInstance();
         Jogador jogador = Jogador.getInstance();
         TrataJogador trataJogador = new TrataJogador();
@@ -43,12 +43,12 @@ public class AtualizaJogo implements Runnable {
             final String nome;
             
             try {
-                requisicao = conexao.receber();
+                requisicao = conexaoCliente.receber();
                 
                 switch (requisicao) {
                     case "movePeao":
-                        ordem = conexao.receber();
-                        sorteio = conexao.receber();
+                        ordem = conexaoCliente.receber();
+                        sorteio = conexaoCliente.receber();
                         System.out.println("movePeao");
                         
                         Platform.runLater(new Runnable() {
@@ -60,7 +60,7 @@ public class AtualizaJogo implements Runnable {
                         });
                         break;
                     case "aumentaSorteGrande":
-                        valor = conexao.receber();
+                        valor = conexaoCliente.receber();
                         sorteGrande.aumentaSorteGrande(Double.parseDouble(valor));
                         System.out.println("aumentaSorteGrande");
                         
@@ -85,7 +85,7 @@ public class AtualizaJogo implements Runnable {
                         });
                         break;
                     case "felizAniversario":
-                        nome = conexao.receber();
+                        nome = conexaoCliente.receber();
                         JOptionPane.showMessageDialog(null, nome + " está na casa Feliz Aniverário!\nDê R$ 100 para ele(a).", "Casa Feliz Aniversário", JOptionPane.INFORMATION_MESSAGE);
                         jogador.getConta().diminuiSaldo(100.0);
                         System.out.println("avisa");
@@ -122,8 +122,8 @@ public class AtualizaJogo implements Runnable {
                         });
                         break;
                     case "pagueVizinho":
-                        nome = conexao.receber();
-                        valor = conexao.receber();
+                        nome = conexaoCliente.receber();
+                        valor = conexaoCliente.receber();
                         JOptionPane.showMessageDialog(null, nome + " lhe pagou R$ "+ valor + ".", "Carta Pague um Vizinho Agora", JOptionPane.INFORMATION_MESSAGE);
                         jogador.getConta().aumentaSaldo(Double.parseDouble(valor));
                         
@@ -137,8 +137,8 @@ public class AtualizaJogo implements Runnable {
                         });
                         break;
                     case "dinheiroExtra":
-                        nome = conexao.receber();
-                        valor = conexao.receber();
+                        nome = conexaoCliente.receber();
+                        valor = conexaoCliente.receber();
                         JOptionPane.showMessageDialog(null, "Pague R$ "+ valor + " a " + nome + ".", "Carta Dinheiro Extra", JOptionPane.INFORMATION_MESSAGE);
                         jogador.getConta().diminuiSaldo(Double.parseDouble(valor));
                         
@@ -150,6 +150,29 @@ public class AtualizaJogo implements Runnable {
                                 jogo.atualizaDivida();
                             }
                         });
+                        break;
+                    case "finalizarTurno":
+                        int vez = jogo.mudaVez();
+                        
+                        if (vez == conexaoCliente.getOrdem()) {
+                            Platform.runLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    System.out.println("entrou run2.6 AtualizaJogo");
+                                    
+                                    if (jogo.acabouTempoPartida() == true) {
+                                        jogo.mudaVez();
+                                        trataJogador.enviaString("finalizarTurno");
+                                        
+                                        if (jogo.acabouJogo() == true) {
+                                            return;   //Envia para Servidor que o jogo acabou
+                                        }
+                                    } else {
+                                        jogo.habilitaInterface();
+                                    }
+                                }
+                                });
+                        }
                         break;
                 }
             } catch (IOException ex) {

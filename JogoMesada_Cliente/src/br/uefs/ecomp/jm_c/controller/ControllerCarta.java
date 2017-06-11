@@ -55,9 +55,9 @@ public class ControllerCarta {
      * descrição e valor.
      */
     private void criaCartasConta() {
-        CartaCorreio cartaConta1 = new CartaCorreio("Contas", "Mensalidade do Spotify Premium", 50.0);
+        CartaCorreio cartaConta1 = new CartaCorreio("Contas", "Mensalidade do Spotify Premium", 100.0);
         CartaCorreio cartaConta2 = new CartaCorreio("Contas", "Conta do World of Warcraft", 100.0);
-        CartaCorreio cartaConta3 = new CartaCorreio("Contas", "Cordas da Guitarra", 200.0);
+        CartaCorreio cartaConta3 = new CartaCorreio("Contas", "Cordas da Guitarra", 100.0);
 
         cartasCorreio.add(cartaConta1);
         cartasCorreio.add(cartaConta2);
@@ -68,9 +68,9 @@ public class ControllerCarta {
      * Vizinho Agora", descrição e valor.
      */
     private void criaCartasPagueVizinhoAgora() {
-        CartaCorreio cartaPagueVizinhoAgora1 = new CartaCorreio("Pague a um Vizinho Agora", "Pagamento de Fiança", 1000.0);
-        CartaCorreio cartaPagueVizinhoAgora2 = new CartaCorreio("Pague a um Vizinho Agora", "Racha do Churrasco", 200.0);
-        CartaCorreio cartaPagueVizinhoAgora3 = new CartaCorreio("Pague a um Vizinho Agora", "Aluguel de Garagem", 300.0);
+        CartaCorreio cartaPagueVizinhoAgora1 = new CartaCorreio("Pague a um Vizinho Agora", "Pagamento de Fiança", 500.0);
+        CartaCorreio cartaPagueVizinhoAgora2 = new CartaCorreio("Pague a um Vizinho Agora", "Racha do Churrasco", 500.0);
+        CartaCorreio cartaPagueVizinhoAgora3 = new CartaCorreio("Pague a um Vizinho Agora", "Aluguel de Garagem", 500.0);
 
         cartasCorreio.add(cartaPagueVizinhoAgora1);
         cartasCorreio.add(cartaPagueVizinhoAgora2);
@@ -82,7 +82,7 @@ public class ControllerCarta {
      */
     private void criaCartasDinheiroExtra() {
         CartaCorreio cartaDinheiroExtra1 = new CartaCorreio("Dinheiro Extra", "Venda de Doces", 200.0);
-        CartaCorreio cartaDinheiroExtra2 = new CartaCorreio("Dinheiro Extra", "Entrega de Jornal", 50.0);
+        CartaCorreio cartaDinheiroExtra2 = new CartaCorreio("Dinheiro Extra", "Entrega de Jornal", 200.0);
 
         cartasCorreio.add(cartaDinheiroExtra1);
         cartasCorreio.add(cartaDinheiroExtra2);
@@ -93,7 +93,7 @@ public class ControllerCarta {
      */
     private void criaCartasDoacoes() {
         CartaCorreio cartaDoacoes1 = new CartaCorreio("Doações", "Sopão para Mendigos", 300.0);
-        CartaCorreio cartaDoacoes2 = new CartaCorreio("Doações", "Contribuição para Orfanato", 500.0);
+        CartaCorreio cartaDoacoes2 = new CartaCorreio("Doações", "Contribuição para Orfanato", 300.0);
 
         cartasCorreio.add(cartaDoacoes1);
         cartasCorreio.add(cartaDoacoes2);
@@ -104,7 +104,7 @@ public class ControllerCarta {
      */
     private void criaCartasCobrancaMosntro() {
         CartaCorreio cartaDoacoes1 = new CartaCorreio("Cobrança Monstro", "Notebook Novo", 2000.0);
-        CartaCorreio cartaDoacoes2 = new CartaCorreio("Cobrança Monstro", "Reforma da Casa", 4000.0);
+        CartaCorreio cartaDoacoes2 = new CartaCorreio("Cobrança Monstro", "Reforma da Casa", 2000.0);
 
         cartasCorreio.add(cartaDoacoes1);
         cartasCorreio.add(cartaDoacoes2);
