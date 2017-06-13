@@ -15,7 +15,7 @@ import javax.swing.JOptionPane;
  * responsável pela criação delas das categorias e tipos específicos e por
  * realizar a ação de cada uma.
  * 
- * @author Camille Jesus
+ * @author Camille Jesus e Felipe Damasceno
  */
 public class ControllerCarta {
  
@@ -41,7 +41,7 @@ public class ControllerCarta {
     /** Método de criação de todas as cartas do jogo.
      *     
      */
-    public void criaBaralho() {
+    public final void criaBaralho() {
         this.criaCartasDinheiroExtra();
         this.criaCartasConta();
         this.criaCartasPagueVizinhoAgora();
@@ -131,7 +131,8 @@ public class ControllerCarta {
     
     /** Método que, a partir do tipo da carta Correio, realiza sua ação específica.
      * 
-     * @param tirouCarta
+     * @param jogadorAtual
+     * @param jogadorEscolhido
      * @param carta
      */
     public void acaoCartaCorreio(String jogadorAtual, String jogadorEscolhido, CartaCorreio carta) {
@@ -179,7 +180,8 @@ public class ControllerCarta {
     
     /** Método específico de ação para carta Correio do tipo Pague a um Vizinho Agora.
      * 
-     * @param tirouCarta
+     * @param jogadorAtual
+     * @param jogadorEscolhido
      * @param carta
      */
     public void acaoCartaPagueVizinhoAgora(String jogadorAtual, String jogadorEscolhido, CartaCorreio carta) {
@@ -199,7 +201,8 @@ public class ControllerCarta {
     
     /** Método específico de ação para carta Correio do tipo Dinheiro Extra.
      * 
-     * @param tirouCarta
+     * @param jogadorAtual
+     * @param jogadorEscolhido
      * @param carta
      */
     public void acaoCartaDinheiroExtra(String jogadorAtual, String jogadorEscolhido, CartaCorreio carta) {
@@ -215,7 +218,6 @@ public class ControllerCarta {
     
     /** Método específico de ação para carta Correio do tipo Doações.
      * 
-     * @param tirouCarta
      * @param carta
      */
     public void acaoCartaDoacoes(CartaCorreio carta) {

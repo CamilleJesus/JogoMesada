@@ -1,17 +1,15 @@
 package br.uefs.ecomp.jm_c.controller;
 
 import br.uefs.ecomp.jm_c.connection.TrataJogador;
-import br.uefs.ecomp.jm_c.model.CartaCorreio;
 import br.uefs.ecomp.jm_c.model.Jogador;
 import br.uefs.ecomp.jm_c.model.SorteGrande;
-import java.util.ArrayList;
 
 
 /**
  * A classe ControllerCasa, como o nome sugere, é o controlador de casas, responsável
  * pelas ações de cada casa do tabuleiro.
  * 
- * @author Camille Jesus
+ * @author Camille Jesus e Felipe Damasceno
  */
 public class ControllerCasa {
     
