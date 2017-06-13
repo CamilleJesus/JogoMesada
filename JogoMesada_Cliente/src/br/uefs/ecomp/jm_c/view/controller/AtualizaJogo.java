@@ -11,6 +11,7 @@ import br.uefs.ecomp.jm_c.connection.ConexaoCliente;
 import br.uefs.ecomp.jm_c.connection.TrataJogador;
 import br.uefs.ecomp.jm_c.model.Jogador;
 import br.uefs.ecomp.jm_c.model.SorteGrande;
+import br.uefs.ecomp.jm_c.view.TelaJogo;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -168,10 +169,10 @@ public class AtualizaJogo implements Runnable {
                                     if (jogo.acabouTempoPartida() == true) {
                                         jogo.mudaVez();
                                         trataJogador.enviaString("finalizarTurno");
-                                        
+
                                         if (jogo.acabouJogo() == true) {
                                             System.out.println("Jogo acabou!");
-                                            return;   //Envia para Servidor que o jogo acabou
+                                            
                                         }
                                         jogo.desabilitaInterface();
                                     } else {
@@ -179,19 +180,31 @@ public class AtualizaJogo implements Runnable {
                                     }
                                 }
                             });
-                            
+
                             if (jogo.acabouJogo() == true) {
                                 System.out.println("Acabou jogo");
 
                                 Conexao cliente = Conexao.getInstancia();
-                                
+
                                 if (cliente.conecta()) {
                                     cliente.envia("vencedor");
+                                    cliente.envia(conexaoCliente.getNickname());
+                                    cliente.envia("" + jogador.getConta().getSaldo());
+
+                                    String resposta = cliente.recebe();
                                     try {
                                         cliente.desconecta();
                                     } catch (IOException ex) {
                                         Logger.getLogger(AtualizaJogo.class.getName()).log(Level.SEVERE, null, ex);
                                     }
+                                    System.out.println(resposta);
+                                    Platform.runLater(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            TelaJogo.getStage().close();
+                                            JOptionPane.showMessageDialog(null, resposta, "Classificação", JOptionPane.INFORMATION_MESSAGE);
+                                        }
+                                    });
                                 }
 
                                 try {

@@ -18,7 +18,7 @@ import javafx.stage.Stage;
  */
 public class TelaJogo extends Application {
     private ConexaoCliente conexaoCliente = ConexaoCliente.getInstancia();
-    
+    private static Stage stage;
     /** Método que carrega a tela e inicializa a cena (frame).
      * 
      * @param stage
@@ -26,12 +26,22 @@ public class TelaJogo extends Application {
      */
     @Override
     public void start(Stage stage) throws Exception {
+        TelaJogo.stage = stage;
         //Chama o arquivo FXML correpondente:
         Parent root = FXMLLoader.load(getClass().getResource("TelaJogo.fxml"));      
         Scene scene = new Scene(root);
         stage.setTitle("Jogo da Mesada   <" + this.conexaoCliente.getNickname()+ ">");   //Renomeia o frame
         stage.setScene(scene);
         stage.show();
+    }
+    
+    /**
+     * Retorna o Stage da interface.
+     *
+     * @return Stage
+     */
+    public static Stage getStage() {
+        return stage;
     }
 
     /** Método que inicia o programa.
