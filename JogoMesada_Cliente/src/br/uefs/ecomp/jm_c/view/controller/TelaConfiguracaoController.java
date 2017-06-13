@@ -97,7 +97,7 @@ public class TelaConfiguracaoController implements Initializable {
         
         
         
-        int sala = entrarSala(conexao.getNome(), cor, tempo);
+        int sala = entrarSala(conexao.getNickname(), cor, tempo);
         // se nao aconteceu nenhum erro
         if (sala != -1) {
            // entra na sala
@@ -124,19 +124,19 @@ public class TelaConfiguracaoController implements Initializable {
      */
     private int entrarSala(String nome, String cor, String tempo) throws UnknownHostException, IOException {
         Conexao cliente = Conexao.getInstancia();
-        if (cliente.conectar()) {
+        if (cliente.conecta()) {
             // solicita entrar em uma sala
-            cliente.enviar("sala");
-            cliente.enviar(nome);
-            cliente.enviar(InetAddress.getByName("localhost").getHostAddress());
-            cliente.enviar("" + ConexaoCliente.getPorta());
-            cliente.enviar(cor);// cor do pino
-            cliente.enviar(tempo);//por quanto tempo ele quer que o jogo oconteca
+            cliente.envia("sala");
+            cliente.envia(nome);
+            cliente.envia(InetAddress.getByName("localhost").getHostAddress());
+            cliente.envia("" + ConexaoCliente.getPorta());
+            cliente.envia(cor);// cor do pino
+            cliente.envia(tempo);//por quanto tempo ele quer que o jogo oconteca
             // recebe em qual sala esta
-            int sala = Integer.parseInt(cliente.receber());
+            int sala = Integer.parseInt(cliente.recebe());
             // servidor responde se tudo ocorreu corretamente
-            String resposta = cliente.receber();
-            cliente.disconectar();
+            String resposta = cliente.recebe();
+            cliente.desconecta();
             // se tudo deu certo 
             if (resposta.equals("1")) {
                 return sala;

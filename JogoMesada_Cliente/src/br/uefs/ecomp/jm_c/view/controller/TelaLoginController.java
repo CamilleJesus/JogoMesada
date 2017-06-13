@@ -85,17 +85,17 @@ public class TelaLoginController implements Initializable {
             if (verificarCampos(nome, senha)) {
 
                 Conexao cliente = Conexao.getInstancia();
-                if (cliente.conectar()) {
-                    cliente.enviar("entrar");
-                    cliente.enviar(nome);
-                    cliente.enviar(senha);
+                if (cliente.conecta()) {
+                    cliente.envia("entrar");
+                    cliente.envia(nome);
+                    cliente.envia(senha);
 
-                    String resposta = cliente.receber();
-                    cliente.disconectar();
+                    String resposta = cliente.recebe();
+                    cliente.desconecta();
 
                     if (resposta.equals("1")) {
                         ConexaoCliente conexao = ConexaoCliente.getInstancia();
-                        conexao.setNome(nome);
+                        conexao.setNickname(nome);
                         
                         new TelaConfiguracao().start(new Stage());
                         TelaLogin.getStage().close();

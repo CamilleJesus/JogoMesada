@@ -84,13 +84,13 @@ public class TelaCadastroController implements Initializable {
 		if(verificarCampos(nome, senha)){
 					
 			Conexao cliente = Conexao.getInstancia();
-			if (cliente.conectar()){
-				cliente.enviar("cadastrar");
-				cliente.enviar(nome);
-				cliente.enviar(senha);
+			if (cliente.conecta()){
+				cliente.envia("cadastrar");
+				cliente.envia(nome);
+				cliente.envia(senha);
 		
-				String resposta = cliente.receber();
-				cliente.disconectar();
+				String resposta = cliente.recebe();
+				cliente.desconecta();
 						
 				if (resposta.equals("1")){					
                                     new TelaLogin().start(new Stage());

@@ -67,7 +67,7 @@ public class TelaLogin extends Application {
         String porta = JOptionPane.showInputDialog("Digite porta do servidor");
         if (!porta.equals("")) {
             ConexaoCliente.setPorta(Integer.parseInt(porta));
-            ConexaoCliente.getInstancia().conectar();
+            ConexaoCliente.getInstancia().conecta();
             
         }
 

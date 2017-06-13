@@ -68,22 +68,22 @@ public class EntraSala implements Runnable{
         esperarTempo(sala);
         Conexao cliente = Conexao.getInstancia();
         ConexaoCliente conexao = ConexaoCliente.getInstancia(); 
-        if (cliente.conectar()) {
+        if (cliente.conecta()) {
             // conecta os jogadores em p2p
-            cliente.enviar("conectar");
-            cliente.enviar("" + sala);
+            cliente.envia("conectar");
+            cliente.envia("" + sala);
             //tempo de duracao da partida
-            int tempoPartida = Integer.parseInt(cliente.receber());
+            int tempoPartida = Integer.parseInt(cliente.recebe());
             conexao.setTempoPartida(tempoPartida);
-            int tam = Integer.parseInt(cliente.receber());
+            int tam = Integer.parseInt(cliente.recebe());
             // pega as informacao dois jogadores
             for (int i = 0; i < tam; i++) {
 
-                String ip = cliente.receber();
-                String porta = cliente.receber();
-                String ordem = cliente.receber();
-                String nome = cliente.receber();
-                String cor = cliente.receber();
+                String ip = cliente.recebe();
+                String porta = cliente.recebe();
+                String ordem = cliente.recebe();
+                String nome = cliente.recebe();
+                String cor = cliente.recebe();
                 // se o jogador nao eh dono dessa maquina
                 if (Integer.parseInt(porta) != conexao.getPorta()) {
                     // adiciona adversario na conexao p2p
@@ -99,7 +99,7 @@ public class EntraSala implements Runnable{
             
         }
         
-        cliente.disconectar();
+        cliente.desconecta();
         
 
     }
@@ -114,13 +114,13 @@ public class EntraSala implements Runnable{
         String resposta = "false";
         // enquanto tempo nao acabou
         while (resposta.equals("false")) {
-            if (cliente.conectar()) {
+            if (cliente.conecta()) {
                 // pergunta ao servidor se o tempo acabou
-                cliente.enviar("tempo");
-                cliente.enviar("" + sala);
-                resposta = cliente.receber();
+                cliente.envia("tempo");
+                cliente.envia("" + sala);
+                resposta = cliente.recebe();
                 
-                cliente.disconectar();
+                cliente.desconecta();
             }
         }
     }

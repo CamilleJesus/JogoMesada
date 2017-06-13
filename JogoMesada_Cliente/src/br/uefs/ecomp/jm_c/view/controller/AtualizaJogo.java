@@ -47,13 +47,13 @@ public class AtualizaJogo implements Runnable {
             final String nome;
 
             try {
-                requisicao = conexaoCliente.receber();
+                requisicao = conexaoCliente.recebe();
 
                 switch (requisicao) {
 
                     case "movePeao":
-                        ordem = conexaoCliente.receber();
-                        sorteio = conexaoCliente.receber();
+                        ordem = conexaoCliente.recebe();
+                        sorteio = conexaoCliente.recebe();
                         System.out.println("movePeao");
 
                         Platform.runLater(new Runnable() {
@@ -65,7 +65,7 @@ public class AtualizaJogo implements Runnable {
                         });
                         break;
                     case "aumentaSorteGrande":
-                        valor = conexaoCliente.receber();
+                        valor = conexaoCliente.recebe();
                         sorteGrande.aumentaSorteGrande(Double.parseDouble(valor));
                         System.out.println("aumentaSorteGrande");
 
@@ -90,7 +90,7 @@ public class AtualizaJogo implements Runnable {
                         });
                         break;
                     case "felizAniversario":
-                        nome = conexaoCliente.receber();
+                        nome = conexaoCliente.recebe();
                         JOptionPane.showMessageDialog(null, nome + " está na casa Feliz Aniverário!\nDê R$ 100 para ele(a).", "Casa Feliz Aniversário", JOptionPane.INFORMATION_MESSAGE);
                         jogador.getConta().diminuiSaldo(100.0);
                         System.out.println("avisa");
@@ -127,8 +127,8 @@ public class AtualizaJogo implements Runnable {
                         });
                         break;
                     case "pagueVizinho":
-                        nome = conexaoCliente.receber();
-                        valor = conexaoCliente.receber();
+                        nome = conexaoCliente.recebe();
+                        valor = conexaoCliente.recebe();
                         JOptionPane.showMessageDialog(null, nome + " lhe pagou R$ " + valor + ".", "Carta Pague um Vizinho Agora", JOptionPane.INFORMATION_MESSAGE);
                         jogador.getConta().aumentaSaldo(Double.parseDouble(valor));
 
@@ -142,8 +142,8 @@ public class AtualizaJogo implements Runnable {
                         });
                         break;
                     case "dinheiroExtra":
-                        nome = conexaoCliente.receber();
-                        valor = conexaoCliente.receber();
+                        nome = conexaoCliente.recebe();
+                        valor = conexaoCliente.recebe();
                         JOptionPane.showMessageDialog(null, "Pague R$ " + valor + " a " + nome + ".", "Carta Dinheiro Extra", JOptionPane.INFORMATION_MESSAGE);
                         jogador.getConta().diminuiSaldo(Double.parseDouble(valor));
 
@@ -185,17 +185,17 @@ public class AtualizaJogo implements Runnable {
 
                                 Conexao cliente = Conexao.getInstancia();
                                 
-                                if (cliente.conectar()) {
-                                    cliente.enviar("vencedor");
+                                if (cliente.conecta()) {
+                                    cliente.envia("vencedor");
                                     try {
-                                        cliente.disconectar();
+                                        cliente.desconecta();
                                     } catch (IOException ex) {
                                         Logger.getLogger(AtualizaJogo.class.getName()).log(Level.SEVERE, null, ex);
                                     }
                                 }
 
                                 try {
-                                    ConexaoCliente.getInstancia().disconectar();
+                                    ConexaoCliente.getInstancia().desconecta();
                                 } catch (IOException ex) {
                                     Logger.getLogger(AtualizaJogo.class.getName()).log(Level.SEVERE, null, ex);
                                 }

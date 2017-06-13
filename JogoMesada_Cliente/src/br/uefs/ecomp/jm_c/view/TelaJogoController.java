@@ -420,7 +420,7 @@ public class TelaJogoController implements Initializable {
     }
     
     public void realizaAcao(String jogador, String tipo) {
-        this.facade.acaoCartaCorreio(this.conexaoCliente.getNome(), jogador, this.facade.buscaCartaCorreio(tipo));
+        this.facade.acaoCartaCorreio(this.conexaoCliente.getNickname(), jogador, this.facade.buscaCartaCorreio(tipo));
         this.atualizaSaldo();
         this.atualizaDivida();
         this.atualizaSorteGrande();
@@ -782,7 +782,7 @@ public class TelaJogoController implements Initializable {
         } else if ((coluna == 2) && (linha == 1)) {
             this.informaCasaAchouComprador();
         } else if ((coluna == 3) && (linha == 1)) {
-            this.facade.acaoCasaFelizAniversario(this.conexaoCliente.getNumeroJogadores(), this.conexaoCliente.getNome());
+            this.facade.acaoCasaFelizAniversario(this.conexaoCliente.getNumeroJogadores(), this.conexaoCliente.getNickname());
             this.atualizaSaldo();
         } else if ((coluna == 4) && (linha == 1)) {
             this.casaCorreio(1);

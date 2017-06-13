@@ -38,7 +38,7 @@ public class TelaEsperaController implements Initializable {
     private ConexaoCliente conexaoCliente = ConexaoCliente.getInstancia();
     
     public void atualizaNome() {
-        this.labelNome.setText("Bem-vindo(a), " + this.conexaoCliente.getNome() + "!");
+        this.labelNome.setText("Bem-vindo(a), " + this.conexaoCliente.getNickname()+ "!");
     }
     
     @Override

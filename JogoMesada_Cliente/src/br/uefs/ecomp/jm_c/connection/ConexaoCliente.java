@@ -2,38 +2,36 @@ package br.uefs.ecomp.jm_c.connection;
 
 import br.uefs.ecomp.jm_c.model.Adversario;
 import java.io.IOException;
-import java.io.PrintStream;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.net.Socket;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 import javax.swing.JOptionPane;
 
+
 /**
- * Classe que inicializa a conexao com o servidor e se comunica com ele enviando
- * e recebendo Strings.
+ * Classe ConexaoCliente, inicializa a conexão com o servidor e se comunica com
+ * ele enviando e recebendo strings.
  *
- * @author felipe
+ * @author Camille Jesus e Felipe Damasceno
  *
  */
 public class ConexaoCliente {
-
-    DatagramSocket servidor;
+    
     private static ConexaoCliente Conexao;
+    
+    DatagramSocket servidor;
     private static int porta;// porta do servidor udp
     private ArrayList<Adversario> saidas;
-    private static String nome;
+    private static String nickname;
     private int ordem; //ordem do jogador no jogo
     private String cor; // cor do pino
     private int tempoPartida;
     
-    /**
-     * Inicializa a classe.
+    /** Método que inicializa a classe.
      *
      * @throws UnknownHostException
      * @throws IOException
@@ -41,39 +39,42 @@ public class ConexaoCliente {
     public static void singleton() throws UnknownHostException, IOException {
         Conexao = new ConexaoCliente();
     }
-  
+
+    /** Método que retorna a instância da classe.
+     *
+     * @return Conexao ConexaoCliente
+     */
+    public static ConexaoCliente getInstancia() {
+        return Conexao;
+    }
     
-    /**
-     * muda ordem do jogador na partida
-     * @param ordem 
+    /** Métod que retorna os adversários da partida.
+     * 
+     * @return saidas Adversarios
      */
-    public void setOrdem(int ordem){
-        this.ordem = ordem;
+    public ArrayList<Adversario> getSaidas() {
+        return saidas;
     }
-    /**
-     * retorna ordem do jogador na partida
-     * @return 
+    
+    /** Método que altera os adversários da partida.
+     * 
+     * @param saidas 
      */
-    public int getOrdem() {
-        return ordem;
+    public void setSaidas(ArrayList<Adversario> saidas) {
+        this.saidas = saidas;
     }
-    /**
-     * retorna nome do jogador.
-     * @return nome
+    
+    /** Método que retonar o número de adversários na partida.
+     * 
+     * @return numero int
      */
-   public String getNome(){
-       return nome;
-   }
-   /**
-    * retorna com do pino.
-    * @return cor
-    */
-    public String getCor() {
-        return cor;
+    public int getNumeroJogadores() {
+        return (saidas.size());
     }
-    /**
-     * Adiciona as informacoes dos adversarios da partida para jogador poder
-     * se comunicar com eles.
+    
+    /** Método que adiciona as informações dos adversários da partida para o jogador
+     * atual estabelecer a comunicação.
+     * 
      * @param ip
      * @param porta
      * @param ordem
@@ -83,99 +84,10 @@ public class ConexaoCliente {
     public void addAdversario(InetAddress ip, int porta, int ordem, String nome, String cor){
         saidas.add(new Adversario(ip, porta, ordem, nome, cor));
     }
-
-    /**
-     * Retorna a instancia da classe.
-     *
-     * @return Conexao
-     */
-    public static ConexaoCliente getInstancia() {
-        return Conexao;
-    }
-    
-    /**
-     * Retorna a instancia da classe.
-     *
-     * @return Conexao
-     */
-    public static int getPorta() {
-        return porta;
-    }
-
-    /**
-     * Altera o valor do ip do servidor.
-     *
-     * @param ip
-     */
-    public static void setPorta(int porta) {
-        Conexao.porta = porta;
-    }
-    
-    public int getTempoPartida () {
-        return this.tempoPartida;
-    }
-    
-    /**
-     * muda tempo da partida
-     * @param tempoPartida 
-     */
-    public void setTempoPartida(int tempoPartida){
-        this.tempoPartida = tempoPartida;
-       
-    }
-    
-    /**
-     * retorna os adversarios da partida
-     * @return saidas
-     */
-    public ArrayList<Adversario> getSaidas() {
-        return saidas;
-    }
-    /**
-     * muda os adversarios da partida
-     * @param saidas 
-     */
-    public void setSaidas(ArrayList<Adversario> saidas) {
-        this.saidas = saidas;
-    }
-    
-    public int getNumeroJogadores() {
-        return (saidas.size());
-    }
-
-    /**
-     * Conecta com o servidor.
-     *
-     * @throws UnknownHostException
-     * @throws IOException
-     */
-    public boolean conectar() {
-        saidas = new ArrayList<Adversario>();
-        
-        try {
-            //cria porta para escutar algo
-            servidor = new DatagramSocket(porta);
-
-            System.out.println("Porta " + porta + " aberta!");
-            
-
-            return true; // sucesso
-        } catch (Exception e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Erro ao conectar o servidor",
-                    "Erro", JOptionPane.ERROR_MESSAGE);
-            return false; // deu erro
-        }
-
-    }
-    /**
-     * muda nome do jogador
-     * @param nome 
-     */
-    public static void setNome(String nome){
-        ConexaoCliente.nome = nome;
-    }
-    
+     /** Método que retorna o nome dos jogadores.
+      * 
+      * @return  nomes ArrayList
+      */
     public ArrayList getNomeJogadores() {
         ArrayList nomes =  new ArrayList();
                 
@@ -184,79 +96,174 @@ public class ConexaoCliente {
         }
         return nomes;
     }
-
-    /**
-     * Envia uma String para o servidor.
+    
+    /** Método que retorna a porta do servidor UDP atual.
      *
-     * @param s
+     * @return porta int
      */
-    public void enviar(String s) throws SocketException, IOException {
-        DatagramSocket ds = new DatagramSocket();
-        //envia mensagem para as portas dos outros usuarios
-        byte[] msg = s.getBytes();
-        for (Adversario jogador : saidas) {
-            
-            DatagramPacket pkg = new DatagramPacket(msg, msg.length, jogador.getIp(), jogador.getPorta());
-            //envia pacote
-            ds.send(pkg);
+    public static int getPorta() {
+        return porta;
+    }
 
-        }
-        ds.close ();
+    /** Método que altera o valor da porta do servidor UDP atual.
+     *
+     * @param porta
+     */
+    public static void setPorta(int porta) {
+        Conexao.porta = porta;
     }
     
-    public void enviarJogador(String nome, String s) throws SocketException, IOException {
-        DatagramSocket ds = new DatagramSocket();
-        //envia mensagem para as portas dos outros usuarios
-        byte[] msg = s.getBytes();
-        
-        for (Adversario jogador : saidas) {
-            
-            if (nome.equals(jogador.getNickname())) {
-                DatagramPacket pkg = new DatagramPacket(msg, msg.length, jogador.getIp(), jogador.getPorta());
-                //envia pacote
-                ds.send(pkg);
-            }
-        }
-        ds.close ();
-    }
-
-    
-
-
-/**
- * Recebe String do servidor e a retorna.
- *
- * @return String
- */
-public String receber() throws IOException {
-        byte[] msg = new byte[256];
-        //cria o pacote para receber a mensagem
-        DatagramPacket pkg = new DatagramPacket(msg, msg.length);
-        //recebe mensagem, transforma em string e retorna
-        
-        servidor.receive(pkg);
-        String resposta = new String(pkg.getData()).trim();
-        
-        
-        return resposta;
-        
-    }
-
-    /**
-     * Disconecta do servidor.
-     *
-     * @throws IOException
+    /** Método que retorna o nickname do jogador atual.
+     * 
+     * @return nickname String
      */
-    public void disconectar() throws IOException {
-        servidor.close();
-
+   public String getNickname(){
+       return this.nickname;
+   }
+   
+    /** Método que altera o nickname do jogador atual.
+     * 
+     * @param nickname
+     */
+    public static void setNickname(String nickname){
+        ConexaoCliente.nickname = nickname;
     }
-    /**
-     * muda valor do cor do pino
+    
+    /** Método que retorna a ordem do jogador atual na partida.
+     * 
+     * @return ordem int
+     */
+    public int getOrdem() {
+        return this.ordem;
+    }  
+    
+    /** Método que altera a ordem do jogador atual na partida.
+     * 
+     * @param ordem 
+     */
+    public void setOrdem(int ordem){
+        this.ordem = ordem;
+    }
+   
+   /** Método que retorna a cor do peão escolhida pelo jogador atual.
+    * 
+    * @return cor String
+    */
+    public String getCor() {
+        return cor;
+    }
+    
+    /** Método que altera a cor do peão escolhida pelo jogador atual.
      * @param cor 
      */
     public void setCor(String cor) {
         this.cor = cor;
+    }
+    
+    /** Método que retorna o tempo da partida.
+     * 
+     * @return tempoPartida int
+     */
+    public int getTempoPartida () {
+        return this.tempoPartida;
+    }
+    
+    /** Método que altera o tempo da partida.
+     * 
+     * @param tempoPartida 
+     */
+    public void setTempoPartida(int tempoPartida){
+        this.tempoPartida = tempoPartida;
+       
+    }
+
+    /** Método que conecta com o servidor UDP.
+     * 
+     * @return 
+     */
+    public boolean conecta() {
+        saidas = new ArrayList<>();
+        
+        try {
+            //cria porta para escutar algo
+            servidor = new DatagramSocket(porta);
+            System.out.println("Porta " + porta + " aberta!");
+            return true; // sucesso
+        } catch (SocketException e) {
+            JOptionPane.showMessageDialog(null, "Erro ao conectar o servidor", "Erro",
+                    JOptionPane.ERROR_MESSAGE);
+            return false; // deu erro
+        }
+    }
+
+    /** Método que envia uma string para o servidor UDP.
+     *
+     * @param s
+     * @throws java.net.SocketException
+     */
+    public void envia(String s) throws SocketException, IOException {
+        //envia mensagem para as portas dos outros usuarios
+        try (DatagramSocket ds = new DatagramSocket()) {
+            //envia mensagem para as portas dos outros usuarios
+            byte[] msg = s.getBytes();
+            
+            for (Adversario jogador : saidas) {
+                
+                DatagramPacket pkg = new DatagramPacket(msg, msg.length, jogador.getIp(), jogador.getPorta());
+                //envia pacote
+                ds.send(pkg);
+                
+            }
+        }
+    }
+    
+    /** Método que envia uma string para o servidor UDP de um jogador específico,
+     * a partir de seu nome.
+     * 
+     * @param nome
+     * @param s
+     * @throws SocketException
+     * @throws IOException 
+     */
+    public void enviaJogador(String nome, String s) throws SocketException, IOException {
+        //envia mensagem para as portas dos outros usuarios
+        try (DatagramSocket ds = new DatagramSocket()) {
+            //envia mensagem para as portas dos outros usuarios
+            byte[] msg = s.getBytes();
+            
+            for (Adversario jogador : saidas) {
+                
+                if (nome.equals(jogador.getNickname())) {
+                    DatagramPacket pkg = new DatagramPacket(msg, msg.length, jogador.getIp(), jogador.getPorta());
+                    //envia pacote
+                    ds.send(pkg);
+                }
+            }
+        }
+    }
+
+    /** Método que recebe uma string do servidor UDP e a retorna.
+     *
+     * @return string
+     * @throws java.io.IOException
+     */
+    public String recebe() throws IOException {
+        byte[] msg = new byte[256];
+        //cria o pacote para receber a mensagem
+        DatagramPacket pkg = new DatagramPacket(msg, msg.length);
+        //recebe mensagem, transforma em string e retorna        
+        servidor.receive(pkg);
+        String resposta = new String(pkg.getData()).trim();       
+        return resposta;
+        
+    }
+
+    /** Método que desconecta do servidor USP.
+     *
+     * @throws IOException
+     */
+    public void desconecta() throws IOException {
+        servidor.close();
     }
 
 }

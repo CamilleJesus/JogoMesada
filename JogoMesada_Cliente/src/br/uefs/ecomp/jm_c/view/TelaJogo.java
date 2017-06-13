@@ -29,7 +29,7 @@ public class TelaJogo extends Application {
         //Chama o arquivo FXML correpondente:
         Parent root = FXMLLoader.load(getClass().getResource("TelaJogo.fxml"));      
         Scene scene = new Scene(root);
-        stage.setTitle("Jogo da Mesada   <" + this.conexaoCliente.getNome() + ">");   //Renomeia o frame
+        stage.setTitle("Jogo da Mesada   <" + this.conexaoCliente.getNickname()+ ">");   //Renomeia o frame
         stage.setScene(scene);
         stage.show();
     }
