@@ -60,6 +60,8 @@ public class TrataCliente implements Runnable {
             } else if (acao.equals("conectar")) {
                 //envia informacao dos jogadores da sala para criar o p2p
                 conectarJogadores(); 
+            }else if (acao.equals("vencedor")){
+                System.out.println("funcionaaaaaa!!!!");
             }
         } catch (Exception e) {
             e.printStackTrace();

@@ -5,6 +5,7 @@
  */
 package br.uefs.ecomp.jm_c.view.controller;
 
+import br.uefs.ecomp.jm_c.connection.Conexao;
 import br.uefs.ecomp.jm_c.view.TelaJogoController;
 import br.uefs.ecomp.jm_c.connection.ConexaoCliente;
 import br.uefs.ecomp.jm_c.connection.TrataJogador;
@@ -23,10 +24,11 @@ import javax.swing.JOptionPane;
 public class AtualizaJogo implements Runnable {
 
     private TelaJogoController jogo;
-    public AtualizaJogo(TelaJogoController jogo){
+
+    public AtualizaJogo(TelaJogoController jogo) {
         this.jogo = jogo;
     }
-    
+
     @Override
     public void run() {
         System.out.println("entrou run AtualizaJogo");
@@ -34,23 +36,26 @@ public class AtualizaJogo implements Runnable {
         SorteGrande sorteGrande = SorteGrande.getInstance();
         Jogador jogador = Jogador.getInstance();
         TrataJogador trataJogador = new TrataJogador();
-        
-        while (true) {
+
+        boolean condicao = true;
+        while (condicao) {
             String requisicao = null;
+
             final String ordem;
             final String sorteio;
             final String valor;
             final String nome;
-            
+
             try {
                 requisicao = conexaoCliente.receber();
-                
+
                 switch (requisicao) {
+
                     case "movePeao":
                         ordem = conexaoCliente.receber();
                         sorteio = conexaoCliente.receber();
                         System.out.println("movePeao");
-                        
+
                         Platform.runLater(new Runnable() {
                             @Override
                             public void run() {
@@ -63,7 +68,7 @@ public class AtualizaJogo implements Runnable {
                         valor = conexaoCliente.receber();
                         sorteGrande.aumentaSorteGrande(Double.parseDouble(valor));
                         System.out.println("aumentaSorteGrande");
-                        
+
                         Platform.runLater(new Runnable() {
                             @Override
                             public void run() {
@@ -75,7 +80,7 @@ public class AtualizaJogo implements Runnable {
                     case "zeraSorteGrande":
                         sorteGrande.setValor(0.0);
                         System.out.println("zeraSorteGrande");
-                        
+
                         Platform.runLater(new Runnable() {
                             @Override
                             public void run() {
@@ -89,7 +94,7 @@ public class AtualizaJogo implements Runnable {
                         JOptionPane.showMessageDialog(null, nome + " está na casa Feliz Aniverário!\nDê R$ 100 para ele(a).", "Casa Feliz Aniversário", JOptionPane.INFORMATION_MESSAGE);
                         jogador.getConta().diminuiSaldo(100.0);
                         System.out.println("avisa");
-                        
+
                         Platform.runLater(new Runnable() {
                             @Override
                             public void run() {
@@ -100,17 +105,17 @@ public class AtualizaJogo implements Runnable {
                         break;
                     case "maratonaBeneficente":
                         int numeroDado = jogo.rolaDado();
-                        JOptionPane.showMessageDialog(null, "Número sorteado: " + numeroDado + ".", "Rolagem de Dado", JOptionPane.INFORMATION_MESSAGE);                        
+                        JOptionPane.showMessageDialog(null, "Número sorteado: " + numeroDado + ".", "Rolagem de Dado", JOptionPane.INFORMATION_MESSAGE);
                         double valor2 = (numeroDado * 100.0);
                         double saldo = jogador.getConta().getSaldo();
-                        
+
                         if (saldo < valor2) {
                             jogador.pegaEmprestimo(valor2 - saldo);
                         }
                         jogador.getConta().diminuiSaldo(valor2);
                         sorteGrande.aumentaSorteGrande(valor2);
                         JOptionPane.showMessageDialog(null, "Você colocou R$ " + (numeroDado * 100) + " no Sorte Grande!", "Casa Maratona Beneficente", JOptionPane.INFORMATION_MESSAGE);
-                        
+
                         Platform.runLater(new Runnable() {
                             @Override
                             public void run() {
@@ -124,9 +129,9 @@ public class AtualizaJogo implements Runnable {
                     case "pagueVizinho":
                         nome = conexaoCliente.receber();
                         valor = conexaoCliente.receber();
-                        JOptionPane.showMessageDialog(null, nome + " lhe pagou R$ "+ valor + ".", "Carta Pague um Vizinho Agora", JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.showMessageDialog(null, nome + " lhe pagou R$ " + valor + ".", "Carta Pague um Vizinho Agora", JOptionPane.INFORMATION_MESSAGE);
                         jogador.getConta().aumentaSaldo(Double.parseDouble(valor));
-                        
+
                         Platform.runLater(new Runnable() {
                             @Override
                             public void run() {
@@ -139,9 +144,9 @@ public class AtualizaJogo implements Runnable {
                     case "dinheiroExtra":
                         nome = conexaoCliente.receber();
                         valor = conexaoCliente.receber();
-                        JOptionPane.showMessageDialog(null, "Pague R$ "+ valor + " a " + nome + ".", "Carta Dinheiro Extra", JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Pague R$ " + valor + " a " + nome + ".", "Carta Dinheiro Extra", JOptionPane.INFORMATION_MESSAGE);
                         jogador.getConta().diminuiSaldo(Double.parseDouble(valor));
-                        
+
                         Platform.runLater(new Runnable() {
                             @Override
                             public void run() {
@@ -153,25 +158,44 @@ public class AtualizaJogo implements Runnable {
                         break;
                     case "finalizarTurno":
                         int vez = jogo.mudaVez();
-                        
+
                         if (vez == conexaoCliente.getOrdem()) {
                             Platform.runLater(new Runnable() {
                                 @Override
                                 public void run() {
                                     System.out.println("entrou run2.6 AtualizaJogo");
-                                    
+
                                     if (jogo.acabouTempoPartida() == true) {
                                         jogo.mudaVez();
                                         trataJogador.enviaString("finalizarTurno");
-                                        
-                                        if (jogo.acabouJogo() == true) {
-                                            return;   //Envia para Servidor que o jogo acabou
-                                        }
+                                        jogo.desabilitaInterface();
+
                                     } else {
                                         jogo.habilitaInterface();
                                     }
                                 }
-                                });
+                            });
+                            if (jogo.acabouJogo() == true) {
+                                System.out.println("Acabou jogo");
+
+                                Conexao cliente = Conexao.getInstancia();
+                                if (cliente.conectar()) {
+                                    cliente.enviar("vencedor");
+                                    try {
+                                        cliente.disconectar();
+                                    } catch (IOException ex) {
+                                        Logger.getLogger(AtualizaJogo.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
+                                }
+
+                                try {
+                                    ConexaoCliente.getInstancia().disconectar();
+                                } catch (IOException ex) {
+                                    Logger.getLogger(AtualizaJogo.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+
+                                condicao = false;//Envia para Servidor que o jogo acabou
+                            }
                         }
                         break;
                 }
@@ -180,5 +204,5 @@ public class AtualizaJogo implements Runnable {
             }
         }
     }
-    
+
 }
