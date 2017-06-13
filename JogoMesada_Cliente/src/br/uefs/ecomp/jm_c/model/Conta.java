@@ -5,7 +5,7 @@ package br.uefs.ecomp.jm_c.model;
  * Classe Conta, permite criar uma conta, possui um valor referente ao saldo e um
  * valor de dívida.
  * 
- * @author Camille Jesus
+ * @author Camille Jesus e Felipe Damasceno
  */
 public class Conta {
     

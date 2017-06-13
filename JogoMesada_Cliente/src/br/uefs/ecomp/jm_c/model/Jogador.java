@@ -7,7 +7,7 @@ import java.util.ArrayList;
  * Classe Singleton Jogador, permite criar apenas um jogador, possui um nickname,
  * uma senha, uma conta associada e duas listas de cartas, Correio e Compras.
  * 
- * @author Camille Jesus
+ * @author Camille Jesus e Felipe Damasceno
  */
 public class Jogador {    
     
@@ -165,7 +165,6 @@ public class Jogador {
     /** Método que adiciona uma carta Compras à lista de cartas Compras do jogador.
      *
      * @param carta
-     * @return 
      */
     public void adicionaCartaCompras(CartaCompras carta) {
         this.cartasCompras.add(carta);

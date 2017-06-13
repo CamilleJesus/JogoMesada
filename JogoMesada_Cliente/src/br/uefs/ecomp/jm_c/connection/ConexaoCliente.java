@@ -180,7 +180,7 @@ public class ConexaoCliente {
         ArrayList nomes =  new ArrayList();
                 
         for (int i = 0; i < saidas.size(); i++) {
-            nomes.add(saidas.get(i).getNome());
+            nomes.add(saidas.get(i).getNickname());
         }
         return nomes;
     }
@@ -211,7 +211,7 @@ public class ConexaoCliente {
         
         for (Adversario jogador : saidas) {
             
-            if (nome.equals(jogador.getNome())) {
+            if (nome.equals(jogador.getNickname())) {
                 DatagramPacket pkg = new DatagramPacket(msg, msg.length, jogador.getIp(), jogador.getPorta());
                 //envia pacote
                 ds.send(pkg);

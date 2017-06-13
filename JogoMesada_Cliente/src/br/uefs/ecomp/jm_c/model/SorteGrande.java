@@ -5,7 +5,7 @@ package br.uefs.ecomp.jm_c.model;
  * Classe Singleton SorteGrande, permite criar apenas uma instância dessa classe,
  * possui um valor.
  * 
- * @author Camille Jesus
+ * @author Camille Jesus e Felipe Damasceno
  */
 public class SorteGrande {
      

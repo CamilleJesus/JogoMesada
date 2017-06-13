@@ -5,7 +5,7 @@ package br.uefs.ecomp.jm_c.model;
  * Classe CartaCorreio, permite criar uma carta da categoria Correio, possui um
  * tipo (há seis tipos de cartas dessa categoria), uma descrição e um valor.
  * 
- * @author Camille Jesus
+ * @author Camille Jesus e Felipe Damasceno
  */
 public class CartaCorreio {
         
@@ -16,7 +16,7 @@ public class CartaCorreio {
     /** Construtor da classe, inicializa os atributos da classe com os valores
      * recebidos por parâmetro.
      * 
-     * @param tipoCarta
+     * @param tipo
      * @param descricao
      * @param valor
      */
@@ -36,7 +36,7 @@ public class CartaCorreio {
 
     /** Método que altera o tipo da carta.
      * 
-     * @param tipoCarta
+     * @param tipo
      */
     public void setTipo(String tipo) {
         this.tipo = tipo;

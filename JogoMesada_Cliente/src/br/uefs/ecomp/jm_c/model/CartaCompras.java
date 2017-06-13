@@ -1,13 +1,11 @@
 package br.uefs.ecomp.jm_c.model;
 
-import java.util.Objects;
-
 
 /**
  * Classe CartaCompras, permite criar uma carta da categoria Compras, possui uma
  * descrição, um valor de compra e um valor de revenda.
  * 
- * @author Camille Jesus
+ * @author Camille Jesus e Felipe Damasceno
  */
 public class CartaCompras {
          

@@ -2,102 +2,115 @@ package br.uefs.ecomp.jm_c.model;
 
 import java.net.InetAddress;
 
+
 /**
- * Classe que guarda as informacoes dos outros jogadores da partida
+ * Classe Adversário, guarda as informações dos outros jogadores da partida.
  * 
- * @author felipe e Camille
+ * @author Camille Jesus e Felipe Damasceno
  */
 public class Adversario {
     
     private InetAddress ip;
     private Integer porta;
     private int ordem;
-    private String nome;
+    private String nickname;
     private String cor;
-    /**
-     * Inicializa as variaveis
+    
+    /** Construtor da classe, inicializa os atributos da classe com os valores
+     * recebidos por parâmetro.
+     * 
      * @param ip
      * @param porta
      * @param ordem do jogador na partida
-     * @param nome
+     * @param nickname
      * @param cor do pino
      */
-    public Adversario(InetAddress ip, Integer porta, int ordem, String nome, String cor) {
+    public Adversario(InetAddress ip, Integer porta, int ordem, String nickname, String cor) {
         this.ip = ip;
         this.porta = porta;
         this.ordem = ordem;
+        this.nickname = nickname;
         this.cor = cor;
-        this.nome = nome;
     }
-    /**
-     * retorna o ip do adversario.
-     * @return ip
+    
+    /** Método que retorna o IP do adversário.
+     * 
+     * @return ip InetAddress
      */
     public InetAddress getIp() {
-        return ip;
+        return this.ip;
     }
-    /**
-     * muda valor do ip do jogador
+    
+    /** Método que altera o IP do adversário.
+     * 
      * @param ip 
      */
     public void setIp(InetAddress ip) {
         this.ip = ip;
     }
-    /**
-     * retorna porta do servidor udp
-     * @return porta
+    
+    /** Método que retorna a porta do servidor UDP.
+     * 
+     * @return porta Interger
      */
     public Integer getPorta() {
-        return porta;
+        return this.porta;
     }
-    /**
-     * muda valor da porta do servidor udp
-     * @param porta 
+    
+    /** Método que altera a porta do servidor UDP.
+     * 
+     * @param porta
      */
     public void setPorta(Integer porta) {
         this.porta = porta;
     }
-    /**
-     * retorna ordem do jogador na partida
-     * @return ordem
+    
+    /** Método que retorna a ordem do jogador na partida.
+     * 
+     * @return ordem int
      */
     public int getOrdem() {
 
         return this.ordem;
 
     }
-    /**
-     * muda valor da ordem do jogador na partida
-     * @param ordem 
+    
+    /** Método que altera a ordem do jogador na partida.
+     * 
+     * @param ordem
      */
     public void setOrdem(int ordem) {
         this.ordem = ordem;
 
     }
-    /**
-     * retorna nome
-     * @return nome
+    
+    /** Método que retorna o nickname do jogador.
+     * 
+     * @return porta Interger
      */
-    public String getNome() {
-        return nome;
+    public String getNickname() {
+        return this.nickname;
     }
-    /**
-     * muda nome do jogador
-     * @param nome 
+    
+    /** Método que altera o nickname do jogador.
+     * 
+     * @param nickname
      */
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setNome(String nickname) {
+        this.nickname = nickname;
     }
-    /**
-     * retorna cor do pino
-     * @return cor
+    
+    /** Método que retorna a cor do peão do jogador.
+     * 
+     * @return porta Interger
      */
     public String getCor() {
-        return cor;
+        return this.cor;
     }
-    /**
-     * muda cor do pino
-     * @param cor 
+    
+    /** Método que altera a cor do peão do jogador.
+     * 
+     * @param cor
      */
     public void setCor(String cor) {
         this.cor = cor;
