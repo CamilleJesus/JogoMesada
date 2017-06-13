@@ -165,6 +165,7 @@ public class AtualizaJogo implements Runnable {
                                         trataJogador.enviaString("finalizarTurno");
                                         
                                         if (jogo.acabouJogo() == true) {
+                                            System.out.println("Jogo acabou!");
                                             return;   //Envia para Servidor que o jogo acabou
                                         }
                                     } else {

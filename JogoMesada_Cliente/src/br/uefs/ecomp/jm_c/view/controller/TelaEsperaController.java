@@ -24,7 +24,10 @@ public class TelaEsperaController implements Initializable {
     private Text textBemVindo;
 
     @FXML
-    private Label nome;
+    private Label labelNome;
+
+    @FXML
+    private Label labelOrdem;
 
     @FXML
     private AnchorPane pane;
@@ -35,7 +38,7 @@ public class TelaEsperaController implements Initializable {
     private ConexaoCliente conexaoCliente = ConexaoCliente.getInstancia();
     
     public void atualizaNome() {
-        this.nome.setText(this.conexaoCliente.getNome() + "!");
+        this.labelNome.setText("Bem-vindo(a), " + this.conexaoCliente.getNome() + "!");
     }
     
     @Override

@@ -92,10 +92,10 @@ public class TelaCadastroController implements Initializable {
 				String resposta = cliente.receber();
 				cliente.disconectar();
 						
-				if (resposta.equals("1")){
-					
-					new TelaLogin().start(new Stage());
-					TelaCadastro.getStage().close();
+				if (resposta.equals("1")){					
+                                    new TelaLogin().start(new Stage());
+                                    TelaCadastro.getStage().close();
+                                    JOptionPane.showMessageDialog(null, "Cadastro realizado!", "Confirmação", JOptionPane.OK_OPTION);
 				}else{
                                     JOptionPane.showMessageDialog(null, "Nickname já cadastrado!", "Erro!", JOptionPane.ERROR_MESSAGE);
 				}

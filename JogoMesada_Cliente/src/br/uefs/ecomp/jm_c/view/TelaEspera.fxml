@@ -21,9 +21,8 @@
                   <Bloom threshold="0.25" />
                </effect>
             </ProgressIndicator>
-            <Text fx:id="textBemVindo" layoutX="15.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Bem-vindo(a)," />
             <Text fx:id="textFrase" layoutX="65.0" layoutY="180.0" strokeType="OUTSIDE" strokeWidth="0.0" text="O jogo começará em instantes..." />
-            <Label fx:id="nome" layoutX="94.0" layoutY="14.0" />
+            <Label fx:id="labelNome" layoutX="15.0" layoutY="14.0" />
          </children></AnchorPane>
   </content>
 </TitledPane>

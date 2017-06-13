@@ -234,7 +234,7 @@ public class TelaJogoController implements Initializable {
     }
     
     public Peao getPeaoAtual() {
-        return (this.getPeao(conexaoCliente.getOrdem()));
+        return (this.getPeao(this.conexaoCliente.getOrdem()));
     }
     
     public void clicaEmprestimo(ActionEvent event) {
@@ -252,11 +252,16 @@ public class TelaJogoController implements Initializable {
             if ((!carta.equals("Contas")) && (!carta.equals("Cobrança Monstro"))) {
                 podeFinalizar = false;
             }
-        } 
+        }
+        
+        if (!this.buttonDado.isDisabled()) {
+            podeFinalizar = false;
+        }
         
         if (podeFinalizar == true) {
             this.mudaVez();
             this.trataJogador.enviaString("finalizarTurno");
+            this.fieldDado.clear();
             this.desabilitaInterface();
         } else {
             JOptionPane.showMessageDialog(null, "Você ainda tem carta(s) Correio imediata(s)!", "Erro!", JOptionPane.ERROR_MESSAGE);
@@ -1111,7 +1116,7 @@ public class TelaJogoController implements Initializable {
         ArrayList<Adversario> usuarios = conexaoCliente.getSaidas();
         
         for (int i = 0; i < usuarios.size(); i++) {
-            comboJogadores.getItems().add(usuarios.get(i).getNome());   //Integrar classe usuário com jogador e mudar porta para nome
+            comboJogadores.getItems().add((usuarios.get(i).getOrdem() + 1) + " - " + usuarios.get(i).getNome());   //Integrar classe usuário com jogador e mudar porta para nome
         }
     }
     
