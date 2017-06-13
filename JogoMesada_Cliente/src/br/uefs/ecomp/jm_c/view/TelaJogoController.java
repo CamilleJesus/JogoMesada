@@ -300,20 +300,22 @@ public class TelaJogoController implements Initializable {
     }
     
     public void clicaDado(ActionEvent event) {
-        Integer sorteio = this.facade.rolaDado();
-        this.fieldDado.setText(sorteio.toString());
-        int ordem = conexaoCliente.getOrdem();
-        this.movePeao(ordem, sorteio);
-        this.enviaMovePeao(ordem, sorteio);
-        Peao peao = this.getPeaoAtual();
-        this.acaoCasa(peao.getColuna(), peao.getLinha());
-        this.buttonDado.setDisable(true);
+        
         
         if (this.acabouTempoPartida() == true) {
             this.mudaVez();
             this.trataJogador.enviaString("finalizarTurno");
             this.desabilitaInterface();
-        } 
+        }else{
+            Integer sorteio = this.facade.rolaDado();
+            this.fieldDado.setText(sorteio.toString());
+            int ordem = conexaoCliente.getOrdem();
+            this.movePeao(ordem, sorteio);
+            this.enviaMovePeao(ordem, sorteio);
+            Peao peao = this.getPeaoAtual();
+            this.acaoCasa(peao.getColuna(), peao.getLinha());
+            this.buttonDado.setDisable(true);
+        }
     }
     
     public void clicaComboCorreio(ActionEvent event) {
@@ -560,9 +562,12 @@ public class TelaJogoController implements Initializable {
             default:
                 break;
         }
+        int vez = this.conexaoCliente.getOrdem();
         
-        if (this.acabouMes() == true) {
-            this.mes++;
+        if (this.vez == vez) {
+            if (this.acabouMes() == true) {
+                this.mes++;
+            }
         }
     }
     
@@ -740,7 +745,7 @@ public class TelaJogoController implements Initializable {
         this.paneCenter.add(circle5, peao.getColuna(), peao.getLinha());
     }
     
-    public void atualizaMes() {        
+    public void atualizaMes() {
         this.fieldMes.setText(Integer.toString(mes));
     }
     
@@ -874,6 +879,8 @@ public class TelaJogoController implements Initializable {
     
     public boolean acabouMes() {
         Peao peao = this.getPeaoAtual();
+        System.out.println(peao.getColuna());
+        System.out.println(peao.getLinha());
         
         if ((peao.getColuna() == 3) && (peao.getLinha() == 4)) {
             return true;
@@ -883,13 +890,20 @@ public class TelaJogoController implements Initializable {
     
     public boolean acabouTempoPartida() {
         Peao peao = this.getPeaoAtual();
-        
-        if ((peao.getColuna() == 3) && (peao.getLinha() == 4) &&
-                (this.mes == this.conexaoCliente.getTempoPartida())) {
-            return true;
+        System.out.println("true");
+        if (peao.getColuna() == 3){
+            System.out.println("true");
+            if (peao.getLinha() == 4){
+                System.out.println("true");
+                if (this.mes >= this.conexaoCliente.getTempoPartida()){
+                    System.out.println("true");
+                    return true;
+                }
+            }
         }
         return false;
     }
+
     
     public boolean acabouJogo() {
         int quant = 0;
@@ -897,12 +911,19 @@ public class TelaJogoController implements Initializable {
         for (int i = 0; i < peoes.size(); i++) {
             Peao peao = this.peoes.get(i);
             
-            if ((peao.getColuna() == 3) && (peao.getLinha() == 4)) {
-                quant++;
+            if (peao.getColuna() == 3){
+            System.out.println("acabou");
+            if (peao.getLinha() == 4){
+                System.out.println("o");
+                if (this.mes >= this.conexaoCliente.getTempoPartida()){
+                    System.out.println("jogo");
+                    quant++;
+                }
             }
         }
+        }
         
-        if (quant == 6) {
+        if (quant == peoes.size()) {
             return true;
         }
         return false;

@@ -41,6 +41,7 @@ public class ConexaoCliente {
     public static void singleton() throws UnknownHostException, IOException {
         Conexao = new ConexaoCliente();
     }
+  
     
     /**
      * muda ordem do jogador na partida
