@@ -75,26 +75,28 @@ public class Servidor implements Serializable {
         }
 
     }
-
+    /**
+     * Calcula quem ficou em que possicao no final do jogo e 
+     * retorna a classificacao da partida.
+     * @param nome
+     * @param saldo
+     * @return Informacao das colocacoes de cada jogador
+     */
     public String getVencedor(String nome, double saldo) {
         
         
         int sala = salaJogador.get(nome);
+        //lista dos jogadores com seus nomes e saldos
         LinkedList<Pontuacao> pontuacao = classificacao.get(sala);
 
-        
+        // adiciona suas informacoes
         pontuacao.add(new Pontuacao(nome, saldo));
-        
-        
-        
-        
+        // espera todos os jogadores esta na lista
         while (pontuacao.size() != getSala(sala).size()){
             pontuacao = classificacao.get(sala);
-            System.out.println(sala);
-            System.out.println( getSala(sala).size());
-            System.out.println( pontuacao.size());
+            
         }
-        
+        // ordena a lista pelo maior saldo ao menor
         Collections.sort(pontuacao, new Comparator<Pontuacao>() {
 
             @Override
@@ -107,9 +109,10 @@ public class Servidor implements Serializable {
                 }
             }
         });
+        
         String resultado = "";
         int i = 1;
-        
+        // gera a string com a classificacao de cada jogador
         for (Pontuacao jogador: pontuacao){
             
             resultado = resultado + i + " " + jogador.getNome() + "; ";
