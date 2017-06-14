@@ -20,7 +20,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author Rafaela
+ * @author Camille Jesus e Felipe Damasceno
  */
 public class AtualizaJogo implements Runnable {
 

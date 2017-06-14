@@ -48,6 +48,8 @@ public class Conexao {
     public static void setIp(String ip){
             Conexao.ip = ip;
     }
+    
+    
 
     /** Método que conecta com o servidor.
      * 

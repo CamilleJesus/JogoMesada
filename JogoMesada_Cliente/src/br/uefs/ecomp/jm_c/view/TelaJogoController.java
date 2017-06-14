@@ -249,13 +249,15 @@ public class TelaJogoController implements Initializable {
         for (int i = 0; i < this.comboCorreio.getItems().size(); i++) {
             String carta = this.comboCorreio.getItems().get(i);
             
-            if ((!carta.equals("Contas")) && (!carta.equals("Cobrança Monstro"))) {
+            if ((!carta.equals("Contas")) && (!carta.equals("Cobrança Monstro")) && (!carta.equals("Vá para Frente Agora"))) {
                 podeFinalizar = false;
             }
         }
         
         if (!this.buttonDado.isDisabled()) {
             podeFinalizar = false;
+        } else {
+            JOptionPane.showMessageDialog(null, "Você ainda não fez sua jogada!", "Erro!", JOptionPane.ERROR_MESSAGE);
         }
         
         if (podeFinalizar == true) {
@@ -263,8 +265,6 @@ public class TelaJogoController implements Initializable {
             this.trataJogador.enviaString("finalizarTurno");
             this.fieldDado.clear();
             this.desabilitaInterface();
-        } else {
-            JOptionPane.showMessageDialog(null, "Você ainda tem carta(s) Correio imediata(s)!", "Erro!", JOptionPane.ERROR_MESSAGE);
         }
     }
     
