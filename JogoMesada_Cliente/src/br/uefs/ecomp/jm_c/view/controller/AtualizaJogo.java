@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.uefs.ecomp.jm_c.view.controller;
 
 import br.uefs.ecomp.jm_c.connection.Conexao;
@@ -19,13 +14,14 @@ import javafx.application.Platform;
 import javax.swing.JOptionPane;
 
 /**
- *
+ * Classe que escuta a acao dos adversarios e atualiza a tela
+ * 
  * @author Camille Jesus e Felipe Damasceno
  */
 public class AtualizaJogo implements Runnable {
 
     private TelaJogoController jogo;
-
+    
     public AtualizaJogo(TelaJogoController jogo) {
         this.jogo = jogo;
     }

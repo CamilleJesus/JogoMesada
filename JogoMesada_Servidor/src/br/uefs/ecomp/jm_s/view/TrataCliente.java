@@ -59,14 +59,9 @@ public class TrataCliente implements Runnable {
                 tempo();//tempo de espera acabou?
             } else if (acao.equals("conectar")) {
                 //envia informacao dos jogadores da sala para criar o p2p
-                conectarJogadores(); 
-            }else if (acao.equals("vencedor")){
-                String nome = entrada.nextLine();
-                double saldo = Double.parseDouble(entrada.nextLine());
-                System.out.println(saldo);
-                String classificacao = servidor.getVencedor(nome, saldo);
-                System.out.println("ói eu");
-                saida.println(classificacao);
+                conectarJogadores();
+            } else if (acao.equals("vencedor")) {
+                classificacao();
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -75,6 +70,19 @@ public class TrataCliente implements Runnable {
             saida.close();
         }
     }
+    /**
+     * Calcula vencedor da partida, quem tem maior saldo e envia 
+     * para o jogador.
+     */
+    private void classificacao() {
+        String nome = entrada.nextLine();
+        double saldo = Double.parseDouble(entrada.nextLine());
+
+        String classificacao = servidor.getVencedor(nome, saldo);
+
+        saida.println(classificacao);
+    }
+
     /**
      * Envia informacao dos jogadores da sala para criar o p2p
      */
@@ -98,6 +106,7 @@ public class TrataCliente implements Runnable {
 
         }
     }
+
     /**
      * Envia ao jogador se o tempo de espera para o jogo comecar acabou ou nao
      */
@@ -110,9 +119,11 @@ public class TrataCliente implements Runnable {
             saida.println("false");
         }
     }
+
     /**
      * Recebe informacao do usuario e coloca ele em uma sala de espera.
-     * @throws UnknownHostException 
+     *
+     * @throws UnknownHostException
      */
     public void entrarSala() throws UnknownHostException {
         String nome = entrada.nextLine();
