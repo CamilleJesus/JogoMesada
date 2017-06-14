@@ -256,8 +256,6 @@ public class TelaJogoController implements Initializable {
         
         if (!this.buttonDado.isDisabled()) {
             podeFinalizar = false;
-        } else {
-            JOptionPane.showMessageDialog(null, "Você ainda não fez sua jogada!", "Erro!", JOptionPane.ERROR_MESSAGE);
         }
         
         if (podeFinalizar == true) {
